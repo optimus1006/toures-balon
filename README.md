@@ -80,7 +80,7 @@ En el archivo **application.properties** pueden verse las propiedades de context
 
 ### Diagrama de proceso de negocio propuesto (BPM)
 
-
+![TouresBalon](https://github.com/optimus1006/toures-balon/blob/master/diagrams/TouresBalonPago.png)
 
 ### Patrones utilizados
 
