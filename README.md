@@ -1,17 +1,84 @@
-# toures-balon
+# Toures-Balon
 
 ## Integrantes
 
  - Jennifer Goyeneche
  - Andrea Gomez
- - Manuel Gonzalez 
- - Ivan Linares 
- - Ivan Pinilla 
+ - Manuel González 
+ - Iván Linares 
+ - Iván Pinilla 
  - Julio Pinzón
 
 ## Visión general
 
 Esta aplicación expone varias operaciones que permiten realizar la compra de planes de turismo especializado en eventos deportivos para la empresa Toures Balon
+
+### Diagrama de proceso de negocio propuesto (BPM)
+
+![TouresBalon](https://github.com/optimus1006/toures-balon/blob/master/diagrams/TouresBalonPago.png)
+
+## Catálogo de servicios
+
+DOMINIO | SERVICIO | DESCRIPCIÓN
+--- | --- | --- 
+Autenticación | Servicios de autenticación | Generación de autenticación tanto para aplicaciones como para usuarios
+Clientes | Administración de Clientes | Los clientes podrán ingresar al sitio e inscribirse ingresando sus datos principales (ver modelo de datos y exceptuar “status”); así mismo, el usuario deberá ingresar su contraseña
+Facturación | Conciliar Movimientos | Servicio que controla la conciliación de movimientos contables con el sistema financiero
+Ordenes | Crear ordenes | Crear ordenes de productos
+Órdenes | Cancelación de Órdenes | El sistema permitirá la cancelación de órdenes de pedido en validación o en reservación que maneja TouresBalón.
+Órdenes | Consultar Ordenes | detalle de productos se debe mostrar
+Órdenes | Pagar orden | Servicio de pago de ordenes
+Productos | Administración de Productos | El sistema permitirá la creación, modificación y eliminación de los productos que comercializa TouresBalón. (Incluye la administración de imágenes). También el sistema permitirá la creación(*), modificación(*) y eliminación(*) de las tarifas asociadas a los productos
+Productos | Administrar Campañas | El sistema permitirá creación(*), modificación(*) y eliminación(*) de campañas. Una campaña es una imagen promocional que se mostrará en el sitio Web y está asociada a un producto durante un periodo de tiempo dado.
+Convenios | Administración de convenios | Consulta y enrolamiento de proveedores/convenios/alianzas 
+
+## Operaciones
+
+### Ordenes
+
+Contiene 4 operaciones con las que se puede operar sobre la orden: 
+
+- `/ordenes` [GET]: Consulta al información de las ordenes basado en parámetros de búsqueda *(No implementado)*
+- `/orden` [POST]: Crea la orden de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/orden` [PUT]: Actualizar la orden de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/orden` [DELETE]: Cancela la orden. *(No implementado)*
+- `/orden/pagar` [POST]: Pagar la orden. *(No implementado)*
+
+### Clientes
+
+Contiene las operaciones necesarias de los clientes
+
+- `/clientes` [GET]: Consulta al información de los clientes basado en parámetros de búsqueda *(No implementado)*
+- `/cliente` [POST]: Crea el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/cliente` [PUT]: Actualizar el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
+
+### Productos
+
+Contiene las operaciones sobre los productos.
+
+- `/productos` [GET]: Consulta al información de los productos basado en parámetros de búsqueda *(No implementado)*
+- `/producto` [POST]: Crea el producto de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/producto` [PUT]: Actualizar el producto de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/producto` [DELETE]: Eliminar el producto. *(No implementado)*
+- `/producto/campanias` [GET]: Consulta al información de las campañas basado en parámetros de busqueda *(No implementado)*
+- `/producto/campania` [POST]: Crea la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/producto/campania` [PUT]: Actualizar la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/producto/campania` [DELETE]: Eliminar la campaña. *(No implementado)*
+
+### Convenios
+
+Contiene las operaciones sobre los proveedores/convenios/alianzas.
+
+- `/convenios` [GET]: Consulta al información de los convenios basado en parámetros de búsqueda *(No implementado)*
+- `/convenio` [POST]: Crea el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/convenio` [PUT]: Actualizar el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/convenio` [DELETE]: Eliminar el convenio. *(No implementado)*
+
+### Facturación
+
+Contiene las operaciones en la facturación.
+
+- `/facturacion/conciliacion` [POST]: Realiza la conciliación con el sistema contable de Toures Balon *(No implementado)*
 
 ## Tecnologías
 
@@ -24,40 +91,7 @@ Patrones usados: Composite (Orquestación), API Gateway, Microservicios.
 
 En este link se encuentra toda la información del API expuesto para el consumo de las aplicaciones del cliente: 
 
-[https://app.swaggerhub.com/apis/ujaveriana/sistema_pagos/1.0.0#trial](https://app.swaggerhub.com/apis/ujaveriana/sistema_pagos/1.0.0#trial)
-
-## Operaciones
-
-### Ordenes
-
-Contiene 2 operaciones con las que se puede operar sobre la cuenta: 
-
-- `/cuenta` : Consulta al información de la cuenta a la que se va a debitar el valor del pago de la factura ingresada. *(No implementado)*
-- `/cuenta/procesar`: Debita el valor del pago de la factura. *(No implementado)*
-
-### Clientes
-
-Contiene las operaciones necesarias para poder realizar el pago de una factura por medio del número de referencia.
-
- - `/factura`: Consulta la factura para obtener el monto a cancelar.
- -  `/factura/pagar`: Permite pagar una factura por el valor de la misma.
- -  `/factura/compensar`: Permite reversar un pago de una factura.
-
-### Productos
-
-Contiene las operaciones necesarias para poder realizar el pago de una factura por medio del número de referencia.
-
- - `/factura`: Consulta la factura para obtener el monto a cancelar.
- -  `/factura/pagar`: Permite pagar una factura por el valor de la misma.
- -  `/factura/compensar`: Permite reversar un pago de una factura.
-
-### Proveedores
-
-Contiene las operaciones necesarias para poder realizar el pago de una factura por medio del número de referencia.
-
- - `/factura`: Consulta la factura para obtener el monto a cancelar.
- -  `/factura/pagar`: Permite pagar una factura por el valor de la misma.
- -  `/factura/compensar`: Permite reversar un pago de una factura.
+[https://app.swaggerhub.com/apis/ujaveriana/toures-balon/1.0.0#trial](https://app.swaggerhub.com/apis/ujaveriana/toures-balon/1.0.0#trial)
 
 ## Documentación del API
 
@@ -77,15 +111,10 @@ En el archivo **application.properties** pueden verse las propiedades de context
 
 ### Diagramas de implementación
 
-
-### Diagrama de proceso de negocio propuesto (BPM)
-
-![TouresBalon](https://github.com/optimus1006/toures-balon/blob/master/diagrams/TouresBalonPago.png)
-
 ### Patrones utilizados
 
 - `Api gateway
-- `Composicion por orquestacion
+- `Composición por orquestación
 - `Microservicios
 
 <!--stackedit_data:
