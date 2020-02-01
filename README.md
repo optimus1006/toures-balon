@@ -19,19 +19,19 @@ Esta aplicación expone varias operaciones que permiten realizar la compra de pl
 
 ## Catálogo de servicios
 
-DOMINIO | SERVICIO | DESCRIPCIÓN
---- | --- | --- 
-Autenticación | Servicios de autenticación | Generación de autenticación tanto para aplicaciones como para usuarios
-Clientes | Administración de Clientes | Los clientes podrán ingresar al sitio e inscribirse ingresando sus datos principales (ver modelo de datos y exceptuar “status”); así mismo, el usuario deberá ingresar su contraseña
-Facturación | Conciliar Movimientos | Servicio que controla la conciliación de movimientos contables con el sistema financiero
-Ordenes | Crear ordenes | Crear ordenes de productos
-Órdenes | Cancelación de Órdenes | El sistema permitirá la cancelación de órdenes de pedido en validación o en reservación que maneja TouresBalón.
-Órdenes | Consultar Ordenes | detalle de productos se debe mostrar
-Órdenes | Pagar orden | Servicio de pago de ordenes
-Órdenes | Consultar factura | Servicio de consulta de factura de una orden
-Productos | Administración de Productos | El sistema permitirá la creación, modificación y eliminación de los productos que comercializa TouresBalón. (Incluye la administración de imágenes). También el sistema permitirá la creación(*), modificación(*) y eliminación(*) de las tarifas asociadas a los productos
-Productos | Administrar Campañas | El sistema permitirá creación(*), modificación(*) y eliminación(*) de campañas. Una campaña es una imagen promocional que se mostrará en el sitio Web y está asociada a un producto durante un periodo de tiempo dado.
-Convenios | Administración de convenios | Consulta y enrolamiento de proveedores/convenios/alianzas 
+DOMINIO | SERVICIO | DESCRIPCIÓN | CANAL
+--- | --- | --- | --- 
+Autenticación | Servicios de autenticación | Generación de autenticación tanto para aplicaciones como para usuarios | Web, Movil
+Clientes | Administración de Clientes | Registro del cliente, actualizacion de datos y estado, consulta de clientes | Web, Movil
+Facturación | Conciliar Movimientos | Servicio que controla la conciliación de movimientos contables con el sistema financiero | Web
+Ordenes | Crear ordenes | Crear ordenes de productos | Web, Movil
+Órdenes | Cancelación de Órdenes | El sistema permitirá la cancelación de órdenes de pedido en validación o en reservación que maneja TouresBalón. | Web, Movil
+Órdenes | Consultar Ordenes | detalle de productos se debe mostrar | Web, Movil
+Órdenes | Pagar orden | Servicio de pago de ordenes | Web, Movil
+Órdenes | Consultar factura | Servicio de consulta de factura de una orden | Web, Movil
+Productos | Administración de Productos | El sistema permitirá la creación, modificación y eliminación de los productos que comercializa TouresBalón. (Incluye la administración de imágenes). También el sistema permitirá la creación(*), modificación(*) y eliminación(*) de las tarifas asociadas a los productos | Web, Movil
+Productos | Administrar Campañas | El sistema permitirá creación(*), modificación(*) y eliminación(*) de campañas. Una campaña es una imagen promocional que se mostrará en el sitio Web y está asociada a un producto durante un periodo de tiempo dado. | Web, Movil
+Convenios | Administración de convenios | Consulta y enrolamiento de proveedores/convenios/alianzas  | Web
 
 ## Operaciones
 
