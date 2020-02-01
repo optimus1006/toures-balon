@@ -28,6 +28,7 @@ Ordenes | Crear ordenes | Crear ordenes de productos
 Órdenes | Cancelación de Órdenes | El sistema permitirá la cancelación de órdenes de pedido en validación o en reservación que maneja TouresBalón.
 Órdenes | Consultar Ordenes | detalle de productos se debe mostrar
 Órdenes | Pagar orden | Servicio de pago de ordenes
+Órdenes | Consultar factura | Servicio de consulta de factura de una orden
 Productos | Administración de Productos | El sistema permitirá la creación, modificación y eliminación de los productos que comercializa TouresBalón. (Incluye la administración de imágenes). También el sistema permitirá la creación(*), modificación(*) y eliminación(*) de las tarifas asociadas a los productos
 Productos | Administrar Campañas | El sistema permitirá creación(*), modificación(*) y eliminación(*) de campañas. Una campaña es una imagen promocional que se mostrará en el sitio Web y está asociada a un producto durante un periodo de tiempo dado.
 Convenios | Administración de convenios | Consulta y enrolamiento de proveedores/convenios/alianzas 
@@ -43,6 +44,7 @@ Contiene 4 operaciones con las que se puede operar sobre la orden:
 - `/orden` [PUT]: Actualizar la orden de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/orden` [DELETE]: Cancela la orden. *(No implementado)*
 - `/orden/pagar` [POST]: Pagar la orden. *(No implementado)*
+- `/orden/factura` [POST]: Consultar factura. *(No implementado)*
 
 ### Clientes
 
