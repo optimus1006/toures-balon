@@ -22,6 +22,7 @@
       "get" : {
         "description" : "Devuelve la información de la factura a pagar.",
         "summary" : "Devuelve factura a pagar.",
+        "tags" : [ "Factura" ],
         "operationId" : "obtenerFactura",
         "parameters" : [ {
           "name" : "numeroFactura",
@@ -195,8 +196,8 @@
     },
     "/orden" : {
       "get" : {
-        "summary" : "Your GET endpoint",
-        "tags" : [ ],
+        "summary" : "Obtiene la información de la orden indicada",
+        "tags" : [ "Orden" ],
         "responses" : {
           "200" : {
             "description" : "OK",
