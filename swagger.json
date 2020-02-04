@@ -7,6 +7,10 @@
     "license" : {
       "name" : "Apache 2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "contact" : {
+      "name" : "Archetype",
+      "email" : "iv.pinilla@javeriana.edu.co"
     }
   },
   "servers" : [ {
@@ -17,7 +21,6 @@
     "/factura" : {
       "get" : {
         "description" : "Devuelve la información de la factura a pagar.",
-        "tags" : [ "Factura" ],
         "summary" : "Devuelve factura a pagar.",
         "operationId" : "obtenerFactura",
         "parameters" : [ {
@@ -189,13 +192,60 @@
           }
         }
       }
+    },
+    "/orden" : {
+      "get" : {
+        "summary" : "Your GET endpoint",
+        "tags" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Orden"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Petición incompleta"
+          },
+          "401" : {
+            "description" : "Sin autorización de acceso a esta operación"
+          },
+          "403" : {
+            "description" : "Prohibido"
+          },
+          "404" : {
+            "description" : "No se encuentra la operación"
+          },
+          "500" : {
+            "description" : "Error no controlado en consulta de órdenes."
+          }
+        },
+        "operationId" : "get-orden",
+        "description" : "Consulta una orden ya generada",
+        "parameters" : [ {
+          "schema" : {
+            "type" : "string"
+          },
+          "in" : "query",
+          "name" : "numeroOrden"
+        } ]
+      }
     }
   },
   "components" : {
     "schemas" : {
       "Cuenta" : {
         "type" : "object",
-        "required" : [ "id" ],
+        "xml" : {
+          "name" : "Cuenta"
+        },
+        "title" : "",
+        "description" : "Datos de la cuenta a usar para el pago de la orden seleccionada por un cliente.",
+        "x-examples" : { },
         "properties" : {
           "id" : {
             "type" : "integer",
@@ -213,25 +263,27 @@
             "description" : "Estado de la cuenta.",
             "enum" : [ "Activa", "Inactiva" ]
           }
-        },
-        "xml" : {
-          "name" : "Cuenta"
         }
       },
       "Factura" : {
         "type" : "object",
-        "required" : [ "id" ],
+        "xml" : {
+          "name" : "Factura"
+        },
+        "description" : "Factura de pago generada a partir de una orden de servicio solicitada por un cliente.",
         "properties" : {
           "id" : {
-            "type" : "integer",
-            "format" : "int64"
+            "type" : "number",
+            "format" : "int64",
+            "description" : "Identificador unico de la factura generada"
           },
           "monto" : {
             "type" : "number",
+            "default" : 0,
             "format" : "double",
-            "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
-            "minLength" : 3,
-            "maxLength" : 20
+            "example" : 514000.23,
+            "minimum" : 0,
+            "description" : "Monto a pagar"
           },
           "estado" : {
             "type" : "string",
@@ -244,44 +296,65 @@
             "enum" : [ "PAGAR", "CONCILIAR" ]
           }
         },
-        "xml" : {
-          "name" : "Factura"
-        }
+        "required" : [ "id", "monto" ]
       },
       "Orden" : {
         "description" : "Orden de un producto, que contiene la información de transporte, hospedaje y el evento al cual asistirá el cliente de Toures Balon.",
         "type" : "object",
-        "required" : [ "id" ],
+        "x-tags" : [ "1.0.0" ],
         "properties" : {
           "id" : {
-            "type" : "integer",
-            "format" : "int64"
-          },
-          "transporte" : {
-            "$ref" : "#/components/schemas/Transporte"
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "61629789-be9d-44f6-a0e3-7b2892835db1",
+            "description" : "Contiene la información necesaria del plan deportivo seleccionado por el ciente, debe tener al menos un transporte adicionado y un evento al cual el cliente asistirá."
           },
           "hospedaje" : {
             "$ref" : "#/components/schemas/Hospedaje"
           },
           "evento" : {
             "$ref" : "#/components/schemas/Evento"
+          },
+          "transporte" : {
+            "type" : "array",
+            "description" : "Listado de transportes asociados a la orden",
+            "items" : {
+              "$ref" : "#/components/schemas/Transporte"
+            }
+          },
+          "precio" : {
+            "type" : "number",
+            "default" : 0,
+            "format" : "double",
+            "example" : 512000,
+            "minimum" : 0,
+            "description" : "Precio de la orden a cobrar"
+          },
+          "moneda" : {
+            "$ref" : "#/components/schemas/Moneda"
           }
-        }
+        },
+        "required" : [ "id", "evento", "precio", "moneda" ]
       },
       "Transporte" : {
         "description" : "Este objeto tiene la estructura básica de la información necesaria para identificar el transporte a usar por el cliente.",
         "type" : "object",
         "properties" : {
-          "fecha" : {
+          "fechaLlegada" : {
             "type" : "string",
-            "format" : "date"
+            "description" : "Fecha y hora de llegada",
+            "format" : "date-time"
           },
           "id" : {
             "type" : "string",
-            "readOnly" : true
+            "readOnly" : true,
+            "format" : "uuid",
+            "example" : "c25c94f3-951f-443a-b2d2-a3df0280a7d9",
+            "description" : "identificador del transporte registrado"
           },
           "puesto" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Puesto dentro del vehículo"
           },
           "tipo" : {
             "type" : "string",
@@ -290,11 +363,18 @@
           },
           "trayecto" : {
             "type" : "array",
+            "description" : "Trayecto a seguir dentro del transporte",
             "items" : {
               "$ref" : "#/components/schemas/Trayecto"
             }
+          },
+          "fechaPartida" : {
+            "type" : "string",
+            "description" : "Fecha y hora de salida",
+            "format" : "date-time"
           }
-        }
+        },
+        "required" : [ "id", "tipo", "fechaPartida" ]
       },
       "Hospedaje" : {
         "description" : "Este objeto tiene la información necesaria para identificar el hospedaje a usar por el cliente.",
@@ -302,23 +382,34 @@
         "properties" : {
           "id" : {
             "type" : "string",
-            "readOnly" : true
+            "readOnly" : true,
+            "format" : "uuid",
+            "example" : "c25c94f3-951f-443a-b2d2-a3df0280a7d9",
+            "description" : "Identificador del hospedaje"
           },
           "fechaLlegada" : {
             "type" : "string",
-            "format" : "date"
+            "format" : "date-time",
+            "description" : "Fecha de llegada al hospedaje registrado en la orden"
           },
           "fechaSalida" : {
             "type" : "string",
-            "format" : "date"
+            "format" : "date",
+            "description" : "Fecha de salida del hospedaje donde estuvo el cliente."
           },
           "habitacion" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "Habitación asignada al cliente"
           },
           "ubicacion" : {
             "$ref" : "#/components/schemas/UbicacionGeografica"
+          },
+          "nombreHotel" : {
+            "type" : "string",
+            "description" : "Indica el nombre del hospedaje asociado a la ubicación seleccionada en la orden"
           }
-        }
+        },
+        "required" : [ "fechaLlegada", "fechaSalida" ]
       },
       "Evento" : {
         "description" : "Contiene la información del evento al cual es cliente asistirá.",
@@ -326,19 +417,25 @@
         "properties" : {
           "id" : {
             "type" : "string",
-            "readOnly" : true
+            "readOnly" : true,
+            "format" : "uuid",
+            "example" : "c25c94f3-951f-443a-b2d2-a3df0280a7d9",
+            "description" : "Identificador interno del evento"
           },
           "fecha" : {
             "type" : "string",
-            "format" : "date"
+            "description" : "Fecha y hora del evento",
+            "format" : "date-time"
           },
-          "ubicacionEvento" : {
-            "type" : "string"
-          },
-          "destino" : {
+          "ubicacionGeografica" : {
             "$ref" : "#/components/schemas/UbicacionGeografica"
+          },
+          "ubicacionInterna" : {
+            "type" : "string",
+            "description" : "Indica cuál es el asiento o puesto dentro del evento"
           }
-        }
+        },
+        "required" : [ "id", "fecha", "ubicacionGeografica" ]
       },
       "UbicacionGeografica" : {
         "description" : "Ubicación geográfica",
@@ -346,42 +443,62 @@
         "properties" : {
           "latitud" : {
             "type" : "number",
-            "format" : "float"
+            "format" : "float",
+            "description" : "Coordenada que indica la latitud de la ubicación"
           },
           "longitud" : {
             "type" : "number",
-            "format" : "float"
+            "format" : "float",
+            "description" : "Coordenada que indica la longitud de la ubicación"
           },
-          "detalle" : {
+          "calle" : {
+            "type" : "string",
             "description" : "Indica la dirección física de un sitio",
-            "type" : "string"
+            "example" : "CALLE FALSA 123",
+            "minLength" : 1,
+            "maxLength" : 255
           },
           "pais" : {
             "type" : "object",
+            "description" : "País de la ubicación",
             "properties" : {
               "nombre" : {
-                "type" : "string"
+                "type" : "string",
+                "example" : "COLOMBIA",
+                "description" : "Nombre del país"
               },
               "codigo" : {
-                "type" : "integer"
+                "type" : "integer",
+                "example" : 57,
+                "description" : "Código del país"
               },
               "ciudad" : {
                 "type" : "object",
+                "description" : "Ciudad dentro del país",
                 "properties" : {
                   "nombre" : {
-                    "type" : "string"
+                    "type" : "string",
+                    "example" : "BOGOTA",
+                    "description" : "Nombre de la ciudad"
                   },
                   "codigo" : {
-                    "type" : "integer"
+                    "type" : "integer",
+                    "example" : 11001,
+                    "description" : "Código de la ciudad"
                   },
                   "localidad" : {
                     "type" : "object",
+                    "description" : "Localidad, barrio o región",
                     "properties" : {
                       "nombre" : {
-                        "type" : "string"
+                        "type" : "string",
+                        "example" : "SAN JOSE",
+                        "description" : "Nombre de la localidad"
                       },
                       "codigo" : {
-                        "type" : "integer"
+                        "type" : "integer",
+                        "example" : 1100123,
+                        "description" : "Código de la localidad"
                       }
                     }
                   }
@@ -392,7 +509,7 @@
         }
       },
       "Trayecto" : {
-        "description" : "indica los puntos de inicio y fin de un trayecto",
+        "description" : "Indica los puntos de inicio y fin de un trayecto",
         "type" : "object",
         "properties" : {
           "origen" : {
@@ -400,8 +517,33 @@
           },
           "destino" : {
             "$ref" : "#/components/schemas/UbicacionGeografica"
+          },
+          "orden" : {
+            "type" : "integer",
+            "default" : 1,
+            "description" : "Indica el orden de un trayectp, el número incremental indica cual debe ser el orden de la ruta a seguir.",
+            "example" : 1,
+            "minimum" : 1
           }
-        }
+        },
+        "required" : [ "origen", "destino", "orden" ]
+      },
+      "Moneda" : {
+        "title" : "Moneda",
+        "type" : "object",
+        "description" : "Descripción de la moneda a usar para asociar a un monto",
+        "properties" : {
+          "tipo" : {
+            "type" : "string",
+            "default" : 3,
+            "description" : "Tipo de moneda asociada al monto",
+            "example" : "EUR",
+            "minLength" : 1,
+            "maxLength" : 3,
+            "pattern" : "^[A-Z]"
+          }
+        },
+        "required" : [ "tipo" ]
       }
     },
     "requestBodies" : {
@@ -452,7 +594,7 @@
                 "monto" : {
                   "type" : "number",
                   "format" : "double",
-                  "example" : 150000.0,
+                  "example" : 150000,
                   "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
                   "minLength" : 3,
                   "maxLength" : 20
@@ -473,7 +615,7 @@
                 "monto" : {
                   "type" : "number",
                   "format" : "double",
-                  "example" : 150000.0,
+                  "example" : 150000,
                   "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
                   "minLength" : 3,
                   "maxLength" : 20
@@ -499,7 +641,7 @@
                 "saldo" : {
                   "type" : "number",
                   "format" : "double",
-                  "example" : 150000.0,
+                  "example" : 150000,
                   "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
                   "minLength" : 3,
                   "maxLength" : 20
@@ -520,7 +662,7 @@
                 "saldo" : {
                   "type" : "number",
                   "format" : "double",
-                  "example" : 150000.0,
+                  "example" : 150000,
                   "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
                   "minLength" : 3,
                   "maxLength" : 20
