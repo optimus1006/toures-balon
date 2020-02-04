@@ -40,41 +40,41 @@ Convenios | Administración de convenios | Consulta y enrolamiento de proveedore
 Contiene 4 operaciones con las que se puede operar sobre la orden: 
 
 - `/ordenes` [GET]: Consulta al información de las ordenes basado en parámetros de búsqueda *(No implementado)*
-- `/orden` [POST]: Crea la orden de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/orden` [PUT]: Actualizar la orden de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/orden` [DELETE]: Cancela la orden. *(No implementado)*
-- `/orden/pagar` [POST]: Pagar la orden. *(No implementado)*
-- `/orden/factura` [POST]: Consultar factura. *(No implementado)*
+- `/ordenes/{id}` [POST]: Crea la orden de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/ordenes/{id}` [PUT]: Actualizar la orden de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/ordenes/{id}` [DELETE]: Cancela la orden. *(No implementado)*
+- `/ordenes/pagar` [POST]: Pagar la orden. *(No implementado)*
+- `/ordenes/factura` [GET]: Consultar factura. *(No implementado)*
 
 ### Clientes
 
 Contiene las operaciones necesarias de los clientes
 
 - `/clientes` [GET]: Consulta al información de los clientes basado en parámetros de búsqueda *(No implementado)*
-- `/cliente` [POST]: Crea el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/cliente` [PUT]: Actualizar el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/clientes` [POST]: Crea el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/clientes/{id}` [PUT]: Actualizar el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
 
 ### Productos
 
 Contiene las operaciones sobre los productos.
 
 - `/productos` [GET]: Consulta al información de los productos basado en parámetros de búsqueda *(No implementado)*
-- `/producto` [POST]: Crea el producto de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/producto` [PUT]: Actualizar el producto de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/producto` [DELETE]: Eliminar el producto. *(No implementado)*
-- `/producto/campanias` [GET]: Consulta al información de las campañas basado en parámetros de busqueda *(No implementado)*
-- `/producto/campania` [POST]: Crea la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/producto/campania` [PUT]: Actualizar la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/producto/campania` [DELETE]: Eliminar la campaña. *(No implementado)*
+- `/productos` [POST]: Crea el producto de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/{id}` [PUT]: Actualizar el producto de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/{id}` [DELETE]: Eliminar el producto. *(No implementado)*
+- `/productos/campanias` [GET]: Consulta al información de las campañas basado en parámetros de busqueda *(No implementado)*
+- `/productos/campania` [POST]: Crea la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/campania/{id}` [PUT]: Actualizar la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/campania/{id}` [DELETE]: Eliminar la campaña. *(No implementado)*
 
 ### Convenios
 
 Contiene las operaciones sobre los proveedores/convenios/alianzas.
 
 - `/convenios` [GET]: Consulta al información de los convenios basado en parámetros de búsqueda *(No implementado)*
-- `/convenio` [POST]: Crea el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/convenio` [PUT]: Actualizar el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/convenio` [DELETE]: Eliminar el convenio. *(No implementado)*
+- `/convenios` [POST]: Crea el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/convenios/{id}` [PUT]: Actualizar el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/convenios/{id}` [DELETE]: Eliminar el convenio. *(No implementado)*
 
 ### Facturación
 
@@ -93,7 +93,7 @@ Patrones usados: Composite (Orquestación), API Gateway, Microservicios.
 
 En este link se encuentra toda la información del API expuesto para el consumo de las aplicaciones del cliente: 
 
-[https://app.swaggerhub.com/apis/ujaveriana/toures-balon/1.0.0#trial](https://app.swaggerhub.com/apis/ujaveriana/toures-balon/1.0.0#trial)
+[API Swagger](https://app.swaggerhub.com/apis/optimus1006/TouresBalon/1.0.0-oas3#/)
 
 ## Documentación del API
 
