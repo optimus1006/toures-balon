@@ -440,72 +440,9 @@
       },
       "UbicacionGeografica" : {
         "description" : "Ubicación geográfica",
-        "type" : "object",
         "properties" : {
-          "latitud" : {
-            "type" : "number",
-            "format" : "float",
-            "description" : "Coordenada que indica la latitud de la ubicación"
-          },
-          "longitud" : {
-            "type" : "number",
-            "format" : "float",
-            "description" : "Coordenada que indica la longitud de la ubicación"
-          },
-          "calle" : {
-            "type" : "string",
-            "description" : "Indica la dirección física de un sitio",
-            "example" : "CALLE FALSA 123",
-            "minLength" : 1,
-            "maxLength" : 255
-          },
           "pais" : {
-            "type" : "object",
-            "description" : "País de la ubicación",
-            "properties" : {
-              "nombre" : {
-                "type" : "string",
-                "example" : "COLOMBIA",
-                "description" : "Nombre del país"
-              },
-              "codigo" : {
-                "type" : "integer",
-                "example" : 57,
-                "description" : "Código del país"
-              },
-              "ciudad" : {
-                "type" : "object",
-                "description" : "Ciudad dentro del país",
-                "properties" : {
-                  "nombre" : {
-                    "type" : "string",
-                    "example" : "BOGOTA",
-                    "description" : "Nombre de la ciudad"
-                  },
-                  "codigo" : {
-                    "type" : "integer",
-                    "example" : 11001,
-                    "description" : "Código de la ciudad"
-                  },
-                  "localidad" : {
-                    "type" : "object",
-                    "description" : "Localidad, barrio o región",
-                    "properties" : {
-                      "nombre" : {
-                        "type" : "string",
-                        "example" : "SAN JOSE",
-                        "description" : "Nombre de la localidad"
-                      },
-                      "codigo" : {
-                        "type" : "integer",
-                        "example" : 1100123,
-                        "description" : "Código de la localidad"
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref" : "https://api.swaggerhub.com/domains/ujaveriana/Pais/1.0.0#/components/schemas/Pais"
           }
         }
       },
