@@ -3,7 +3,7 @@
   "info" : {
     "description" : "Este es un servidor de transacciones de pagos.",
     "version" : "1.0.0",
-    "title" : "Sistema de pago de facturas",
+    "title" : "Toures Balon",
     "license" : {
       "name" : "Apache 2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -17,18 +17,183 @@
     "description" : "Servicio de pagos por API REST",
     "url" : "http://localhost:8080/SistemaPagos/v1.0.0"
   } ],
-  "paths" : {
-    "/factura" : {
+   "paths" : {
+    "/ordenes" : {
       "get" : {
-        "description" : "Devuelve la información de la factura a pagar.",
-        "summary" : "Devuelve factura a pagar.",
+        "summary" : "Retorna lista de ordenes",
+        "description" : "Metodo que retorna la lista de ordenes",
+        "parameters" : [ {
+          "name" : "fechaDesde",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }, {
+          "name" : "fechaHasta",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }, {
+          "name" : "cliente",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Adiciona una nueva orden",
+        "operationId" : "adicionarOrden",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        }
+      }
+    },
+    "/ordenes/{id}" : {
+      "get" : {
+        "tags" : [ "Ordenes" ],
+        "summary" : "Obtener una orden por ID.",
+        "description" : "Obtener una orden por ID.\n",
+        "operationId" : "obtenerOrdenPorId",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id de orden",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operacion exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Orden"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Orden" ],
+        "summary" : "Actualizar los datos de una orden.",
+        "description" : "Actualizar los datos de una orden.\n",
+        "operationId" : "actualizarOrden",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id de orden",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "estado",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "SIN_PAGO", "CANCELADA", "PAGADA" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operacion exitosa"
+          },
+          "400" : {
+            "description" : "Error en actualizacion de orden."
+          },
+          "404" : {
+            "description" : "Orden no encontrada."
+          },
+          "500" : {
+            "description" : "Error en el procesamiento de la petición."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Orden" ],
+        "summary" : "Cancelar una orden.",
+        "description" : "Cancelar los datos de una orden.\n",
+        "operationId" : "cancelarOrden",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id de orden",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operacion exitosa"
+          },
+          "400" : {
+            "description" : "Error en cancelacion de orden."
+          },
+          "404" : {
+            "description" : "Orden no encontrada."
+          },
+          "500" : {
+            "description" : "Error en el procesamiento de la petición."
+          }
+        }
+      }
+    },
+    "/ordenes/factura" : {
+      "get" : {
         "tags" : [ "Factura" ],
+        "summary" : "Devuelve factura a pagar.",
+        "description" : "Devuelve la información de la factura a pagar.",
         "operationId" : "obtenerFactura",
         "parameters" : [ {
-          "name" : "numeroFactura",
+          "name" : "numeroOrden",
           "in" : "query",
-          "description" : "Número de la factura a pagar.",
+          "description" : "Número de la orden a pagar.",
           "required" : true,
+          "style" : "form",
+          "explode" : true,
           "schema" : {
             "type" : "integer",
             "format" : "int64"
@@ -63,12 +228,12 @@
         }
       }
     },
-    "/factura/pagar" : {
+    "/ordenes/pagar" : {
       "post" : {
-        "description" : "Paga una factura con los valores especificados.",
         "tags" : [ "Factura" ],
         "summary" : "Paga una factura.",
-        "operationId" : "pagarFactura",
+        "description" : "Paga una factura con los valores especificados.",
+        "operationId" : "pagarOrden",
         "requestBody" : {
           "$ref" : "#/components/requestBodies/FacturaPago"
         },
@@ -88,274 +253,64 @@
         }
       }
     },
-    "/factura/compensar" : {
-      "post" : {
-        "description" : "Permite reversar un pago.",
-        "tags" : [ "Factura" ],
-        "summary" : "Realizar la compensación de una factura, reversando el pago de la misma.",
-        "operationId" : "compensarFactura",
-        "requestBody" : {
-          "$ref" : "#/components/requestBodies/FacturaPago"
-        },
-        "responses" : {
-          "200" : {
-            "description" : "Compensación realizada."
-          },
-          "400" : {
-            "description" : "Entrada inválida."
-          },
-          "404" : {
-            "description" : "Factura no encontrada."
-          },
-          "500" : {
-            "description" : "Error en el procesamiento de la petición."
-          }
-        }
-      }
-    },
-    "/cuenta" : {
+    "/ping" : {
       "get" : {
-        "description" : "Obtiene la información de la cuenta indicada.",
-        "tags" : [ "Cuenta" ],
-        "summary" : "Consulta de una cuenta.",
-        "operationId" : "obtenerCuenta",
-        "parameters" : [ {
-          "name" : "numeroCuenta",
-          "in" : "query",
-          "description" : "Número de cuenta.",
-          "required" : true,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        } ],
+        "summary" : "Server heartbeat operation",
+        "description" : "This operation shows how to override the global security defined above, as we want to open it up for all users.",
         "responses" : {
           "200" : {
-            "description" : "Cuenta encontrada.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Cuenta"
-                }
-              },
-              "application/xml" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Cuenta"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Cuenta inválida."
-          },
-          "404" : {
-            "description" : "Cuenta no encontrada."
-          },
-          "500" : {
-            "description" : "Error en el procesamiento de la petición."
-          }
-        }
-      }
-    },
-    "/cuenta/procesar" : {
-      "post" : {
-        "description" : "Descuenta el monto de una factura de la cuenta indicada.",
-        "tags" : [ "Cuenta" ],
-        "summary" : "Procesa un pago.",
-        "operationId" : "debitoCuenta",
-        "requestBody" : {
-          "$ref" : "#/components/requestBodies/CuentaPago"
-        },
-        "responses" : {
-          "200" : {
-            "description" : "Debito realizado.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Cuenta"
-                }
-              },
-              "application/xml" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Cuenta"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Error en procesamiento del pago."
-          },
-          "404" : {
-            "description" : "Cuenta no encontrada."
-          },
-          "500" : {
-            "description" : "Error en el procesamiento de la petición."
-          }
-        }
-      }
-    },
-    "/orden" : {
-      "get" : {
-        "summary" : "Obtiene la información de la orden indicada",
-        "tags" : [ "Orden" ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Orden"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Petición incompleta"
-          },
-          "401" : {
-            "description" : "Sin autorización de acceso a esta operación"
-          },
-          "403" : {
-            "description" : "Prohibido"
-          },
-          "404" : {
-            "description" : "No se encuentra la operación"
-          },
-          "500" : {
-            "description" : "Error no controlado en consulta de órdenes."
+            "description" : "OK"
           }
         },
-        "operationId" : "get-orden",
-        "description" : "Consulta una orden ya generada",
-        "parameters" : [ {
-          "schema" : {
-            "type" : "string"
-          },
-          "in" : "query",
-          "name" : "numeroOrden"
-        } ]
+        "security" : [ ]
       }
     }
   },
   "components" : {
     "schemas" : {
-      "Cuenta" : {
+      "Orden" : {
+        "required" : [ "id" ],
         "type" : "object",
-        "xml" : {
-          "name" : "Cuenta"
-        },
-        "title" : "",
-        "description" : "Datos de la cuenta a usar para el pago de la orden seleccionada por un cliente.",
-        "x-examples" : { },
         "properties" : {
           "id" : {
             "type" : "integer",
             "format" : "int64"
           },
-          "saldo" : {
-            "type" : "number",
-            "format" : "double",
-            "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
-            "minLength" : 3,
-            "maxLength" : 20
+          "fecha" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "id-cliente" : {
+            "type" : "integer"
           },
           "estado" : {
             "type" : "string",
-            "description" : "Estado de la cuenta.",
-            "enum" : [ "Activa", "Inactiva" ]
-          }
-        }
-      },
-      "Factura" : {
-        "type" : "object",
-        "xml" : {
-          "name" : "Factura"
-        },
-        "description" : "Factura de pago generada a partir de una orden de servicio solicitada por un cliente.",
-        "properties" : {
-          "id" : {
-            "type" : "number",
-            "format" : "int64",
-            "description" : "Identificador unico de la factura generada"
+            "enum" : [ "SIN_PAGO", "CANCELADA", "PAGADA" ]
           },
-          "monto" : {
-            "type" : "number",
-            "default" : 0,
-            "format" : "double",
-            "example" : 514000.23,
-            "minimum" : 0,
-            "description" : "Monto a pagar"
-          },
-          "estado" : {
-            "type" : "string",
-            "description" : "Estado de la factura a pagar.",
-            "enum" : [ "PAGADO", "CONCILIADO" ]
-          },
-          "operacion" : {
-            "type" : "string",
-            "description" : "Operación a realizar con la factura, puede ser de pago o de conciliación. Solo puede usarse una de las dos opciones y esta determina que función del API debería usarse. Otro valor diferente genera un error en la operación.",
-            "enum" : [ "PAGAR", "CONCILIAR" ]
-          }
-        },
-        "required" : [ "id", "monto" ]
-      },
-      "Orden" : {
-        "description" : "Orden de un producto, que contiene la información de transporte, hospedaje y el evento al cual asistirá el cliente de Toures Balon.",
-        "type" : "object",
-        "x-tags" : [ "1.0.0" ],
-        "properties" : {
-          "id" : {
-            "type" : "string",
-            "format" : "uuid",
-            "example" : "61629789-be9d-44f6-a0e3-7b2892835db1",
-            "description" : "Contiene la información necesaria del plan deportivo seleccionado por el ciente, debe tener al menos un transporte adicionado y un evento al cual el cliente asistirá."
+          "transporte" : {
+            "$ref" : "#/components/schemas/Transporte"
           },
           "hospedaje" : {
             "$ref" : "#/components/schemas/Hospedaje"
           },
           "evento" : {
             "$ref" : "#/components/schemas/Evento"
-          },
-          "transporte" : {
-            "type" : "array",
-            "description" : "Listado de transportes asociados a la orden",
-            "items" : {
-              "$ref" : "#/components/schemas/Transporte"
-            }
-          },
-          "precio" : {
-            "type" : "number",
-            "default" : 0,
-            "format" : "double",
-            "example" : 512000,
-            "minimum" : 0,
-            "description" : "Precio de la orden a cobrar"
-          },
-          "moneda" : {
-            "$ref" : "#/components/schemas/Moneda"
           }
-        },
-        "required" : [ "id", "evento", "precio", "moneda" ]
+        }
       },
       "Transporte" : {
-        "description" : "Este objeto tiene la estructura básica de la información necesaria para identificar el transporte a usar por el cliente.",
         "type" : "object",
         "properties" : {
-          "fechaLlegada" : {
+          "fecha" : {
             "type" : "string",
-            "description" : "Fecha y hora de llegada",
-            "format" : "date-time"
+            "format" : "date"
           },
           "id" : {
             "type" : "string",
-            "readOnly" : true,
-            "format" : "uuid",
-            "example" : "c25c94f3-951f-443a-b2d2-a3df0280a7d9",
-            "description" : "identificador del transporte registrado"
+            "readOnly" : true
           },
           "puesto" : {
-            "type" : "string",
-            "description" : "Puesto dentro del vehículo"
+            "type" : "string"
           },
           "tipo" : {
             "type" : "string",
@@ -364,90 +319,79 @@
           },
           "trayecto" : {
             "type" : "array",
-            "description" : "Trayecto a seguir dentro del transporte",
             "items" : {
               "$ref" : "#/components/schemas/Trayecto"
             }
-          },
-          "fechaPartida" : {
-            "type" : "string",
-            "description" : "Fecha y hora de salida",
-            "format" : "date-time"
           }
         },
-        "required" : [ "id", "tipo", "fechaPartida" ]
+        "description" : "Este objeto tiene la estructura básica de la información necesaria para identificar el transporte a usar por el cliente."
       },
       "Hospedaje" : {
-        "description" : "Este objeto tiene la información necesaria para identificar el hospedaje a usar por el cliente.",
         "type" : "object",
         "properties" : {
           "id" : {
             "type" : "string",
-            "readOnly" : true,
-            "format" : "uuid",
-            "example" : "c25c94f3-951f-443a-b2d2-a3df0280a7d9",
-            "description" : "Identificador del hospedaje"
+            "readOnly" : true
           },
           "fechaLlegada" : {
             "type" : "string",
-            "format" : "date-time",
-            "description" : "Fecha de llegada al hospedaje registrado en la orden"
+            "format" : "date"
           },
           "fechaSalida" : {
             "type" : "string",
-            "format" : "date",
-            "description" : "Fecha de salida del hospedaje donde estuvo el cliente."
+            "format" : "date"
           },
           "habitacion" : {
-            "type" : "string",
-            "description" : "Habitación asignada al cliente"
+            "type" : "string"
           },
           "ubicacion" : {
             "$ref" : "#/components/schemas/UbicacionGeografica"
-          },
-          "nombreHotel" : {
-            "type" : "string",
-            "description" : "Indica el nombre del hospedaje asociado a la ubicación seleccionada en la orden"
           }
         },
-        "required" : [ "fechaLlegada", "fechaSalida" ]
+        "description" : "Este objeto tiene la información necesaria para identificar el hospedaje a usar por el cliente."
       },
       "Evento" : {
-        "description" : "Contiene la información del evento al cual es cliente asistirá.",
         "type" : "object",
         "properties" : {
           "id" : {
             "type" : "string",
-            "readOnly" : true,
-            "format" : "uuid",
-            "example" : "c25c94f3-951f-443a-b2d2-a3df0280a7d9",
-            "description" : "Identificador interno del evento"
+            "readOnly" : true
           },
           "fecha" : {
             "type" : "string",
-            "description" : "Fecha y hora del evento",
-            "format" : "date-time"
+            "format" : "date"
           },
-          "ubicacionGeografica" : {
+          "ubicacionEvento" : {
+            "type" : "string"
+          },
+          "destino" : {
             "$ref" : "#/components/schemas/UbicacionGeografica"
-          },
-          "ubicacionInterna" : {
-            "type" : "string",
-            "description" : "Indica cuál es el asiento o puesto dentro del evento"
           }
         },
-        "required" : [ "id", "fecha", "ubicacionGeografica" ]
+        "description" : "Contiene la información del evento al cual es cliente asistirá."
       },
       "UbicacionGeografica" : {
-        "description" : "Ubicación geográfica",
+        "type" : "object",
         "properties" : {
+          "latitud" : {
+            "type" : "number",
+            "format" : "float"
+          },
+          "longitud" : {
+            "type" : "number",
+            "format" : "float"
+          },
+          "detalle" : {
+            "type" : "string",
+            "description" : "Indica la dirección física de un sitio"
+          },
           "pais" : {
-            "$ref" : "https://api.swaggerhub.com/domains/ujaveriana/Pais/1.0.0#/components/schemas/Pais"
+            "$ref" : "#/components/schemas/UbicacionGeografica_pais"
           }
-        }
+        },
+        "description" : "Ubicación geográfica"
       },
       "Trayecto" : {
-        "description" : "Indica los puntos de inicio y fin de un trayecto",
         "type" : "object",
         "properties" : {
           "origen" : {
@@ -455,33 +399,118 @@
           },
           "destino" : {
             "$ref" : "#/components/schemas/UbicacionGeografica"
-          },
-          "orden" : {
-            "type" : "integer",
-            "default" : 1,
-            "description" : "Indica el orden de un trayectp, el número incremental indica cual debe ser el orden de la ruta a seguir.",
-            "example" : 1,
-            "minimum" : 1
           }
         },
-        "required" : [ "origen", "destino", "orden" ]
+        "description" : "indica los puntos de inicio y fin de un trayecto"
       },
-      "Moneda" : {
-        "title" : "Moneda",
+      "Factura" : {
+        "required" : [ "id" ],
         "type" : "object",
-        "description" : "Descripción de la moneda a usar para asociar a un monto",
         "properties" : {
-          "tipo" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "monto" : {
+            "maxLength" : 20,
+            "minLength" : 3,
+            "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
+            "type" : "number",
+            "format" : "double"
+          },
+          "estado" : {
             "type" : "string",
-            "default" : 3,
-            "description" : "Tipo de moneda asociada al monto",
-            "example" : "EUR",
-            "minLength" : 1,
-            "maxLength" : 3,
-            "pattern" : "^[A-Z]"
+            "description" : "Estado de la factura a pagar.",
+            "enum" : [ "PAGADO", "NO_PAGADO" ]
           }
         },
-        "required" : [ "tipo" ]
+        "xml" : {
+          "name" : "Factura"
+        }
+      },
+      "Cliente" : {
+        "required" : [ "id" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "nombres" : {
+            "type" : "string",
+            "description" : "Nombres del cliente."
+          },
+          "apellidos" : {
+            "type" : "string",
+            "description" : "Apellidos."
+          },
+          "estado" : {
+            "type" : "string",
+            "description" : "Estado del cliente.",
+            "enum" : [ "ACTIVO", "INACTIVO" ]
+          }
+        },
+        "xml" : {
+          "name" : "Factura"
+        }
+      },
+      "inline_response_200" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "fullTime" : {
+            "type" : "boolean"
+          }
+        },
+        "example" : {
+          "id" : 1,
+          "name" : "Jessica Right",
+          "fullTime" : true
+        }
+      },
+      "UbicacionGeografica_pais_ciudad_localidad" : {
+        "type" : "object",
+        "properties" : {
+          "nombre" : {
+            "type" : "string"
+          },
+          "codigo" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "UbicacionGeografica_pais_ciudad" : {
+        "type" : "object",
+        "properties" : {
+          "nombre" : {
+            "type" : "string"
+          },
+          "codigo" : {
+            "type" : "integer"
+          },
+          "localidad" : {
+            "$ref" : "#/components/schemas/UbicacionGeografica_pais_ciudad_localidad"
+          }
+        }
+      },
+      "UbicacionGeografica_pais" : {
+        "type" : "object",
+        "properties" : {
+          "nombre" : {
+            "type" : "string"
+          },
+          "codigo" : {
+            "type" : "integer"
+          },
+          "ciudad" : {
+            "$ref" : "#/components/schemas/UbicacionGeografica_pais_ciudad"
+          }
+        }
       }
     },
     "requestBodies" : {
@@ -490,8 +519,8 @@
         "content" : {
           "application/json" : {
             "schema" : {
-              "type" : "object",
               "required" : [ "id" ],
+              "type" : "object",
               "properties" : {
                 "id" : {
                   "type" : "integer",
@@ -503,8 +532,8 @@
           },
           "application/xml" : {
             "schema" : {
-              "type" : "object",
               "required" : [ "id" ],
+              "type" : "object",
               "properties" : {
                 "id" : {
                   "type" : "integer",
@@ -521,8 +550,8 @@
         "content" : {
           "application/json" : {
             "schema" : {
-              "type" : "object",
               "required" : [ "id", "monto" ],
+              "type" : "object",
               "properties" : {
                 "id" : {
                   "type" : "integer",
@@ -530,20 +559,20 @@
                   "example" : 123456789
                 },
                 "monto" : {
+                  "maxLength" : 20,
+                  "minLength" : 3,
+                  "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
                   "type" : "number",
                   "format" : "double",
-                  "example" : 150000,
-                  "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
-                  "minLength" : 3,
-                  "maxLength" : 20
+                  "example" : 150000
                 }
               }
             }
           },
           "application/xml" : {
             "schema" : {
-              "type" : "object",
               "required" : [ "id", "monto" ],
+              "type" : "object",
               "properties" : {
                 "id" : {
                   "type" : "integer",
@@ -551,61 +580,28 @@
                   "example" : 123456789
                 },
                 "monto" : {
+                  "maxLength" : 20,
+                  "minLength" : 3,
+                  "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
                   "type" : "number",
                   "format" : "double",
-                  "example" : 150000,
-                  "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
-                  "minLength" : 3,
-                  "maxLength" : 20
+                  "example" : 150000
                 }
               }
             }
           }
         }
-      },
-      "CuentaPago" : {
-        "description" : "Request con solo la información de numero y saldode la cuenta.",
-        "content" : {
-          "application/json" : {
-            "schema" : {
-              "type" : "object",
-              "required" : [ "id", "monto" ],
-              "properties" : {
-                "id" : {
-                  "type" : "integer",
-                  "format" : "int64",
-                  "example" : 123456789
-                },
-                "saldo" : {
-                  "type" : "number",
-                  "format" : "double",
-                  "example" : 150000,
-                  "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
-                  "minLength" : 3,
-                  "maxLength" : 20
-                }
-              }
-            }
-          },
-          "application/xml" : {
-            "schema" : {
-              "type" : "object",
-              "required" : [ "id", "monto" ],
-              "properties" : {
-                "id" : {
-                  "type" : "integer",
-                  "format" : "int64",
-                  "example" : 123456789
-                },
-                "saldo" : {
-                  "type" : "number",
-                  "format" : "double",
-                  "example" : 150000,
-                  "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
-                  "minLength" : 3,
-                  "maxLength" : 20
-                }
-              }
+      }
+    },
+    "securitySchemes" : {
+      "application" : {
+        "type" : "oauth2",
+        "flows" : {
+          "clientCredentials" : {
+            "tokenUrl" : "http://example.com/oauth/token",
+            "scopes" : {
+              "write" : "allows modifying resources",
+              "read" : "allows reading resources"
             }
           }
         }
