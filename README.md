@@ -87,7 +87,7 @@ Patrones usados: Composite (Orquestación), API Gateway, Microservicios.
 
 En este link se encuentra toda la información del API expuesto para el consumo de las aplicaciones del cliente: 
 
-[API Swagger](https://app.swaggerhub.com/apis/optimus1006/TouresBalon/1.0.0-oas3#/)
+[API Swagger](https://app.swaggerhub.com/apis/ujaveriana/sistema_pagos/1.0.0#free)
 
 ## Documentación del API
 
