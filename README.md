@@ -41,7 +41,7 @@ Contiene 4 operaciones con las que se puede operar sobre la orden:
 
 - `/ordenes` [GET]: Consulta al información de las ordenes basado en parámetros de búsqueda *(No implementado)*
 - `/ordenes/{id}` [POST]: Crea la orden de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/ordenes/{id}` [PUT]: Actualizar la orden de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/ordenes/{id}` [PATCH]: Actualizar la orden de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/ordenes/{id}` [DELETE]: Cancela la orden. *(No implementado)*
 - `/ordenes/pagar` [POST]: Pagar la orden. *(No implementado)*
 - `/ordenes/factura` [GET]: Consultar factura. *(No implementado)*
@@ -52,7 +52,7 @@ Contiene las operaciones necesarias de los clientes
 
 - `/clientes` [GET]: Consulta al información de los clientes basado en parámetros de búsqueda *(No implementado)*
 - `/clientes` [POST]: Crea el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/clientes/{id}` [PUT]: Actualizar el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/clientes/{id}` [PATCH]: Actualizar el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
 
 ### Productos
 
@@ -60,7 +60,7 @@ Contiene las operaciones sobre los productos.
 
 - `/productos` [GET]: Consulta al información de los productos basado en parámetros de búsqueda *(No implementado)*
 - `/productos` [POST]: Crea el producto de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/{id}` [PUT]: Actualizar el producto de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/{id}` [PATCH]: Actualizar el producto de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/productos/{id}` [DELETE]: Eliminar el producto. *(No implementado)*
 - `/productos/campanias` [GET]: Consulta al información de las campañas basado en parámetros de busqueda *(No implementado)*
 - `/productos/campania` [POST]: Crea la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
@@ -73,14 +73,8 @@ Contiene las operaciones sobre los proveedores/convenios/alianzas.
 
 - `/convenios` [GET]: Consulta al información de los convenios basado en parámetros de búsqueda *(No implementado)*
 - `/convenios` [POST]: Crea el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/convenios/{id}` [PUT]: Actualizar el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/convenios/{id}` [PATCH]: Actualizar el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/convenios/{id}` [DELETE]: Eliminar el convenio. *(No implementado)*
-
-### Facturación
-
-Contiene las operaciones en la facturación.
-
-- `/facturacion/conciliacion` [POST]: Realiza la conciliación con el sistema contable de Toures Balon *(No implementado)*
 
 ## Tecnologías
 
