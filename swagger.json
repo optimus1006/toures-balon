@@ -1,56 +1,41 @@
 {
   "openapi" : "3.0.0",
   "info" : {
-    "description" : "Este es un servidor de transacciones de pagos.",
     "version" : "1.0.0",
-    "title" : "Toures Balon",
-    "license" : {
-      "name" : "Apache 2.0",
-      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
-    },
-    "contact" : {
-      "name" : "Archetype",
-      "email" : "iv.pinilla@javeriana.edu.co"
-    }
+    "title" : "API Ordenes",
+    "description" : "API que define los servicios de ordenes, para consulta facturación y pago de estas."
   },
-  "servers" : [ {
-    "description" : "Servicio de pagos por API REST",
-    "url" : "http://localhost:8080/SistemaPagos/v1.0.0"
+  "security" : [ {
+    "application" : [ "read", "write" ]
   } ],
-   "paths" : {
+  "tags" : [ {
+    "name" : "Ordenes",
+    "description" : "Define los servicios de ordenes, para consulta facturación y pago de estas."
+  }, {
+    "name" : "Facturas",
+    "description" : "Contiene la información del pago aprobado por una entidad bancaria."
+  } ],
+  "paths" : {
     "/ordenes" : {
       "get" : {
         "summary" : "Retorna lista de ordenes",
         "description" : "Metodo que retorna la lista de ordenes",
         "parameters" : [ {
+          "in" : "query",
           "name" : "fechaDesde",
-          "in" : "query",
-          "required" : true,
-          "style" : "form",
-          "explode" : true,
           "schema" : {
             "type" : "string",
             "format" : "date"
-          }
+          },
+          "required" : true
         }, {
+          "in" : "query",
           "name" : "fechaHasta",
-          "in" : "query",
-          "required" : true,
-          "style" : "form",
-          "explode" : true,
           "schema" : {
             "type" : "string",
             "format" : "date"
-          }
-        }, {
-          "name" : "cliente",
-          "in" : "query",
-          "required" : false,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "type" : "integer"
-          }
+          },
+          "required" : true
         } ],
         "responses" : {
           "200" : {
@@ -58,7 +43,10 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/inline_response_200"
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Orden"
+                  }
                 }
               }
             }
@@ -66,11 +54,44 @@
         }
       },
       "post" : {
-        "summary" : "Adiciona una nueva orden",
         "operationId" : "adicionarOrden",
+        "summary" : "Adiciona una nueva orden",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "orden",
+          "$ref" : "#/components/schemas/Orden"
+        } ],
         "responses" : {
           "200" : {
             "description" : "OK"
+          }
+        }
+      }
+    },
+    "/ordenes/cliente/{clienteId}" : {
+      "get" : {
+        "description" : "Devuelve la información de una orden asociada a un cliente.",
+        "tags" : [ "Ordenes" ],
+        "summary" : "devuelve informaicón de una orden.",
+        "operationId" : "obtenerFacturaPorClienteId",
+        "parameters" : [ {
+          "name" : "clienteId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "$ref" : "https://github.com/optimus1006/toures-balon/blob/master/ujaveriana-Pais-1.0.0-domain.yaml"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Se ha realizado la consulta exitosamente.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Orden"
+                }
+              }
+            }
           }
         }
       }
@@ -86,8 +107,6 @@
           "in" : "path",
           "description" : "Id de orden",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
           "schema" : {
             "type" : "integer",
             "format" : "int64"
@@ -116,22 +135,18 @@
           "in" : "path",
           "description" : "Id de orden",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
           "schema" : {
             "type" : "integer",
             "format" : "int64"
           }
         }, {
-          "name" : "estado",
           "in" : "query",
-          "required" : true,
-          "style" : "form",
-          "explode" : true,
+          "name" : "estado",
           "schema" : {
             "type" : "string",
             "enum" : [ "SIN_PAGO", "CANCELADA", "PAGADA" ]
-          }
+          },
+          "required" : true
         } ],
         "responses" : {
           "200" : {
@@ -158,8 +173,6 @@
           "in" : "path",
           "description" : "Id de orden",
           "required" : true,
-          "style" : "simple",
-          "explode" : false,
           "schema" : {
             "type" : "integer",
             "format" : "int64"
@@ -181,19 +194,17 @@
         }
       }
     },
-    "/ordenes/factura" : {
+    "/ordenes/{facturaId}" : {
       "get" : {
+        "description" : "Devuelve la información de la factura a pagar.",
         "tags" : [ "Factura" ],
         "summary" : "Devuelve factura a pagar.",
-        "description" : "Devuelve la información de la factura a pagar.",
         "operationId" : "obtenerFactura",
         "parameters" : [ {
-          "name" : "numeroOrden",
+          "name" : "facturaId",
           "in" : "query",
           "description" : "Número de la orden a pagar.",
           "required" : true,
-          "style" : "form",
-          "explode" : true,
           "schema" : {
             "type" : "integer",
             "format" : "int64"
@@ -230,9 +241,9 @@
     },
     "/ordenes/pagar" : {
       "post" : {
+        "description" : "Paga una factura con los valores especificados.",
         "tags" : [ "Factura" ],
         "summary" : "Paga una factura.",
-        "description" : "Paga una factura con los valores especificados.",
         "operationId" : "pagarOrden",
         "requestBody" : {
           "$ref" : "#/components/requestBodies/FacturaPago"
@@ -253,24 +264,143 @@
         }
       }
     },
-    "/ping" : {
+    "/clientes" : {
       "get" : {
-        "summary" : "Server heartbeat operation",
-        "description" : "This operation shows how to override the global security defined above, as we want to open it up for all users.",
+        "summary" : "Retorna lista de ordenes",
+        "description" : "Metodo que retorna la lista de ordenes",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "fechaDesde",
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "required" : true
+        }, {
+          "in" : "query",
+          "name" : "fechaHasta",
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "required" : true
+        }, {
+          "in" : "query",
+          "name" : "cliente",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : false
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Orden"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "operationId" : "adicionarCliente",
+        "summary" : "Adiciona un nuevo cliente",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "cliente",
+          "$ref" : "#/components/schemas/Cliente"
+        } ],
         "responses" : {
           "200" : {
             "description" : "OK"
           }
-        },
-        "security" : [ ]
+        }
+      }
+    },
+    "/clientes/{id}" : {
+      "get" : {
+        "tags" : [ "Clientes" ],
+        "summary" : "Obtener un cliente por ID.",
+        "description" : "Obtener un cliente por ID.\n",
+        "operationId" : "obtenerClientePorId",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id de cliente",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operacion exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Cliente"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Cliente" ],
+        "summary" : "Actualizar los datos de un Cliente.",
+        "description" : "Actualizar los datos de un cliente.\n",
+        "operationId" : "actualizarCliente",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Id de cliente",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "in" : "query",
+          "name" : "estado",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "ACTIVO", "INACTIVO" ]
+          },
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operacion exitosa"
+          },
+          "400" : {
+            "description" : "Error en actualizacion de cliente."
+          },
+          "404" : {
+            "description" : "Cliente no encontrado."
+          },
+          "500" : {
+            "description" : "Error en el procesamiento de la petición."
+          }
+        }
       }
     }
   },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/optimus1006/TouresBalon/1.0.0"
+  } ],
   "components" : {
     "schemas" : {
       "Orden" : {
-        "required" : [ "id" ],
+        "description" : "Orden de pago con los productos del paquete que el cliente va a comprar",
         "type" : "object",
+        "required" : [ "id" ],
         "properties" : {
           "id" : {
             "type" : "integer",
@@ -285,29 +415,45 @@
           },
           "estado" : {
             "type" : "string",
-            "enum" : [ "SIN_PAGO", "CANCELADA", "PAGADA" ]
+            "enum" : [ "EN_VALIDACION", "EN_RESERVA", "CERRADA", "RECHAZADA", "CANCELADA" ]
           },
           "transporte" : {
-            "$ref" : "#/components/schemas/Transporte"
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Transporte"
+            }
           },
           "hospedaje" : {
-            "$ref" : "#/components/schemas/Hospedaje"
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Hospedaje"
+            }
           },
           "evento" : {
-            "$ref" : "#/components/schemas/Evento"
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Evento"
+            }
+          },
+          "factura" : {
+            "$ref" : "#/components/schemas/Factura"
           }
         }
       },
       "Transporte" : {
+        "description" : "Este objeto tiene la estructura básica de la información necesaria para identificar el transporte a usar por el cliente.",
         "type" : "object",
         "properties" : {
+          "id" : {
+            "type" : "integer",
+            "readOnly" : true
+          },
+          "empresa" : {
+            "type" : "string"
+          },
           "fecha" : {
             "type" : "string",
             "format" : "date"
-          },
-          "id" : {
-            "type" : "string",
-            "readOnly" : true
           },
           "puesto" : {
             "type" : "string"
@@ -323,10 +469,10 @@
               "$ref" : "#/components/schemas/Trayecto"
             }
           }
-        },
-        "description" : "Este objeto tiene la estructura básica de la información necesaria para identificar el transporte a usar por el cliente."
+        }
       },
       "Hospedaje" : {
+        "description" : "Este objeto tiene la información necesaria para identificar el hospedaje a usar por el cliente.",
         "type" : "object",
         "properties" : {
           "id" : {
@@ -346,31 +492,104 @@
           },
           "ubicacion" : {
             "$ref" : "#/components/schemas/UbicacionGeografica"
+          },
+          "direccion" : {
+            "$ref" : "#/components/schemas/Direccion"
+          },
+          "imagenes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Imagen"
+            }
           }
-        },
-        "description" : "Este objeto tiene la información necesaria para identificar el hospedaje a usar por el cliente."
+        }
       },
       "Evento" : {
+        "description" : "Contiene la información del evento al cual es cliente asistirá.",
         "type" : "object",
         "properties" : {
           "id" : {
             "type" : "string",
             "readOnly" : true
           },
+          "nombre" : {
+            "type" : "string"
+          },
+          "descripcion" : {
+            "type" : "string"
+          },
           "fecha" : {
             "type" : "string",
             "format" : "date"
           },
-          "ubicacionEvento" : {
+          "hora" : {
+            "type" : "string",
+            "format" : "time"
+          },
+          "zonaHoraria" : {
             "type" : "string"
           },
-          "destino" : {
+          "ubicacionEvento" : {
             "$ref" : "#/components/schemas/UbicacionGeografica"
+          },
+          "localidades" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Localidad"
+            }
+          },
+          "tipo" : {
+            "type" : "string",
+            "description" : "Tipo de evento.",
+            "enum" : [ "Concierto", "Futbol", "Baloncesto", "Actividad", "Otro" ]
+          },
+          "imagenes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Imagen"
+            }
+          },
+          "imagenPrincipal" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 1
           }
-        },
-        "description" : "Contiene la información del evento al cual es cliente asistirá."
+        }
+      },
+      "Imagen" : {
+        "description" : "Contiene la información de la imagen que se mostrará del evento.",
+        "type" : "object",
+        "properties" : {
+          "nombre" : {
+            "type" : "string"
+          },
+          "path" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Localidad" : {
+        "description" : "Contiene la información de la localidad dentro del evento, en caso de existir .",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "readOnly" : true
+          },
+          "nombre" : {
+            "type" : "string"
+          },
+          "precio" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "aforo" : {
+            "type" : "integer"
+          }
+        }
       },
       "UbicacionGeografica" : {
+        "description" : "Ubicación geográfica",
         "type" : "object",
         "properties" : {
           "latitud" : {
@@ -380,18 +599,71 @@
           "longitud" : {
             "type" : "number",
             "format" : "float"
+          }
+        }
+      },
+      "Pais" : {
+        "description" : "País",
+        "type" : "object",
+        "properties" : {
+          "codigo" : {
+            "description" : "Código del país.",
+            "format" : "int32",
+            "minimum" : 1,
+            "type" : "number"
           },
-          "detalle" : {
+          "nombre" : {
+            "description" : "Nombre del país.",
             "type" : "string",
-            "description" : "Indica la dirección física de un sitio"
+            "minLength" : 1,
+            "maxLength" : 64
+          }
+        }
+      },
+      "Ciudad" : {
+        "description" : "Ciudad",
+        "type" : "object",
+        "properties" : {
+          "codigo" : {
+            "description" : "Código de la ciudad.",
+            "format" : "int32",
+            "minimum" : 1,
+            "type" : "number"
+          },
+          "nombre" : {
+            "description" : "Nombre de la ciudad.",
+            "type" : "string",
+            "minLength" : 1,
+            "maxLength" : 64
           },
           "pais" : {
-            "$ref" : "#/components/schemas/UbicacionGeografica_pais"
+            "$ref" : "#/components/schemas/Pais"
           }
-        },
-        "description" : "Ubicación geográfica"
+        }
+      },
+      "Estado" : {
+        "description" : "Estado",
+        "type" : "object",
+        "properties" : {
+          "codigo" : {
+            "description" : "Código del estado.",
+            "format" : "int32",
+            "minimum" : 1,
+            "type" : "number"
+          },
+          "nombre" : {
+            "description" : "Nombre del estado.",
+            "type" : "string",
+            "minLength" : 1,
+            "maxLength" : 64
+          },
+          "pais" : {
+            "$ref" : "#/components/schemas/Pais"
+          }
+        }
       },
       "Trayecto" : {
+        "description" : "indica los puntos de inicio y fin de un trayecto",
         "type" : "object",
         "properties" : {
           "origen" : {
@@ -400,23 +672,22 @@
           "destino" : {
             "$ref" : "#/components/schemas/UbicacionGeografica"
           }
-        },
-        "description" : "indica los puntos de inicio y fin de un trayecto"
+        }
       },
       "Factura" : {
-        "required" : [ "id" ],
         "type" : "object",
+        "required" : [ "id" ],
         "properties" : {
           "id" : {
             "type" : "integer",
             "format" : "int64"
           },
           "monto" : {
-            "maxLength" : 20,
-            "minLength" : 3,
-            "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
             "type" : "number",
-            "format" : "double"
+            "format" : "double",
+            "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
+            "minLength" : 3,
+            "maxLength" : 20
           },
           "estado" : {
             "type" : "string",
@@ -429,8 +700,8 @@
         }
       },
       "Cliente" : {
-        "required" : [ "id" ],
         "type" : "object",
+        "required" : [ "id" ],
         "properties" : {
           "id" : {
             "type" : "integer",
@@ -444,71 +715,135 @@
             "type" : "string",
             "description" : "Apellidos."
           },
+          "email" : {
+            "type" : "string",
+            "format" : "email"
+          },
+          "telefono" : {
+            "type" : "string"
+          },
+          "celular" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string",
+            "format" : "password"
+          },
           "estado" : {
             "type" : "string",
             "description" : "Estado del cliente.",
             "enum" : [ "ACTIVO", "INACTIVO" ]
+          },
+          "direcciones" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Direccion"
+            }
+          },
+          "tarjetas" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Tarjeta"
+            }
           }
-        },
-        "xml" : {
-          "name" : "Factura"
         }
       },
-      "inline_response_200" : {
+      "Direccion" : {
+        "description" : "Contiene la información de la direccion",
+        "type" : "object",
+        "properties" : {
+          "direccion" : {
+            "description" : "Dirección completa.",
+            "maxLength" : 254,
+            "type" : "string"
+          },
+          "ubicacion" : {
+            "$ref" : "#/components/schemas/UbicacionGeografica"
+          },
+          "tipo" : {
+            "type" : "string",
+            "enum" : [ "CASA", "OFICINA", "OTRO" ]
+          },
+          "pais" : {
+            "$ref" : "#/components/schemas/Pais"
+          },
+          "ciudad" : {
+            "$ref" : "#/components/schemas/Ciudad"
+          },
+          "estado" : {
+            "$ref" : "#/components/schemas/Estado"
+          },
+          "fechaCreacion" : {
+            "description" : "Fecha de creación de la dirección",
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "Convenio" : {
+        "description" : "Afiliación de un comercio que ofrece servicios de hospedaje, transporte o eventos deportivos.",
+        "type" : "object",
+        "properties" : {
+          "nombreProveedor" : {
+            "description" : "Nombre del proveedor de servicios.",
+            "type" : "string",
+            "minLength" : 1,
+            "maxLength" : 254
+          },
+          "identificacion" : {
+            "description" : "Identificación del proveedor de servicios.",
+            "type" : "string",
+            "minLength" : 1,
+            "maxLength" : 40
+          },
+          "tipoConvenio" : {
+            "description" : "Tipo de convenio.",
+            "type" : "string",
+            "enum" : [ "TRANSPORTE", "HOSPEDAJE", "EVENTO" ]
+          },
+          "fechaVigencia" : {
+            "description" : "Vigencia del convenio.",
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "correo" : {
+            "description" : "Correo de contacto del convenio.",
+            "type" : "string",
+            "minLength" : 1,
+            "maxLength" : 90
+          },
+          "pais" : {
+            "description" : "País de origen de operación del convenio.",
+            "$ref" : "#/components/schemas/Pais"
+          },
+          "ciudad" : {
+            "description" : "Ciudad de operación de la empresa de convenio.",
+            "$ref" : "#/components/schemas/Ciudad"
+          }
+        }
+      },
+      "Tarjeta" : {
+        "description" : "Contiene la información de la tarjeta",
         "type" : "object",
         "properties" : {
           "id" : {
-            "type" : "integer"
+            "type" : "integer",
+            "readOnly" : true
           },
-          "name" : {
+          "numero" : {
             "type" : "string"
           },
-          "fullTime" : {
-            "type" : "boolean"
-          }
-        },
-        "example" : {
-          "id" : 1,
-          "name" : "Jessica Right",
-          "fullTime" : true
-        }
-      },
-      "UbicacionGeografica_pais_ciudad_localidad" : {
-        "type" : "object",
-        "properties" : {
-          "nombre" : {
-            "type" : "string"
+          "tipo" : {
+            "type" : "string",
+            "enum" : [ "VISA", "MASTER_CARD" ]
           },
-          "codigo" : {
-            "type" : "integer"
-          }
-        }
-      },
-      "UbicacionGeografica_pais_ciudad" : {
-        "type" : "object",
-        "properties" : {
-          "nombre" : {
-            "type" : "string"
+          "estado" : {
+            "type" : "string",
+            "enum" : [ "ACTIVA", "INACTIVA" ]
           },
-          "codigo" : {
-            "type" : "integer"
-          },
-          "localidad" : {
-            "$ref" : "#/components/schemas/UbicacionGeografica_pais_ciudad_localidad"
-          }
-        }
-      },
-      "UbicacionGeografica_pais" : {
-        "type" : "object",
-        "properties" : {
-          "nombre" : {
-            "type" : "string"
-          },
-          "codigo" : {
-            "type" : "integer"
-          },
-          "ciudad" : {
-            "$ref" : "#/components/schemas/UbicacionGeografica_pais_ciudad"
+          "principal" : {
+            "type" : "boolean",
+            "default" : false
           }
         }
       }
@@ -519,8 +854,8 @@
         "content" : {
           "application/json" : {
             "schema" : {
-              "required" : [ "id" ],
               "type" : "object",
+              "required" : [ "id" ],
               "properties" : {
                 "id" : {
                   "type" : "integer",
@@ -532,8 +867,8 @@
           },
           "application/xml" : {
             "schema" : {
-              "required" : [ "id" ],
               "type" : "object",
+              "required" : [ "id" ],
               "properties" : {
                 "id" : {
                   "type" : "integer",
@@ -550,8 +885,8 @@
         "content" : {
           "application/json" : {
             "schema" : {
-              "required" : [ "id", "monto" ],
               "type" : "object",
+              "required" : [ "id", "monto" ],
               "properties" : {
                 "id" : {
                   "type" : "integer",
@@ -559,20 +894,20 @@
                   "example" : 123456789
                 },
                 "monto" : {
-                  "maxLength" : 20,
-                  "minLength" : 3,
-                  "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
                   "type" : "number",
                   "format" : "double",
-                  "example" : 150000
+                  "example" : 150000.0,
+                  "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
+                  "minLength" : 3,
+                  "maxLength" : 20
                 }
               }
             }
           },
           "application/xml" : {
             "schema" : {
-              "required" : [ "id", "monto" ],
               "type" : "object",
+              "required" : [ "id", "monto" ],
               "properties" : {
                 "id" : {
                   "type" : "integer",
@@ -580,12 +915,12 @@
                   "example" : 123456789
                 },
                 "monto" : {
-                  "maxLength" : 20,
-                  "minLength" : 3,
-                  "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
                   "type" : "number",
                   "format" : "double",
-                  "example" : 150000
+                  "example" : 150000.0,
+                  "pattern" : "^-?[0-9]+(\\.[0-9]+)?$",
+                  "minLength" : 3,
+                  "maxLength" : 20
                 }
               }
             }
