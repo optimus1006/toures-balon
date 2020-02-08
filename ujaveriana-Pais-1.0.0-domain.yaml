@@ -1,0 +1,89 @@
+# OpenAPI version identifier - required for OpenAPI 3.0 domains
+openapi: 3.0.0
+
+#######################
+# Optional info section
+#######################
+info:
+  title: Cliente
+  description: Información completa de un cliente
+  version: '1.0.0'
+
+components:
+
+  ####################
+  # Modelo de datos
+  ####################
+  schemas:
+    Customer: # TODO: Revisar implementación, definir persona natural y jurídica.
+      description: 'Cliente o prospecto de cliente que está interesado en adquirir un producto financiero.'
+      type: object
+      properties:
+        code: #field:en_ente
+          type: integer
+        subtype: #en_subtipo: 
+          description: > 
+            'Indica el tipo de cliente:'
+            * P: Persona
+            * C: Compañía 
+          type: string
+          enum: [P, C]
+        identification: #field:en_ced_ruc > Identification.number
+          allOf:
+            - $ref: 'https://s3.us-east-2.amazonaws.com/apispecs.cobiscorp.com/private/domains/general-purpose/admin/v1/COBISAdminDomain.yaml#/components/schemas/Identification'
+          description: 'Identificación del cliente o prospecto.'
+        #en_tipo_ced > Identificacion.type
+        names: #field:en_nombre
+          description: 'Nombres.'
+          type: string
+          minLength: 1
+          maxLength: 64
+        lastName: #field:p_p_apellido
+          description: 'Primer apellido.'
+          type: string
+          minLength: 1
+          maxLength: 16
+        otherLastName: #field:p_s_apellido
+          description: 'Segundo apellido.'
+          type: string
+          maxLength: 16
+        status: #field:en_estado o field:cobis..cl_ente_aux.ea_estado (Depende de la implementación del cliente)
+          description: >
+            'Estado COBIS:'
+              * P: Prospecto
+              * C: Cliente
+          type: string
+          enum: [P,C]
+        subsidiary: #field:en_filial
+          $ref: 'https://s3.us-east-2.amazonaws.com/apispecs.cobiscorp.com/private/domains/general-purpose/admin/v1/COBISAdminDomain.yaml#/components/schemas/Subsidiary'
+        branch: #field:en_oficina
+          $ref: 'https://s3.us-east-2.amazonaws.com/apispecs.cobiscorp.com/private/domains/general-purpose/admin/v1/COBISAdminDomain.yaml#/components/schemas/Branch'
+        enrollmentDate: #field:en_fecha_crea
+          description: 'Fecha de creación.'
+          type: string
+          format: date-time
+        lastUpdateDate: #field:en_fecha_mod
+          description: 'Fecha de la última modificación.'
+          type: string
+          format: date-time
+        
+        comment: #field:en_comentario
+          description: 'Comentarios'
+          type: string
+          maxLength: 254
+        documentValidated: #field:en_doc_validado
+          description: 'Indica si el número de documento está validado.'
+          type: boolean
+        superBanReported: #field:en_rep_superban
+          description: 'Indica si el cliente está reportado en SuperBan.'
+          type: boolean
+        gender: #field:p_sexo
+          $ref: 'https://s3.us-east-2.amazonaws.com/apispecs.cobiscorp.com/private/domains/general-purpose/admin/v1/COBISAdminDomain.yaml#/components/schemas/Gender'
+        birthDate: #field:p_fecha_nac
+          description: 'Fecha de nacimiento'
+          type: string
+          format: date
+        cityBirth: #field:p_ciudad_nac
+          allOf:
+            - $ref: 'https://s3.us-east-2.amazonaws.com/apispecs.cobiscorp.com/private/domains/general-purpose/admin/v1/COBISAdminDomain.yaml#/components/schemas/City'
+          description: 'Ciudad de nacimiento.'
