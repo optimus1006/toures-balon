@@ -22,21 +22,21 @@ Esta aplicación expone varias operaciones que permiten realizar la compra de pl
 DOMINIO | SUBDOMINIO | SERVICIO | DESCRIPCIÓN | CANAL
 --- | --- | --- | --- | --- 
 Autenticación | Servicios de autenticación | Generación de autenticación tanto para aplicaciones como para usuarios | Web, Movil
-Clientes | Registrar Clientes | Registro del cliente | Web, Movil
-Clientes | Actualizar Clientes | Actualizacion de datos y estado de clientes | Web, Movil
-Clientes | Consultar Clientes | Consulta de clientes por los diferentes parametros | Web, Movil
-Ordenes | Crear ordenes | Crear ordenes de productos | Web, Movil
-Órdenes | Cancelación de Órdenes | El sistema permitirá la cancelación de órdenes de pedido en validación o en reservación que maneja TouresBalón. | Web, Movil
-Órdenes | Consultar Ordenes | detalle de productos se debe mostrar | Web, Movil
-Órdenes | Pagar orden | Servicio de pago de ordenes | Web, Movil
-Órdenes | Consultar factura | Servicio de consulta de factura de una orden | Web, Movil
-Productos | Administración de Productos | El sistema permitirá la creación, modificación y eliminación de los productos que comercializa TouresBalón. (Incluye la administración de imágenes). También el sistema permitirá la creación(*), modificación(*) y eliminación(*) de las tarifas asociadas a los productos | Web, Movil
+Clientes |  | Registrar Clientes | Registro del cliente | Web, Movil
+Clientes |  | Actualizar Clientes | Actualizacion de datos y estado de clientes | Web, Movil
+Clientes |  | Consultar Clientes | Consulta de clientes por los diferentes parametros | Web, Movil
+Ordenes |  | Crear ordenes | Crear ordenes de productos | Web, Movil
+Órdenes |  | Cancelación de Órdenes | El sistema permitirá la cancelación de órdenes de pedido en validación o en reservación que maneja TouresBalón. | Web, Movil
+Órdenes |  | Consultar Ordenes | detalle de productos se debe mostrar | Web, Movil
+Órdenes |  | Pagar orden | Servicio de pago de ordenes | Web, Movil
+Órdenes | Factura | Consultar factura | Servicio de consulta de factura de una orden | Web, Movil
+Productos |  | Administración de Productos | El sistema permitirá la creación, modificación y eliminación de los productos que comercializa TouresBalón. (Incluye la administración de imágenes). También el sistema permitirá la creación(*), modificación(*) y eliminación(*) de las tarifas asociadas a los productos | Web, Movil
 Productos | Campañas | Administrar Campañas | El sistema permitirá creación(*), modificación(*) y eliminación(*) de campañas. Una campaña es una imagen promocional que se mostrará en el sitio Web y está asociada a un producto durante un periodo de tiempo dado. | Web, Movil
 Productos | Paquetes |  Administrar Paquetes | El sistema permitirá creación(*), modificación(*) y eliminación(*) de paquetes. Un paquete es un conjuto de eventos, con transportes y hospedajes | Web, Movil
 Productos | Transportes |  Administrar Transportes | El sistema permitirá creación(*), modificación(*) y eliminación(*) de paquetes. Un paquete es un conjuto de eventos, con transportes y hospedajes | Web, Movil
 Productos | Hospedajes |  Administrar Hospedajes | El sistema permitirá creación(*), modificación(*) y eliminación(*) de hospedajes. | Web
 Productos | Eventos |  Administrar Productos | El sistema permitirá creación(*), modificación(*) y eliminación(*) de productos. | Web, Movil
-Convenios | Administración de convenios | Consulta y enrolamiento de proveedores/convenios/alianzas  | Web
+Convenios |  | Administración de convenios | Consulta y enrolamiento de proveedores/convenios/alianzas  | Web
 
 ## Operaciones
 
