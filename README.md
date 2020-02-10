@@ -19,18 +19,23 @@ Esta aplicación expone varias operaciones que permiten realizar la compra de pl
 
 ## Catálogo de servicios
 
-DOMINIO | SERVICIO | DESCRIPCIÓN | CANAL
---- | --- | --- | --- 
+DOMINIO | SUBDOMINIO | SERVICIO | DESCRIPCIÓN | CANAL
+--- | --- | --- | --- | --- 
 Autenticación | Servicios de autenticación | Generación de autenticación tanto para aplicaciones como para usuarios | Web, Movil
-Clientes | Administración de Clientes | Registro del cliente, actualizacion de datos y estado, consulta de clientes | Web, Movil
-Facturación | Conciliar Movimientos | Servicio que controla la conciliación de movimientos contables con el sistema financiero | Web
+Clientes | Registrar Clientes | Registro del cliente | Web, Movil
+Clientes | Actualizar Clientes | Actualizacion de datos y estado de clientes | Web, Movil
+Clientes | Consultar Clientes | Consulta de clientes por los diferentes parametros | Web, Movil
 Ordenes | Crear ordenes | Crear ordenes de productos | Web, Movil
 Órdenes | Cancelación de Órdenes | El sistema permitirá la cancelación de órdenes de pedido en validación o en reservación que maneja TouresBalón. | Web, Movil
 Órdenes | Consultar Ordenes | detalle de productos se debe mostrar | Web, Movil
 Órdenes | Pagar orden | Servicio de pago de ordenes | Web, Movil
 Órdenes | Consultar factura | Servicio de consulta de factura de una orden | Web, Movil
 Productos | Administración de Productos | El sistema permitirá la creación, modificación y eliminación de los productos que comercializa TouresBalón. (Incluye la administración de imágenes). También el sistema permitirá la creación(*), modificación(*) y eliminación(*) de las tarifas asociadas a los productos | Web, Movil
-Productos | Administrar Campañas | El sistema permitirá creación(*), modificación(*) y eliminación(*) de campañas. Una campaña es una imagen promocional que se mostrará en el sitio Web y está asociada a un producto durante un periodo de tiempo dado. | Web, Movil
+Productos | Campañas | Administrar Campañas | El sistema permitirá creación(*), modificación(*) y eliminación(*) de campañas. Una campaña es una imagen promocional que se mostrará en el sitio Web y está asociada a un producto durante un periodo de tiempo dado. | Web, Movil
+Productos | Paquetes |  Administrar Paquetes | El sistema permitirá creación(*), modificación(*) y eliminación(*) de paquetes. Un paquete es un conjuto de eventos, con transportes y hospedajes | Web, Movil
+Productos | Transportes |  Administrar Transportes | El sistema permitirá creación(*), modificación(*) y eliminación(*) de paquetes. Un paquete es un conjuto de eventos, con transportes y hospedajes | Web, Movil
+Productos | Hospedajes |  Administrar Hospedajes | El sistema permitirá creación(*), modificación(*) y eliminación(*) de hospedajes. | Web
+Productos | Eventos |  Administrar Productos | El sistema permitirá creación(*), modificación(*) y eliminación(*) de productos. | Web, Movil
 Convenios | Administración de convenios | Consulta y enrolamiento de proveedores/convenios/alianzas  | Web
 
 ## Operaciones
@@ -40,7 +45,7 @@ Convenios | Administración de convenios | Consulta y enrolamiento de proveedore
 Contiene 4 operaciones con las que se puede operar sobre la orden: 
 
 - `/ordenes` [GET]: Consulta al información de las ordenes basado en parámetros de búsqueda *(No implementado)*
-- `/ordenes/{id}` [POST]: Crea la orden de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/ordenes` [POST]: Crea la orden de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/ordenes/{id}` [PATCH]: Actualizar la orden de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/ordenes/{id}` [DELETE]: Cancela la orden. *(No implementado)*
 - `/ordenes/pagar` [POST]: Pagar la orden. *(No implementado)*
@@ -53,6 +58,7 @@ Contiene las operaciones necesarias de los clientes
 - `/clientes` [GET]: Consulta al información de los clientes basado en parámetros de búsqueda *(No implementado)*
 - `/clientes` [POST]: Crea el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/clientes/{id}` [PATCH]: Actualizar el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/clientes/{id}` [DELETE]: Borrar el cliente de acuerdo al id recibido *(No implementado)*
 
 ### Productos
 
@@ -63,9 +69,26 @@ Contiene las operaciones sobre los productos.
 - `/productos/{id}` [PATCH]: Actualizar el producto de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/productos/{id}` [DELETE]: Eliminar el producto. *(No implementado)*
 - `/productos/campanias` [GET]: Consulta al información de las campañas basado en parámetros de busqueda *(No implementado)*
-- `/productos/campania` [POST]: Crea la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/campania/{id}` [PUT]: Actualizar la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/campania/{id}` [DELETE]: Eliminar la campaña. *(No implementado)*
+- `/productos/campanias` [POST]: Crea la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/campanias/{id}` [PUT]: Actualizar la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/campanias/{id}` [DELETE]: Eliminar la campaña. *(No implementado)*
+- `/productos/paquetes` [GET]: Consulta al información de las campañas basado en parámetros de busqueda *(No implementado)*
+- `/productos/paquetes` [POST]: Crea la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/paquetes/{id}` [PUT]: Actualizar la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/paquetes/{id}` [DELETE]: Eliminar la campaña. *(No implementado)*
+- `/productos/paquetes/itinerario` [GET]: Consulta al información del itinerario asociado al paquete *(No implementado)*
+- `/productos/transportes` [GET]: Consulta al información de las transportes basado en parámetros de busqueda *(No implementado)*
+- `/productos/transportes` [POST]: Crea el transporte de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/transportes/{id}` [PUT]: Actualizar el transporte de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/transportes/{id}` [DELETE]: Eliminar el transporte. *(No implementado)*
+- `/productos/hospedajes` [GET]: Consulta al información de las hospedajes basado en parámetros de busqueda *(No implementado)*
+- `/productos/hospedajes` [POST]: Crea el hospedaje de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/hospedajes/{id}` [PUT]: Actualizar el hospedaje de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/hospedajes/{id}` [DELETE]: Eliminar el hospedaje. *(No implementado)*
+- `/productos/eventos` [GET]: Consulta al información de las eventos basado en parámetros de busqueda *(No implementado)*
+- `/productos/eventos` [POST]: Crea el evento de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/eventos/{id}` [PUT]: Actualizar el evento de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/eventos/{id}` [DELETE]: Eliminar el evento. *(No implementado)*
 
 ### Convenios
 
