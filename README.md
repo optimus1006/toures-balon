@@ -35,7 +35,7 @@ Productos | Campañas | Administrar Campañas | El sistema permitirá creación(
 Productos | Paquetes |  Administrar Paquetes | El sistema permitirá creación(*), modificación(*) y eliminación(*) de paquetes. Un paquete es un conjuto de eventos, con transportes y hospedajes | Web, Movil
 Productos | Transportes |  Administrar Transportes | El sistema permitirá creación(*), modificación(*) y eliminación(*) de paquetes. Un paquete es un conjuto de eventos, con transportes y hospedajes | Web, Movil
 Productos | Hospedajes |  Administrar Hospedajes | El sistema permitirá creación(*), modificación(*) y eliminación(*) de hospedajes. | Web
-Productos | Eventos |  Administrar Productos | El sistema permitirá creación(*), modificación(*) y eliminación(*) de productos. | Web, Movil
+Productos | Eventos |  Administrar Eventos | El sistema permitirá creación(*), modificación(*) y eliminación(*) de eventos. | Web, Movil
 Convenios |  | Administración de convenios | Consulta y enrolamiento de proveedores/convenios/alianzas  | Web
 
 ## Operaciones
