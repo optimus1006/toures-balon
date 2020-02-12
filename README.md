@@ -71,38 +71,46 @@ Contiene las operaciones sobre los productos.
 - `/productos` [GET] [ProductosGETAll]: Consulta al información de los productos basado en parámetros de búsqueda *(No implementado)*
 - `/productos/{idProducto}` [GET] [ProductosGETById]: Consulta al información de un producto de acuerdo a su id. *(No implementado)*
 - `/productos` [POST] [ProductosPST]: Crea el producto de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos` [PATCH]: Actualizar el producto de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/{id}` [DELETE]: Eliminar el producto. *(No implementado)*
+- `/productos` [PATCH] [ProductosPCT]: Actualizar el producto de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/{id}` [DELETE] [ProductosDEL]: Eliminar el producto. *(No implementado)*
 - `/productos/campanias` [GET]: Consulta al información de las campañas basado en parámetros de busqueda *(No implementado)*
-- `/productos/campanias` [POST]: Crea la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/campanias` [PATCH]: Actualizar la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/campanias/{id}` [DELETE]: Eliminar la campaña. *(No implementado)*
-- `/productos/paquetes` [GET]: Consulta al información de las campañas basado en parámetros de busqueda *(No implementado)*
-- `/productos/paquetes` [POST]: Crea la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/paquetes` [PATCH]: Actualizar la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/paquetes/{id}` [DELETE]: Eliminar la campaña. *(No implementado)*
-- `/productos/paquetes/itinerario` [GET]: Consulta al información del itinerario asociado al paquete *(No implementado)*
-- `/productos/transportes` [GET]: Consulta al información de las transportes basado en parámetros de busqueda *(No implementado)*
-- `/productos/transportes` [POST]: Crea el transporte de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/transportes` [PATCH]: Actualizar el transporte de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/transportes/{id}` [DELETE]: Eliminar el transporte. *(No implementado)*
-- `/productos/hospedajes` [GET]: Consulta al información de las hospedajes basado en parámetros de busqueda *(No implementado)*
-- `/productos/hospedajes` [POST]: Crea el hospedaje de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/hospedajes` [PATCH]: Actualizar el hospedaje de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/hospedajes/{id}` [DELETE]: Eliminar el hospedaje. *(No implementado)*
-- `/productos/eventos` [GET]: Consulta al información de las eventos basado en parámetros de busqueda *(No implementado)*
-- `/productos/eventos` [POST]: Crea el evento de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/eventos` [PATCH]: Actualizar el evento de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/eventos/{id}` [DELETE]: Eliminar el evento. *(No implementado)*
+- `/productos/campanias/{idCampana}` [GET] [CampanaGETById]: Consulta al información una campaña de acuerdo a su id *(No implementado)*
+- `/productos/campanias` [POST] [CampanaPST]: Crea la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/campanias` [PATCH] [CampanaPCT]: Actualizar la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/campanias/{id}` [DELETE] [CampanaDEL]: Eliminar la campaña. *(No implementado)*
+- `/productos/campanias/{idCampana}/paquetes/{idPaquete}` [GET] [PaqueteGETByIdCapana]: Consulta el paquete de una campaña de acuerdo a su id y el id del paquete *(No implementado)*
+- `/productos/paquetes` [GET] [PaquetesGETAll]: Consulta al información de los paquetes basado en parámetros de busqueda *(No implementado)*
+- `/productos/paquetes/{idPaquete}` [GET] [PaquetesGETById]: Consulta al información de un paquete de acuerdo a su id *(No implementado)*
+- `/productos/paquetes` [POST] [PaquetesPST]: Crea el paquete de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/paquetes` [PATCH] [PaquetesPCT]: Actualizar el paquete de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/paquetes/{id}` [DELETE] [PaquetesDEL]: Eliminar la campaña. *(No implementado)*
+- `/productos/paquetes/{idPaquete}/itinerario` [GET] [PaquetesItinerarioGETById]: Consulta al información del itinerario asociado al paquete *(No implementado)*
+- `/productos/transportes` [GET] [TransportesGETAll] : Consulta al información de las transportes basado en parámetros de busqueda *(No implementado)*
+- `/productos/transportes/{idTransporte}` [GET] [TransportesGETById] : Consulta al información de un registro de transporte basado en en su id *(No implementado)*
+- `/productos/transportes` [POST] [TransportesPST]: Crea el transporte de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/transportes` [PATCH] [TransportesPCT]: Actualizar el transporte de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/transportes/{idTransporte}` [DELETE] [TransportesDEL]: Eliminar el transporte. *(No implementado)*
+- `/productos/hospedajes` [GET] [HospedajesGETAll]: Consulta al información de las hospedajes basado en parámetros de busqueda *(No implementado)*
+- `/productos/hospedajes/{idHospedaje}` [GET] [HospedajesGETById]: Consulta al información de un hospedaje de acuerdo a su id *(No implementado)*
+- `/productos/hospedajes` [POST] [HospedajesPST]: Crea el hospedaje de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/hospedajes` [PATCH] [HospedajesPCT]: Actualizar el hospedaje de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/hospedajes/{id}` [DELETE] [HospedajesDEL]: Eliminar el hospedaje. *(No implementado)*
+- `/productos/eventos` [GET] [EventosGETAll]: Consulta al información de las eventos basado en parámetros de busqueda *(No implementado)*
+- `/productos/eventos/{idEvento}` [GET] [EventosGETById]: Consulta al información de un evento de acuerdo a su id *(No implementado)*
+- `/productos/eventos` [POST] [EventosPST]: Crea el evento de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/eventos` [PATCH] [EventosPCT]: Actualizar el evento de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/eventos/{id}` [DELETE] [EventosDEL]: Eliminar el evento. *(No implementado)*
 
 ### Convenios
 
 Contiene las operaciones sobre los proveedores/convenios/alianzas.
 
-- `/convenios` [GET]: Consulta al información de los convenios basado en parámetros de búsqueda *(No implementado)*
-- `/convenios` [POST]: Crea el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/convenios` [PATCH]: Actualizar el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/convenios/{id}` [DELETE]: Eliminar el convenio. *(No implementado)*
+- `/convenios` [GET] [ConveniosGETAll]: Consulta al información de los convenios basado en parámetros de búsqueda *(No implementado)*
+- `/convenios/{idConvenio}` [GET] [ConveniosGETById]: Consulta al información de un convenio de acuerdo a su id *(No implementado)*
+- `/convenios/{idConvenio}/productos` [GET] [ConveniosGETAllProductos]: Consulta la información de los productos de un convenio de acuerdo a su id *(No implementado)*
+- `/convenios` [POST] [ConveniosPST]: Crea el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/convenios` [PATCH] [ConveniosPCT]: Actualizar el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/convenios/{id}` [DELETE] [ConveniosDEL]: Eliminar el convenio. *(No implementado)*
 
 ### Administracion
 
