@@ -46,7 +46,7 @@ Contiene 4 operaciones con las que se puede operar sobre la orden:
 
 - `/ordenes` [GET]: Consulta al información de las ordenes basado en parámetros de búsqueda *(No implementado)*
 - `/ordenes` [POST]: Crea la orden de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/ordenes/{id}` [PATCH]: Actualizar la orden de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/ordenes` [PATCH]: Actualizar la orden de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/ordenes/{id}` [DELETE]: Cancela la orden. *(No implementado)*
 - `/ordenes/pagar` [POST]: Pagar la orden. *(No implementado)*
 - `/ordenes/factura` [GET]: Consultar factura. *(No implementado)*
@@ -57,7 +57,7 @@ Contiene las operaciones necesarias de los clientes
 
 - `/clientes` [GET]: Consulta al información de los clientes basado en parámetros de búsqueda *(No implementado)*
 - `/clientes` [POST]: Crea el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/clientes/{id}` [PATCH]: Actualizar el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/clientes` [PATCH]: Actualizar el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/clientes/{id}` [DELETE]: Borrar el cliente de acuerdo al id recibido *(No implementado)*
 
 ### Productos
@@ -66,28 +66,28 @@ Contiene las operaciones sobre los productos.
 
 - `/productos` [GET]: Consulta al información de los productos basado en parámetros de búsqueda *(No implementado)*
 - `/productos` [POST]: Crea el producto de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/{id}` [PATCH]: Actualizar el producto de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos` [PATCH]: Actualizar el producto de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/productos/{id}` [DELETE]: Eliminar el producto. *(No implementado)*
 - `/productos/campanias` [GET]: Consulta al información de las campañas basado en parámetros de busqueda *(No implementado)*
 - `/productos/campanias` [POST]: Crea la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/campanias/{id}` [PUT]: Actualizar la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/campanias` [PATCH]: Actualizar la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/productos/campanias/{id}` [DELETE]: Eliminar la campaña. *(No implementado)*
 - `/productos/paquetes` [GET]: Consulta al información de las campañas basado en parámetros de busqueda *(No implementado)*
 - `/productos/paquetes` [POST]: Crea la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/paquetes/{id}` [PUT]: Actualizar la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/paquetes` [PATCH]: Actualizar la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/productos/paquetes/{id}` [DELETE]: Eliminar la campaña. *(No implementado)*
 - `/productos/paquetes/itinerario` [GET]: Consulta al información del itinerario asociado al paquete *(No implementado)*
 - `/productos/transportes` [GET]: Consulta al información de las transportes basado en parámetros de busqueda *(No implementado)*
 - `/productos/transportes` [POST]: Crea el transporte de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/transportes/{id}` [PUT]: Actualizar el transporte de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/transportes` [PATCH]: Actualizar el transporte de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/productos/transportes/{id}` [DELETE]: Eliminar el transporte. *(No implementado)*
 - `/productos/hospedajes` [GET]: Consulta al información de las hospedajes basado en parámetros de busqueda *(No implementado)*
 - `/productos/hospedajes` [POST]: Crea el hospedaje de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/hospedajes/{id}` [PUT]: Actualizar el hospedaje de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/hospedajes` [PATCH]: Actualizar el hospedaje de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/productos/hospedajes/{id}` [DELETE]: Eliminar el hospedaje. *(No implementado)*
 - `/productos/eventos` [GET]: Consulta al información de las eventos basado en parámetros de busqueda *(No implementado)*
 - `/productos/eventos` [POST]: Crea el evento de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/eventos/{id}` [PUT]: Actualizar el evento de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/eventos` [PATCH]: Actualizar el evento de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/productos/eventos/{id}` [DELETE]: Eliminar el evento. *(No implementado)*
 
 ### Convenios
@@ -96,8 +96,19 @@ Contiene las operaciones sobre los proveedores/convenios/alianzas.
 
 - `/convenios` [GET]: Consulta al información de los convenios basado en parámetros de búsqueda *(No implementado)*
 - `/convenios` [POST]: Crea el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/convenios/{id}` [PATCH]: Actualizar el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/convenios` [PATCH]: Actualizar el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/convenios/{id}` [DELETE]: Eliminar el convenio. *(No implementado)*
+
+### Administracion
+
+Contiene operaciones correspondientes a la administracion de la plataforma.
+
+- `/admin/user` [GET]: Consulta el listado completo de usuarios existentes en el sistema.
+- `/admin/user/{userId}` [GET]: Consulta informacion de un usuario de acuerdo a su id.
+- `/admin/user/{userId}` [DELETE]: Borrar un usuario del sistema.
+- `/admin/user` [PATCH]: Actualizar un usuario en el sistema.
+- `/admin/user` [POST]: Crear un usuario en el sistema.
+
 
 ## Tecnologías
 
