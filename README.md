@@ -44,28 +44,33 @@ Convenios |  | Administración de convenios | Consulta y enrolamiento de proveed
 
 Contiene 4 operaciones con las que se puede operar sobre la orden: 
 
-- `/ordenes` [GET]: Consulta al información de las ordenes basado en parámetros de búsqueda *(No implementado)*
-- `/ordenes` [POST]: Crea la orden de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/ordenes` [PATCH]: Actualizar la orden de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/ordenes/{id}` [DELETE]: Cancela la orden. *(No implementado)*
-- `/ordenes/pagar` [POST]: Pagar la orden. *(No implementado)*
-- `/ordenes/factura` [GET]: Consultar factura. *(No implementado)*
+- `/ordenes/clientes/{idCliente}` [GET] [OrdenesGETByIdCliente]: Consulta al información de las ordenes asociadas a un cliente *(No implementado)*
+- `/ordenes` [GET] [OrdenesGETAll]: Consulta al información de las ordenes basado en parámetros de búsqueda *(No implementado)*
+- `/ordenes/{idOrden}` [GET] [OrdenesGETById]: Consulta la información de una orden por su id. *(No implementado)*
+- `/ordenes` [POST] [OrdenesPST]: Crea la orden de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/ordenes` [PATCH] [OrdenesPCT]: Actualizar la orden de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/ordenes/{idOrden}` [DELETE] [OrdenesDEL]: Cancela la orden. *(No implementado)*
+- `/ordenes/facturas` [POST] [FacturasPST]: Pagar la orden. *(No implementado)*
+- `/ordenes/facturas` [GET] [FacturasGETAll]: Consultar todas las facturas. *(No implementado)*
+- `/ordenes/facturas/orden/{idOrden}/factura/{idFactura}` [GET] [FacturasGETById]: Consultar factura por id de la orden y id de la factura. *(No implementado)*
 
 ### Clientes
 
 Contiene las operaciones necesarias de los clientes
 
-- `/clientes` [GET]: Consulta al información de los clientes basado en parámetros de búsqueda *(No implementado)*
-- `/clientes` [POST]: Crea el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/clientes` [PATCH]: Actualizar el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/clientes/{id}` [DELETE]: Borrar el cliente de acuerdo al id recibido *(No implementado)*
+- `/clientes` [GET] [ClientesGETAll]: Consulta al información de los clientes basado en parámetros de búsqueda *(No implementado)*
+- `/clientes/{idCliente}` [GET] [ClientesGETById]: Consulta la informacion de un cliente por su id *(No implementado)*
+- `/clientes` [POST] [ClientesPST]: Crea el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/clientes` [PATCH] [ClientesPCT]: Actualizar el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/clientes/{idCliente}` [DELETE] [ClientesDEL]: Borrar el cliente de acuerdo al id recibido *(No implementado)*
 
 ### Productos
 
 Contiene las operaciones sobre los productos.
 
-- `/productos` [GET]: Consulta al información de los productos basado en parámetros de búsqueda *(No implementado)*
-- `/productos` [POST]: Crea el producto de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos` [GET] [ProductosGETAll]: Consulta al información de los productos basado en parámetros de búsqueda *(No implementado)*
+- `/productos/{idProducto}` [GET] [ProductosGETById]: Consulta al información de un producto de acuerdo a su id. *(No implementado)*
+- `/productos` [POST] [ProductosPST]: Crea el producto de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/productos` [PATCH]: Actualizar el producto de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/productos/{id}` [DELETE]: Eliminar el producto. *(No implementado)*
 - `/productos/campanias` [GET]: Consulta al información de las campañas basado en parámetros de busqueda *(No implementado)*
