@@ -61,7 +61,7 @@ Contiene las operaciones necesarias de los clientes
 - `/clientes` [GET] [ClientesGETAll]: Consulta al información de los clientes basado en parámetros de búsqueda *(No implementado)*
 - `/clientes/{idCliente}` [GET] [ClientesGETById]: Consulta la informacion de un cliente por su id *(No implementado)*
 - `/clientes` [POST] [ClientesPST]: Crea el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/clientes` [PATCH] [ClientesPCT]: Actualizar el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/clientes/{idCliente}` [PATCH] [ClientesPCT]: Actualizar el cliente de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/clientes/{idCliente}` [DELETE] [ClientesDEL]: Borrar el cliente de acuerdo al id recibido *(No implementado)*
 
 ### Productos
@@ -71,8 +71,8 @@ Contiene las operaciones sobre los productos.
 - `/productos` [GET] [ProductosGETAll]: Consulta al información de los productos basado en parámetros de búsqueda *(No implementado)*
 - `/productos/{idProducto}` [GET] [ProductosGETById]: Consulta al información de un producto de acuerdo a su id. *(No implementado)*
 - `/productos` [POST] [ProductosPST]: Crea el producto de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos` [PATCH] [ProductosPCT]: Actualizar el producto de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/{id}` [DELETE] [ProductosDEL]: Eliminar el producto. *(No implementado)*
+- `/productos/{idProducto}` [PATCH] [ProductosPCT]: Actualizar el producto de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/productos/{idProducto}` [DELETE] [ProductosDEL]: Eliminar el producto. *(No implementado)*
 - `/productos/campanias` [GET]: Consulta al información de las campañas basado en parámetros de busqueda *(No implementado)*
 - `/productos/campanias/{idCampana}` [GET] [CampanaGETById]: Consulta al información una campaña de acuerdo a su id *(No implementado)*
 - `/productos/campanias` [POST] [CampanaPST]: Crea la campaña de acuerdo con los parámetros recibidos. *(No implementado)*
