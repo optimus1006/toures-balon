@@ -73,13 +73,8 @@ Contiene las operaciones sobre los productos.
 - `/productos` [POST] [ProductosPST]: Crea el producto de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/productos/{idProducto}` [PATCH] [ProductosPCT]: Actualizar el producto de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/productos/{idProducto}` [DELETE] [ProductosDEL]: Eliminar el producto. *(No implementado)*
-- `/productos/paquetes` [GET] [PaquetesGETAll]: Consulta al información de los paquetes basado en parámetros de busqueda *(No implementado)*
-- `/productos/paquetes/{idPaquete}` [GET] [PaquetesGETById]: Consulta al información de un paquete de acuerdo a su id *(No implementado)*
-- `/productos/paquetes` [POST] [PaquetesPST]: Crea el paquete de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/paquetes` [PATCH] [PaquetesPCT]: Actualizar el paquete de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/paquetes/{id}` [DELETE] [PaquetesDEL]: Eliminar la campaña. *(No implementado)*
-- `/productos/paquetes/{idPaquete}/itinerario` [GET] [PaquetesItinerarioGETById]: Consulta al información del itinerario asociado al paquete *(No implementado)*
-- `/productos/paquetes/{idCliente}` [GET] [PaquetesGETByIdCliente]: Consulta la información de los paquetes de un cliente *(No implementado)*
+- `/productos/{idProducto}/itinerario` [GET] [PaquetesItinerarioGETById]: Consulta al información del itinerario asociado al paquete *(No implementado)*
+- `/productos/{idCliente}` [GET] [PaquetesGETByIdCliente]: Consulta la información de los paquetes de un cliente *(No implementado)*
 - `/productos/transportes` [GET] [TransportesGETAll] : Consulta al información de las transportes basado en parámetros de busqueda *(No implementado)*
 - `/productos/transportes/{idTransporte}` [GET] [TransportesGETById] : Consulta al información de un registro de transporte basado en en su id *(No implementado)*
 - `/productos/transportes` [POST] [TransportesPST]: Crea el transporte de acuerdo con los parámetros recibidos. *(No implementado)*
