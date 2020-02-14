@@ -47,8 +47,8 @@ Contiene 4 operaciones con las que se puede operar sobre la orden:
 - `/ordenes/clientes/{idCliente}` [GET] [OrdenesGETByIdCliente]: Consulta al información de las ordenes asociadas a un cliente *(No implementado)*
 - `/ordenes` [GET] [OrdenesGETAll]: Consulta al información de las ordenes basado en parámetros de búsqueda *(No implementado)*
 - `/ordenes/{idOrden}` [GET] [OrdenesGETById]: Consulta la información de una orden por su id. *(No implementado)*
-- `/ordenes` [POST] [OrdenesPST]: Crea la orden de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/ordenes` [PATCH] [OrdenesPCT]: Actualizar la orden de acuerdo con los parámetros recibidos. *(No implementado)*
+- `/ordenes` [POST] [OrdenesPST]: Crea la orden de acuerdo con los parámetros recibidos. La orden debe tener transporte, eventos y hospedajes. Se crea tambien como estado "Cotizacion". La orden va a atada a un producto. *(No implementado)*
+- `/ordenes` [PATCH] [OrdenesPCT]: Actualizar la orden de acuerdo con los parámetros recibidos. La orden se actualiza solamente el estado.  *(No implementado)*
 - `/ordenes/{idOrden}` [DELETE] [OrdenesDEL]: Cancela la orden. *(No implementado)*
 - `/ordenes/facturas` [POST] [FacturasPST]: Pagar la orden. *(No implementado)*
 - `/ordenes/facturas` [GET] [FacturasGETAll]: Consultar todas las facturas. *(No implementado)*
@@ -71,11 +71,14 @@ Contiene las operaciones sobre los productos.
 - `/productos` [GET] [ProductosGETAll]: Consulta al información de los productos basado en parámetros de búsqueda *(No implementado)*
 - `/productos/{idProducto}` [GET] [ProductosGETById]: Consulta al información de un producto de acuerdo a su id. *(No implementado)*
 - `/productos` [POST] [ProductosPST]: Crea el producto de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/{idProducto}` [PATCH] [ProductosPCT]: Actualizar el producto de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/{idProducto}` [DELETE] [ProductosDEL]: Eliminar el producto. *(No implementado)*
-- `/productos/{idProducto}/itinerario` [GET] [PaquetesItinerarioGETById]: Consulta al información del itinerario asociado al paquete *(No implementado)*
-- `/productos/{idCliente}` [GET] [PaquetesGETByIdCliente]: Consulta la información de los paquetes de un cliente *(No implementado)*
-- `/productos/transportes` [GET] [TransportesGETAll] : Consulta al información de las transportes basado en parámetros de busqueda *(No implementado)*
+- `/productos/{idProducto}` [PATCH] [ProductosPCT]: Actualizar el producto de acuerdo con los parámetros recibidos. Cuando el asesor realiza borradores y no quiere mandar a una subasta aun el estado se puede actualizar en dichos casos. *(No implementado)*
+- `/productos/{idProducto}` [DELETE] [ProductosDEL]: Eliminar el producto. Se puede borrar siempre y cuando este en estado borrador. *(No implementado)*
+- `/productos/{idProducto}/itinerario` [GET] [ProductosItinerarioGETById]: Consulta al información del itinerario asociado al paquete *(No implementado)*
+- `/productos/{idCliente}` [GET] [ProductosGETByIdCliente]: Consulta la información de los paquetes de un cliente *(No implementado)*
+- `/productos/{idProducto}/transportes` [GET] [ProductosTransportesGETByIdProducto]: Consulta la información referente a un transporte de acuerdo al id del producto *(No implementado)*
+- `/productos/{idProducto}/hospedajes` [GET] [ProductosHospedajessGETByIdProducto]: Consulta la información referente a hospedajes de acuerdo al id del producto. *(No implementado)*
+- `/productos/{idProducto}/eventos` [GET] [ProductosEventosGETByIdProducto]: Consulta la información referente a eventos de acuerdo al id del producto *(No implementado)*
+- `/productos/transportes` [GET] [TransportesGETAll] : Consulta al información de las transportes basado en parámetros de busqueda. Trae como parte de sus parametros de busqueda el id del convenio. *(No implementado)*
 - `/productos/transportes/{idTransporte}` [GET] [TransportesGETById] : Consulta al información de un registro de transporte basado en en su id *(No implementado)*
 - `/productos/transportes` [POST] [TransportesPST]: Crea el transporte de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/productos/transportes` [PATCH] [TransportesPCT]: Actualizar el transporte de acuerdo con los parámetros recibidos. *(No implementado)*
@@ -84,12 +87,12 @@ Contiene las operaciones sobre los productos.
 - `/productos/hospedajes/{idHospedaje}` [GET] [HospedajesGETById]: Consulta al información de un hospedaje de acuerdo a su id *(No implementado)*
 - `/productos/hospedajes` [POST] [HospedajesPST]: Crea el hospedaje de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/productos/hospedajes` [PATCH] [HospedajesPCT]: Actualizar el hospedaje de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/hospedajes/{id}` [DELETE] [HospedajesDEL]: Eliminar el hospedaje. *(No implementado)*
+- `/productos/hospedajes/{idHospedaje}` [DELETE] [HospedajesDEL]: Eliminar el hospedaje. *(No implementado)*
 - `/productos/eventos` [GET] [EventosGETAll]: Consulta al información de las eventos basado en parámetros de busqueda *(No implementado)*
 - `/productos/eventos/{idEvento}` [GET] [EventosGETById]: Consulta al información de un evento de acuerdo a su id *(No implementado)*
 - `/productos/eventos` [POST] [EventosPST]: Crea el evento de acuerdo con los parámetros recibidos. *(No implementado)*
 - `/productos/eventos` [PATCH] [EventosPCT]: Actualizar el evento de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/productos/eventos/{id}` [DELETE] [EventosDEL]: Eliminar el evento. *(No implementado)*
+- `/productos/eventos/{idEvento}` [DELETE] [EventosDEL]: Eliminar el evento. *(No implementado)*
 
 ### Convenios
 
