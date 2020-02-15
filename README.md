@@ -134,6 +134,11 @@ En este link se encuentra toda la información del API expuesto para el consumo 
 
 [API Swagger Clientes](https://app.swaggerhub.com/apis/optimus1006/Clientes/1.0.0?loggedInWithGitHub=true)
 
+### API REST Productos
+[API Swagger Dominio](https://app.swaggerhub.com/domains/manuelgonzalezb/ProductosDominio/1.0.0)
+
+[API Swagger Productos](https://app.swaggerhub.com/apis/manuelgonzalezb/ProductosAPI/1.0.0#/)
+
 ## Documentación del API
 
 ### API expuesto en el API Gateway:
