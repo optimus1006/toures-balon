@@ -74,7 +74,7 @@ Contiene las operaciones sobre los productos.
 - `/productos/{idProducto}` [PATCH] [ProductosPCT]: Actualizar el producto de acuerdo con los parámetros recibidos. Cuando el asesor realiza borradores y no quiere mandar a una subasta aun el estado se puede actualizar en dichos casos. *(No implementado)*
 - `/productos/{idProducto}` [DELETE] [ProductosDEL]: Eliminar el producto. Se puede borrar siempre y cuando este en estado borrador. *(No implementado)*
 - `/productos/{idProducto}/itinerario` [GET] [ProductosItinerarioGETById]: Consulta al información del itinerario asociado al paquete *(No implementado)*
-- `/productos/{idCliente}` [GET] [ProductosGETByIdCliente]: Consulta la información de los paquetes de un cliente *(No implementado)*
+- `/productos/cliente/{idCliente}` [GET] [ProductosGETByIdCliente]: Consulta la información de los paquetes de un cliente *(No implementado)*
 - `/productos/{idProducto}/transportes` [GET] [ProductosTransportesGETByIdProducto]: Consulta la información referente a un transporte de acuerdo al id del producto *(No implementado)*
 - `/productos/{idProducto}/hospedajes` [GET] [ProductosHospedajessGETByIdProducto]: Consulta la información referente a hospedajes de acuerdo al id del producto. *(No implementado)*
 - `/productos/{idProducto}/eventos` [GET] [ProductosEventosGETByIdProducto]: Consulta la información referente a eventos de acuerdo al id del producto *(No implementado)*
