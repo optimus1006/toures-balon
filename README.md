@@ -144,6 +144,10 @@ En este link se encuentra toda la información del API expuesto para el consumo 
 
 [API Swagger Productos](https://app.swaggerhub.com/apis/ivanalfonso88/Convenios/1.0.0#/)
 
+### API REST Utilitarios
+
+[API Swagger Dominio](https://app.swaggerhub.com/domains/manuelgonzalezCOBIS/DominioUtilitarios/1.0.0)
+
 ## Documentación del API
 
 ### API expuesto en el API Gateway:
