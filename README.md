@@ -148,6 +148,8 @@ En este link se encuentra toda la información del API expuesto para el consumo 
 
 [API Swagger Dominio](https://app.swaggerhub.com/domains/manuelgonzalezCOBIS/DominioUtilitarios/1.0.0)
 
+[API Swagger Utilitarios](https://app.swaggerhub.com/apis/manuelgonzalezb/Utilitarios/1.0.0)
+
 ## Documentación del API
 
 ### API expuesto en el API Gateway:
