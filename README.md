@@ -3,7 +3,7 @@
 ## Integrantes
 
  - Jennifer Goyeneche
- - Andrea Gomez
+ - Andrea Gómez
  - Manuel González 
  - Iván Linares 
  - Iván Pinilla 
@@ -21,7 +21,7 @@ Esta aplicación expone varias operaciones que permiten realizar la compra de pl
 
 DOMINIO | SUBDOMINIO | SERVICIO | DESCRIPCIÓN | CANAL
 --- | --- | --- | --- | --- 
-Autenticación | Servicios de autenticación | Generación de autenticación tanto para aplicaciones como para usuarios | Web, Movil
+Autenticación |  | Servicios de autenticación | Generación de autenticación tanto para aplicaciones como para usuarios | Web, Movil
 Clientes |  | Registrar Clientes | Registro del cliente | Web, Movil
 Clientes |  | Actualizar Clientes | Actualizacion de datos y estado de clientes | Web, Movil
 Clientes |  | Consultar Clientes | Consulta de clientes por los diferentes parametros | Web, Movil
@@ -154,6 +154,27 @@ En este link se encuentra toda la información del API expuesto para el consumo 
 [API Swagger Dominio](https://app.swaggerhub.com/domains/manuelgonzalezCOBIS/DominioUtilitarios/1.0.0)
 
 [API Swagger Utilitarios](https://app.swaggerhub.com/apis/manuelgonzalezb/Utilitarios/1.0.0)
+
+
+## Flujos de negocio
+
+### Flujo de compra
+
+![Compra de paquetes](https://github.com/optimus1006/toures-balon/blob/master/diagrams/Compra.jpg)
+
+### Solicitar cotizacion
+
+### Consulta productos (paquetes)
+
+### Reservar
+
+### Cancelar reserva
+
+### Cancelar orden
+
+### Modificar cotizacion
+
+### Registrarse
 
 ## Documentación del API
 
