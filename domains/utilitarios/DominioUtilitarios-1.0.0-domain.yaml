@@ -1,0 +1,130 @@
+# OpenAPI version identifier - required for OpenAPI 3.0 domains
+openapi: 3.0.0
+
+#######################
+# Optional info section
+#######################
+info:
+  title: Dominio de Utilitarios
+  description: Dominio de todas aquellas entidades que son usadas por otros dominios y que no son propensas facilmente a cambios
+  version: '1.0.0'
+
+components:
+
+  ####################
+  # Common data models
+  ####################
+  schemas:
+    Pais:
+      description: País
+      type: object
+      properties:
+        codigo: 
+          description: Código del país.
+          format: int32
+          minimum: 1
+          type: number
+        nombre: 
+          description: Nombre del país.
+          type: string
+          minLength: 1
+          maxLength: 64
+    Ciudad:
+      description: Ciudad
+      type: object
+      properties:
+        codigo: 
+          description: Código de la ciudad.
+          format: int32
+          minimum: 1
+          type: number
+        nombre: 
+          description: Nombre de la ciudad.
+          type: string
+          minLength: 1
+          maxLength: 64
+        pais:
+          $ref: '#/components/schemas/Pais'
+          
+    Error:
+      properties:
+        code:
+          maxLength: 128
+          minLength: 1
+          type: string
+          description: Código específico del error.
+        id:
+          maxLength: 40
+          minLength: 1
+          type: string
+          description: Id de referencia única para propósitos de auditoría.
+        message:
+          maxLength: 500
+          minLength: 1
+          type: string
+          description: Descripción del error específico.
+        path:
+          maxLength: 500
+          minLength: 1
+          type: string
+          description: Al referirse de un error debido a un campo específico, se describe la ruta del campo.
+        url:
+          maxLength: 500
+          minLength: 1
+          type: string
+          description: URL de la documentación en donde se encuentra mayor información sobre el error.
+      description: Error específico que describe un problema presentado al ejecutar una operación.
+    ErrorResponseDetail:
+      required:
+      - error
+      - message
+      properties:
+        message:
+          maxLength: 500
+          minLength: 1
+          type: string
+          description: Descripción del error general.
+        error:
+          required:
+          - code
+          - message
+          type: array
+          description: Lista de los errores específicos.
+          items:
+            $ref: '#/components/schemas/Error'
+      description: Mensaje de respuesta de error
+      
+    MetodoPago:
+      required:
+        - code
+        - descripcion
+      description: Listado de todos los metodos de pago permitidos para alguna compra
+      properties:
+        codigo:
+          maxLength: 10
+          minLength: 1
+          type: string
+          description: codigo del metodo de pago.
+        descripcion:
+          maxLength: 500
+          minLength: 1
+          type: string
+          description: nombre del metodo de pago
+        
+
+
+  #########################
+  # Common headers
+  # (except request headers - they are defined as parameters)
+  #########################
+  headers:
+    X-RateLimit-Limit:
+      description: Request limit per hour
+      schema:
+        type: integer
+      example: 100
+    X-RateLimit-Remaining:
+      description: Remaining requests for the hour
+      schema:
+        type: integer
+      example: 94
