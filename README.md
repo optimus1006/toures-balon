@@ -164,7 +164,7 @@ En este link se encuentra toda la información del API expuesto para el consumo 
 
 ### Solicitar cotizacion
 
-![Solicitar cotizacion](https://github.com/optimus1006/toures-balon/blob/master/diagrams/Solicitar cotizacion.jpg)
+![Solicitar cotizacion](https://github.com/optimus1006/toures-balon/blob/master/diagrams/Solicitar%20cotizacion.jpg)
 
 ### Consulta productos (paquetes)
 
