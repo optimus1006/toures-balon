@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: touresbalon-api-clientes
+Implementation-Version: 1.0.0
+Built-By: mggonzalez
+Implementation-Vendor-Id: com.touresbalon.service
+Build-Jdk: 1.8.0_231
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/touresbalon-api-clientes
+Created-By: Maven Integration for Eclipse
+
