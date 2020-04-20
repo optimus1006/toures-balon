@@ -1,0 +1,39 @@
+version: '3'
+services:
+  postgresdb:
+    container_name: postgres_container
+    image: postgres
+    volumes:
+      - ./PostgreSQL/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+      - postgres-data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=Clientes
+    #network_mode: bridge
+    networks:
+      - touresbalon-network
+    ports:
+      - 5435:5432
+    expose:
+      - 5435
+    restart: unless-stopped
+  apiclientsapp:
+    container_name: apiclientsapp
+    image: apiclientsapp:latest
+    #network_mode: bridge
+    ports:
+      - 8082:8082
+    expose:
+      - 8082
+    networks:
+      - touresbalon-network
+    depends_on:
+      - postgresdb
+      #links:
+      #- postgresdb
+volumes:
+  postgres-data:
+networks:
+  touresbalon-network:
+    external: true
