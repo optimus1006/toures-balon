@@ -1,3 +1,4 @@
+,
 # Toures-Balon
 
 ## Integrantes
@@ -177,6 +178,8 @@ En este link se encuentra toda la información del API expuesto para el consumo 
 ### Modificar cotizacion
 
 ### Registrarse
+
+![Registrar cliente nuevo](https://github.com/optimus1006/toures-balon/blob/master/diagrams/Clientes.jpg)
 
 ## Documentación del API
 

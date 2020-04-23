@@ -1,0 +1,159 @@
+# OpenAPI version identifier - required for OpenAPI 3.0 domains
+openapi: 3.0.0
+
+#######################
+# Optional info section
+#######################
+info:
+  title: Dominio de clientes
+  description: Dominio de clientes para Toures Balon
+  version: '1.0.0'
+
+components:
+
+  ####################
+  # Common data models
+  ####################
+  schemas:
+  
+  # Objetos
+    Cliente:
+      type: object
+      required: 
+         - id
+      properties:
+        id:
+          type: integer
+          format: int64
+        identificacion:
+          type: string
+        nombres:
+          type: string
+          description: Nombres del cliente.
+        apellidos:
+          type: string
+          description: Apellidos.
+        email:
+          type: string
+          format: email
+        telefono:
+          type: string
+        celular:
+          type: string
+        estado:
+          $ref: '#/components/schemas/Estado'
+        categoria:
+          $ref: '#/components/schemas/Categoria'
+        tipoIdentificacion:
+          $ref: '#/components/schemas/TipoIdentificacion'
+        direcciones: 
+          type: array
+          items:
+            $ref: '#/components/schemas/Direccion'
+        tarjetas: 
+          type: array
+          items:
+            $ref: '#/components/schemas/Tarjeta'
+    Direccion: 
+      description: Contiene la información de la direccion
+      type: object
+      properties:
+        direccion:
+          description: Dirección completa.
+          maxLength: 254
+          type: string
+        ubicacion:
+            $ref: '#/components/schemas/UbicacionGeografica'
+        tipo:
+          type: string
+          enum:
+            - CASA
+            - OFICINA
+            - OTRO
+        pais:
+          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Pais'
+        ciudad:
+          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad'
+        estado:
+          $ref: '#/components/schemas/Estado'
+        fechaCreacion:
+          description: Fecha de creación de la dirección
+          type: string
+          format: date-time
+    Tarjeta: 
+      description: Contiene la información de la tarjeta
+      type: object
+      properties:
+        numero:
+          type: string
+        tipo:
+          type: string
+          enum:
+            - VISA
+            - MASTER_CARD
+        estado:
+          type: string
+          enum:
+            - ACTIVA
+            - INACTIVA
+        principal:
+          type: boolean
+          default: false
+    UbicacionGeografica: 
+      description: Ubicación geográfica
+      type: object
+      properties: 
+        latitud: 
+          type: number
+          format: float
+        longitud: 
+          type: number
+          format: float
+    
+  ####################
+  # Catalogos
+  ####################
+    Estado:
+      description: Estado de cliente , puede ser ACTIVO o INACTIVO
+      type: object
+      properties:
+        codigo: 
+          description: Código del estado.
+          format: int32
+          minimum: 1
+          type: number
+        nombre: 
+          description: Nombre del estado.
+          type: string
+          minLength: 1
+          maxLength: 64
+        pais:
+          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Pais'
+    TipoIdentificacion:
+      description: Tipo Identificacion
+      type: object
+      properties:
+        codigo: 
+          description: Código del Tipo Identificacion.
+          format: int32
+          minimum: 1
+          type: number
+        nombre: 
+          description: Nombre del Tipo Identificacion.
+          type: string
+          minLength: 1
+          maxLength: 64
+    Categoria:
+      description: "Categoria de cliente, puede ser :  PLATEADO, DORADO y PLATINO"  
+      type: object
+      properties:
+        codigo: 
+          description: Código del categoria.
+          format: int32
+          minimum: 1
+          type: number
+        nombre: 
+          description: Nombre del categoria.
+          type: string
+          minLength: 1
+          maxLength: 64
