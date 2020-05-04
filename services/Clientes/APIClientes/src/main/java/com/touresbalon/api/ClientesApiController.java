@@ -2,9 +2,7 @@ package com.touresbalon.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.NativeWebRequest;
 
-import com.touresbalon.api.service.ClienteService;
+import com.touresbalon.api.service.ClienteServices;
 import com.touresbalon.service.domain.Cliente;
 import com.touresbalon.service.domain.ClientesGETAllRS;
 import com.touresbalon.service.domain.ClientesGETByIdRs;
@@ -27,7 +25,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -36,12 +33,12 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("${openapi.clientes.base-path:/archetype/Clientes/1.0.0}")
-public class ClientesApiController implements ClientesApi {
+public class ClientesApiController implements IClientesApi {
 
 	private final NativeWebRequest request;
 
 	@Autowired
-	private ClienteService clienteService;
+    private ClienteServices clienteService;
 
 	@org.springframework.beans.factory.annotation.Autowired
 	public ClientesApiController(NativeWebRequest request) {
@@ -62,13 +59,14 @@ public class ClientesApiController implements ClientesApi {
 			@ApiResponse(code = 500, message = "Error del sistema") })
 	@RequestMapping(value = "/clientes", produces = { "application/json" }, consumes = {
 			"application/json" }, method = RequestMethod.POST)
-	public ResponseEntity<Object> clientesPST(
-			@ApiParam(value = "Cliente a registrar") @Valid @RequestBody ClientesPSTRq clientesPSTRq) {
+	public ResponseEntity<ClientesPSTRs> clientesPST(
+			@ApiParam(value = "Cliente a registrar") @Valid @RequestBody ClientesPSTRq clientesPSTRq) throws RuntimeException{
 		ClientesPSTRs clientesPSTRs = new ClientesPSTRs();
 		Cliente cliente = new Cliente();
-		cliente.setId(clienteService.createCliente(clientesPSTRq.getCliente()));
+		Long idCliente = clienteService.createCliente(clientesPSTRq.getCliente());
+		cliente.setId(idCliente);
 		clientesPSTRs.setCliente(cliente);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		return new ResponseEntity<ClientesPSTRs>(clientesPSTRs, HttpStatus.CREATED);
 	}
 
 	@ApiOperation(value = "Consulta al información de los clientes basado en parámetros de búsqueda", nickname = "clientesGETAll", notes = "Consulta al información de los clientes basado en parámetros de búsqueda ", response = ClientesGETAllRS.class, tags = {
@@ -110,12 +108,12 @@ public class ClientesApiController implements ClientesApi {
         @ApiResponse(code = 201, message = "Cliente actualizado exitosamente", response = ClientesPCTRs.class),
         @ApiResponse(code = 400, message = "Parametro Invalido"),
         @ApiResponse(code = 500, message = "Error del sistema") })
-    @RequestMapping(value = "/clientes",
+    @RequestMapping(value = "/clientes/{identificacion}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PATCH)
-    public ResponseEntity<ClientesPCTRs> clientesPCT(@ApiParam(value = "Cliente a actualizar"  )  @Valid @RequestBody ClientesPCTRq clientesPCTRq) {
-		clienteService.updateCliente(clientesPCTRq.getCliente());
+    public ResponseEntity<ClientesPCTRs> clientesPCT(@ApiParam(value = "Id de cliente", required = true) @PathVariable("identificacion") String identificacion, @ApiParam(value = "Cliente a actualizar"  )  @Valid @RequestBody ClientesPCTRq clientesPCTRq) {
+		clienteService.updateCliente(clientesPCTRq.getCliente(),identificacion);
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }

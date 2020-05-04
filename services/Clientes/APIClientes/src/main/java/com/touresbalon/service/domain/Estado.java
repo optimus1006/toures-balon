@@ -25,9 +25,6 @@ public class Estado   {
   @JsonProperty("nombre")
   private String nombre;
 
-  @JsonProperty("pais")
-  private Pais pais;
-
   public Estado codigo(int codigo) {
     this.codigo = codigo;
     return this;
@@ -70,27 +67,6 @@ public class Estado   {
     this.nombre = nombre;
   }
 
-  public Estado pais(Pais pais) {
-    this.pais = pais;
-    return this;
-  }
-
-  /**
-   * Get pais
-   * @return pais
-  */
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Pais getPais() {
-    return pais;
-  }
-
-  public void setPais(Pais pais) {
-    this.pais = pais;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -102,13 +78,12 @@ public class Estado   {
     }
     Estado estado = (Estado) o;
     return Objects.equals(this.codigo, estado.codigo) &&
-        Objects.equals(this.nombre, estado.nombre) &&
-        Objects.equals(this.pais, estado.pais);
+        Objects.equals(this.nombre, estado.nombre);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(codigo, nombre, pais);
+    return Objects.hash(codigo, nombre);
   }
 
   @Override
@@ -118,7 +93,6 @@ public class Estado   {
     
     sb.append("    codigo: ").append(toIndentedString(codigo)).append("\n");
     sb.append("    nombre: ").append(toIndentedString(nombre)).append("\n");
-    sb.append("    pais: ").append(toIndentedString(pais)).append("\n");
     sb.append("}");
     return sb.toString();
   }

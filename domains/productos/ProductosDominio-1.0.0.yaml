@@ -1,0 +1,399 @@
+# OpenAPI version identifier - required for OpenAPI 3.0 domains
+openapi: 3.0.0
+
+#######################
+# Optional info section
+#######################
+info:
+  title: Dominio de Productos
+  description: Dominio de productos para Toures Balon
+  version: '1.0.0'
+
+components:
+
+  ####################
+  # Common data models
+  ####################
+  schemas:
+  
+  ####################
+  # Objetos
+  ####################
+    Producto:
+      type: object
+      description: paquete que contiene todos los componentes necesarios para un plan
+      required:
+        - id
+      properties:
+        id:
+          type: number
+        descripcion:
+          type: string
+        transportes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transporte'
+        eventos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Evento'
+        hospedajes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Hospedaje'
+    
+    Transporte:
+      type: object
+      description: transportes habilitados para realizar un viaje a cualquier destino
+      required: 
+        - id
+      properties:
+        id:
+          type: number
+          description: id interno del transporte
+        description:
+          type: string
+        vehiculo:
+          $ref: '#/components/schemas/Vehiculo'
+        fechaPartida:
+          type: string
+          format: date-time
+        lugarPartida:
+          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad'
+        fechaLlegada:
+          type: string
+          format: date-time
+        lugarDestino:
+          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad'
+        asientos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Asiento'
+        convenio:
+          type: string
+        
+    Asiento:
+      type: object
+      description: Puestos, cillas asociadas a un medio de transporte
+      properties:
+        id:
+          type: string
+        tipo:
+          type: string
+          description: >
+              'Prerencia asiento:'
+                * VIP: vip
+                * TURISTA: Medio
+                * ECONOMICO: precio bajo
+          enum: [VIP, TURISTA, ECONOMICO]
+        valor:
+          type: number
+          format: currency
+            
+    Vehiculo:
+      type: object
+      description: tipos de vehiculos para transportarse de un lugar a otro
+      properties:
+        id:
+          type: string
+        tipoVehiculo:
+          $ref: '#/components/schemas/TipoTransporte'
+        marca:
+          type: string
+        modelo:
+          type: integer
+          format: int32
+        referencia:
+          type: string
+          
+    Hospedaje:
+      type: object
+      description: Contiene la información del sitio donde se hospedará un cliente que pagó por una habitación en un hotel.
+      properties:
+        codigo:
+          description: Código que identifica al hospedaje
+          type: integer
+        nombre:
+          description: Nombre del establecimiento de hospedaje.
+          maxLength: 255
+          type: string
+          example: 'HOTEL DUERME BUENO'
+        tipoHospedaje:
+          $ref: '#/components/schemas/TipoHospedaje'
+        calificacion:
+          description: Calificación del hotel según los clientes y/o expertos.
+          type: number
+          minimum: 0
+          maximum: 5
+        direccion:
+          description: Código del producto dentro del sistema.
+          maxLength: 255
+          type: string
+          example: '23TH ST - CRAWROFD - 76005'
+        geolocalizacion:
+          $ref: '#/components/schemas/UbicacionGeografica'
+        pais:
+          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Pais'
+        ciudad:
+          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad'
+        informacion:
+          description: Texto que contiene una descripción del sitio, sus servicios, ventajas, etc.
+          type: string
+          maxLength: 4000
+        cantidadCuartos:
+          description: Cantidad de cuartos disponibles en el hotel.
+          type: integer
+          format: int32
+          minimum: 0
+        fotos:
+          description: lista de fotos que muestran las instalaciones del hospedaje.
+          type: array
+          items:
+            $ref: '#/components/schemas/Imagen'
+            
+    UbicacionGeografica: 
+      description: Ubicación geográfica de un sitio, definido por coordenadas polares (latitud y longitud).
+      type: object
+      properties: 
+        latitud: 
+          description: Coordenada de latitud.
+          type: number
+          format: float
+        longitud: 
+          description: Coordenada de longitud.
+          type: number
+          format: float
+          
+    TipoHospedaje:
+      description: Tipos de hotel posibles.
+      type: string
+      enum: 
+        - HOTEL
+        - MOTEL
+        - RESORT
+        - VILLA
+        - CABAÑA
+        
+    Imagen: 
+      description: Contiene la información de la imagen que se mostrará del evento.
+      type: object
+      properties:
+        nombre:
+          type: string
+        path:
+          type: string
+        dimensiones:
+          type: object
+          properties:
+            ancho:
+              type: integer
+              minimum: 1
+            alto: 
+              type: integer
+              minimum: 1
+        data:
+          type: string
+          format: binary
+          
+    Evento: 
+      description: Contiene la información del evento al cual es cliente asistirá.
+      type: object
+      properties:
+        id: 
+          type: integer
+        nombre:
+          type: string
+          maxLength: 100
+        descripcion:
+          type: string
+          maxLength: 255
+        fecha:
+          type: string
+          format: date
+        hora:
+          type: string
+          format: time
+        zonaHoraria:
+          type: string
+        cantidad: 
+          type: integer
+        ubicacionEvento: 
+          $ref: '#/components/schemas/Direccion'
+        localidades: 
+          type: array
+          items:
+            $ref: '#/components/schemas/Localidad'
+        asientos: 
+          type: array
+          minLength: 0
+          items:
+            type: string
+        tipo:
+          type: string
+          description: Tipo de evento.
+          enum:
+            - Concierto
+            - Futbol
+            - Baloncesto
+            - Actividad
+            - Otro
+        imagenes: 
+          type: array
+          items:
+            $ref: '#/components/schemas/Imagen'
+        imagenPrincipal:
+          type: integer
+          format: int32
+          default: 1
+        estado:
+          type: string
+          description: Estado el evento
+          enum:
+            - ACTIVO
+            - INACTIVO
+            
+    Localidad: 
+      description: Contiene la información de la localidad dentro del evento, en caso de existir .
+      type: object
+      properties:
+        id: 
+          type: integer
+          readOnly: true
+        nombre:
+          type: string
+        precio:
+          type: number
+          format: double
+        aforo:
+          type: integer
+          
+    Direccion: 
+      description: Contiene la información de la direccion
+      type: object
+      properties:
+        direccion:
+          description: Dirección completa.
+          maxLength: 254
+          type: string
+        ubicacion:
+            $ref: '#/components/schemas/UbicacionGeografica'
+        tipo:
+          type: string
+          enum:
+            - CASA
+            - OFICINA
+            - OTRO
+        pais:
+          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Pais'
+        ciudad:
+          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad'
+        estado:
+          $ref: '#/components/schemas/Estado'
+        fechaCreacion:
+          description: Fecha de creación de la dirección
+          type: string
+          format: date-time
+          
+    
+  ####################
+  # Catalogos
+  ####################
+    TipoTransporte:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        capacidadPersonas:
+          type: number
+        capacidadEquipaje:
+          type: number
+        tipoCapacidadCarga:
+          type: string
+          description: >
+            'Capacidad:'
+              * Kg: Kilogramos
+              * Ton: Toneladas
+          enum: [Kg, Ton]
+          
+    ErrorResponse:
+      description: Respuesta de la operación de un servicio.
+      properties:
+        message:
+          maxLength: 500
+          minLength: 1
+          type: string
+          description: Descripción del error general.
+        error:
+          type: array
+          description: Lista de los errores específicos.
+          items:
+            $ref: '#/components/schemas/Error'
+            
+    Estado:
+      description: Estado
+      type: object
+      properties:
+        codigo: 
+          description: Código del estado.
+          format: int32
+          minimum: 1
+          type: number
+        nombre: 
+          description: Nombre del estado.
+          type: string
+          minLength: 1
+          maxLength: 64
+        pais:
+          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Pais'
+            
+    Error:
+      properties:
+        code:
+          maxLength: 128
+          minLength: 1
+          type: string
+          description: Código específico del error.
+        id:
+          maxLength: 40
+          minLength: 1
+          type: string
+          description: Id de referencia única para propósitos de auditoría.
+        message:
+          maxLength: 500
+          minLength: 1
+          type: string
+          description: Descripción del error específico.
+        path:
+          maxLength: 500
+          minLength: 1
+          type: string
+          description: Al referirse de un error debido a un campo específico, se describe la ruta del campo.
+        url:
+          maxLength: 500
+          minLength: 1
+          type: string
+          description: URL de la documentación en donde se encuentra mayor información sobre el error.
+      description: Error específico que describe un problema presentado al ejecutar una operación.
+    ErrorResponseDetail:
+      required:
+      - error
+      - message
+      properties:
+        message:
+          maxLength: 500
+          minLength: 1
+          type: string
+          description: Descripción del error general.
+        error:
+          required:
+          - code
+          - message
+          type: array
+          description: Lista de los errores específicos.
+          items:
+            $ref: '#/components/schemas/Error'
+      description: Mensaje de respuesta de error

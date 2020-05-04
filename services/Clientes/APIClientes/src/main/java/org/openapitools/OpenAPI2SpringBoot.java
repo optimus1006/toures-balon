@@ -1,24 +1,20 @@
 package org.openapitools;
 
 import com.fasterxml.jackson.databind.Module;
-import com.touresbalon.api.service.ClienteService;
 
 import org.openapitools.jackson.nullable.JsonNullableModule;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"org.openapitools", "com.touresbalon.api" , "org.openapitools.configuration"})
-@EnableJpaRepositories("com.touresbalon.api.repository")
-@EntityScan("com.touresbalon.api.repository")
+@ComponentScan(basePackages = {"org.openapitools", "com.touresbalon.api","com.touresbalon.api.repository" , "org.openapitools.configuration"})
+//@EnableJpaRepositories("com.touresbalon.api.repository.read")
 public class OpenAPI2SpringBoot implements CommandLineRunner {
 
 	

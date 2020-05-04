@@ -6,8 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.touresbalon.api.repository.ClienteRepository;
-
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;

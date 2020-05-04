@@ -1,0 +1,1 @@
+java -jar openapi-generator-cli.jar generate  -i "rutal local del yaml" -g spring -o project --model-package com.touresbalon.api --api-package com.touresbalon.api --group-id com.touresbalon.service --artifact-id touresbalon-api-clientes --artifact-version 1.0.0

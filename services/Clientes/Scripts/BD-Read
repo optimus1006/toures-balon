@@ -1,0 +1,176 @@
+-- Database: Clientes-Read
+
+-- DROP DATABASE "Clientes-Read";
+
+CREATE DATABASE "Clientes-Read"
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Spanish_Spain.1252'
+    LC_CTYPE = 'Spanish_Spain.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+	
+	
+-- Table: public.categoria
+
+-- DROP TABLE public.categoria;
+
+CREATE TABLE public.categoria
+(
+    codigo integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    nombre text COLLATE pg_catalog."default",
+    CONSTRAINT "Categoria_pkey" PRIMARY KEY (codigo)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.categoria
+    OWNER to postgres;
+	
+INSERT INTO public.categoria(
+	nombre)
+	VALUES ('PLATEADO');
+
+INSERT INTO public.categoria(
+	nombre)
+	VALUES ('DORADO');
+	
+INSERT INTO public.categoria(
+	nombre)
+	VALUES ('PLATINO');
+	
+	
+-- Table: public.estado
+
+-- DROP TABLE public.estado;
+
+CREATE TABLE public.estado
+(
+    codigo integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    nombre text COLLATE pg_catalog."default",
+    CONSTRAINT "Estado_pkey" PRIMARY KEY (codigo)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.estado
+    OWNER to postgres;
+	
+INSERT INTO public.estado(
+	nombre)
+	VALUES ('ACTIVO');
+	
+INSERT INTO public.estado(
+	nombre)
+	VALUES ('INACTIVO');
+
+
+-- Table: public.tipoidentificacion
+
+-- DROP TABLE public.tipoidentificacion;
+
+CREATE TABLE public.tipoidentificacion
+(
+    codigo text COLLATE pg_catalog."default" NOT NULL,
+    descripcion text COLLATE pg_catalog."default",
+    CONSTRAINT tipoidentificacion_pkey PRIMARY KEY (codigo)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.tipoidentificacion
+    OWNER to postgres;
+	
+INSERT INTO public.tipoidentificacion(
+	codigo, descripcion)
+	VALUES ('CC', 'CEDULA DE CIUDADANIA');
+
+
+-- Table: public.cliente
+
+-- DROP TABLE public.cliente;
+
+CREATE TABLE public.cliente
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    identificacion text COLLATE pg_catalog."default" NOT NULL,
+    nombres text COLLATE pg_catalog."default" NOT NULL,
+    apellidos text COLLATE pg_catalog."default" NOT NULL,
+    email text COLLATE pg_catalog."default",
+    categoria integer,
+    estado integer,
+    telefono text COLLATE pg_catalog."default",
+    celular text COLLATE pg_catalog."default",
+    tipoidentificacion text COLLATE pg_catalog."default" NOT NULL,
+    fecharegistro timestamp without time zone,
+    CONSTRAINT "Cliente_pkey" PRIMARY KEY (id),
+    CONSTRAINT estado_fk FOREIGN KEY (estado)
+        REFERENCES public.estado (codigo) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT tipoidentificacion_fk FOREIGN KEY (tipoidentificacion)
+        REFERENCES public.tipoidentificacion (codigo) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.cliente
+    OWNER to postgres;	
+-- Table: public.direccion
+
+-- DROP TABLE public.direccion;
+
+CREATE TABLE public.direccion
+(
+    codigo integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    direccion text COLLATE pg_catalog."default" NOT NULL,
+    tipo text COLLATE pg_catalog."default",
+    pais integer NOT NULL,
+    ciudad integer,
+    estado integer,
+    fechacreacion date,
+    idcliente integer,
+    latitud text COLLATE pg_catalog."default",
+    longitud text COLLATE pg_catalog."default",
+    CONSTRAINT "Direccion_pkey" PRIMARY KEY (codigo),
+    CONSTRAINT cliente_fk FOREIGN KEY (idcliente)
+        REFERENCES public.cliente (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.direccion
+    OWNER to postgres;
+
+
+-- Table: public.tarjeta
+
+-- DROP TABLE public.tarjeta;
+
+CREATE TABLE public.tarjeta
+(
+    numero numeric NOT NULL,
+    tipo text COLLATE pg_catalog."default",
+    principal boolean,
+    idcliente integer,
+    estado text COLLATE pg_catalog."default",
+    CONSTRAINT "Tarjeta_pkey" PRIMARY KEY (numero),
+    CONSTRAINT cliente_fk FOREIGN KEY (idcliente)
+        REFERENCES public.cliente (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.tarjeta
+    OWNER to postgres;
