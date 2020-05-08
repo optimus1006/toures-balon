@@ -69,9 +69,13 @@ components:
         lugarDestino:
           $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad'
         asientos:
+          description: indica la cantidad de voletos comprados para el transporte
           type: array
           items:
             $ref: '#/components/schemas/Asiento'
+        cantidadCupos:
+          description: indica la cantidad de asientos que el convenio esta dispuesto a ofrecer
+          type: integer
         convenio:
             $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/convenios/DominioConvenios-1.0.0.yaml#/components/schemas/Convenio'
         
