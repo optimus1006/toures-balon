@@ -1,0 +1,1615 @@
+openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/manuelgonzalezb/ProductosAPI/1.0.0
+info:
+  description: 'Este es el API de productos para el grupo de servicios de Toures Balon. En este documento se encuentra la definición de los servicios requeridos para la administración de productos para el cliente como para los proveedores que requieren registrar un producto.'
+  version: "1.0.0"
+  title: Toures Balon - API Productos
+  contact:
+    email: mg_gonzalez@javeriana.edu.co
+  license:
+    name: Archetype 1.0
+    url: 'https://github.com/optimus1006/toures-balon/blob/master/README.md'
+tags:
+  - name: Transportes
+    description: Transportes que intervienen en la operacion de la empresa
+  - name: Hospedajes
+    description: Hospedajes que intervienen en la operacion de la empresa
+    
+  - name: Eventos
+    description: Operaciones de consulta, creación, actualización y borrado de eventos
+  
+paths:
+  /productos:
+    get:
+      tags:
+        - Productos
+      summary: Consulta la informacion de todos los productos creados basado en parametros de busqueda
+      operationId: ProductosGETAll
+      description: Consulta la informacion de todos los productos creados basado en parametros de busqueda
+      parameters:
+        - in: query
+          name: offset
+          required: false
+          schema:
+            type: integer
+            description: El número de productos a omitir antes de comenzar a recopilar el conjunto de resultados
+        - in: query
+          name: limit
+          required: false
+          schema:
+            type: integer
+          description: El número de productos a retornar
+        - in: query
+          name: nombre
+          required: false
+          schema:
+            type: integer
+          description: Nombre o parte para consultar
+        - in: query
+          name: fechaDesde
+          required: false
+          schema:
+            type: string
+            format: date
+          description: Fecha inferior para buscar por rango
+        - in: query
+          name: fechaHasta
+          schema:
+            type: string
+            format: date
+          description: Fecha superior para buscar por rango
+        - in: query
+          name: estado
+          schema:
+            type: string
+            enum:
+              - ACTIVO
+              - INACTIVO
+          description: Estado del producto.
+      responses:
+        '200':
+          description: Consulta exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductosGETAllRS'
+              example:
+                productos:
+                  - producto:
+                      id: 2233
+                      descripcion: paquete economico a eliminatorias col vs arg
+                      eventos: 
+                        - evento:
+                          nombre: 'Partido Colombia     -Argentina'
+                          descripcion: 'Eliminatorias     almundial - Colombia Vs   Argentina'
+                          fecha: '2020-03-28'
+                          hora: '15:30:00'
+                          zonaHoraria: 'America/Bogota'
+                          estado: 'ACTIVO'
+                          cantidad: 2
+                          direccion: 
+                            direccion: 
+                              direccion: 'Avenida 1'
+                            ubicacion: 
+                              latitud: 1223
+                              longitud: 3123
+                            tipo: 'CASA'
+                            pais:
+                              codigo: 'COL'
+                            ciudad:
+                              codigo: 'BAR'
+                            estado:
+                              codigo: 'ATL'
+                          localidades: 
+                            localidad:
+                              nombre: 'Occidental'
+                              precio: 100000.00
+                            localidad2:
+                              nombre: 'Oriental'
+                              precio: 80000.00
+                          asientos: 
+                            - '1'
+                            - '2'
+                          tipo: 'Futbol'
+                          imagenes: 
+                            imagen:
+                              descripcion: 'Imagen   partido'
+                              nombre: 'Imagen'
+                              path: 'images/imagen.png'
+                          imagenPrincipal: 'images  /colombia-argentina.png'
+                      transportes:
+                        - transporte:
+                            id: AF4433
+                            descripcion: 'avion boing 777   avianca'
+                            vehiculo:
+                              id: 5556676
+                              tipoTransporte:
+                                id: 2
+                            fechaPartida: '2020-05-15 09  :00:05'
+                            lugarPartida:
+                              codigo: 20
+                              nombre: 'CALI'
+                              pais:
+                                codigo: 7
+                                nombre: Colombia
+                            fechaLlegada: '2020-05-15 11  :00:05'
+                            lugarLlegada:
+                              codigo: 6
+                              nombre: 'BOGOTA'
+                              pais:
+                                codigo: 7
+                                nombre: Colombia
+                            asientos:
+                              - asiento:
+                                  id: F29
+                                  tipo: TURISTA
+                              - asiento:
+                                  id: F13
+                                  tipo: TURISTA
+        '400':
+          description: Parametro invalido
+        '500':
+          description: Error del sistema
+        '401':
+          description: No autorizado
+          
+    post:
+      tags:
+        - Productos
+      summary: Crear paquete de productos
+      operationId: ProductosPST
+      description: Crear paquete de productos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductosPSTRq'
+            example:
+              producto:
+                descripcion: paquete vacacional a ver la final de champins league
+                eventos:
+                  - evento:
+                      id: 18867
+        description: Producto a registrar
+      responses:
+        '201':
+          description: Producto registrado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductosPSTRs'
+              example: 
+                producto:
+                  id: 88546
+        '400':
+          description: 'Parametro Invalido'
+        '409':
+          description: Evento ya estaba registrado  
+        '500':
+          description: Error del sistema
+          
+  /productos/producto/{idProducto}:
+    get:
+      tags:
+        - Productos
+      summary: Consulta la información de un producto de acuerdo a su id
+      operationId: ProductosGETById
+      description: Consulta la información de un producto de acuerdo a su id
+      parameters:
+        - name: idProducto
+          in: path
+          description: Id de producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Consulta exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductosGETAllRS'
+              example:
+                  producto:
+                    id: 2233
+                    descripcion: paquete economico a eliminatorias col vs arg
+                    eventos: 
+                      - evento:
+                        nombre: 'Partido Colombia     -Argentina'
+                        descripcion: 'Eliminatorias     almundial - Colombia Vs   Argentina'
+                        fecha: '2020-03-28'
+                        hora: '15:30:00'
+                        zonaHoraria: 'America/Bogota'
+                        estado: 'ACTIVO'
+                        cantidad: 2
+                        direccion: 
+                          direccion: 
+                            direccion: 'Avenida 1'
+                          ubicacion: 
+                            latitud: 1223
+                            longitud: 3123
+                          tipo: 'CASA'
+                          pais:
+                            codigo: 'COL'
+                          ciudad:
+                            codigo: 'BAR'
+                          estado:
+                            codigo: 'ATL'
+                        localidades: 
+                          localidad:
+                            nombre: 'Occidental'
+                            precio: 100000.00
+                          localidad2:
+                            nombre: 'Oriental'
+                            precio: 80000.00
+                        asientos: 
+                          - '1'
+                          - '2'
+                        tipo: 'Futbol'
+                        imagenes: 
+                          imagen:
+                            descripcion: 'Imagen   partido'
+                            nombre: 'Imagen'
+                            path: 'images/imagen.png'
+                        imagenPrincipal: 'images  /colombia-argentina.png'
+                    transportes:
+                      - transporte:
+                          id: AF4433
+                          descripcion: 'avion boing 777   avianca'
+                          vehiculo:
+                            id: 5556676
+                            tipoTransporte:
+                              id: 2
+                          fechaPartida: '2020-05-15 09  :00:05'
+                          lugarPartida:
+                            codigo: 20
+                            nombre: 'CALI'
+                            pais:
+                              codigo: 7
+                              nombre: Colombia
+                          fechaLlegada: '2020-05-15 11  :00:05'
+                          lugarLlegada:
+                            codigo: 6
+                            nombre: 'BOGOTA'
+                            pais:
+                              codigo: 7
+                              nombre: Colombia
+                          asientos:
+                            - asiento:
+                                id: F29
+                                tipo: TURISTA
+                            - asiento:
+                                id: F13
+                                tipo: TURISTA
+        '400':
+          description: Parametro invalido
+        '500':
+          description: Error del sistema
+        '401':
+          description: No autorizado
+    
+    patch:
+      tags:
+        - Productos
+      summary: Actualizar información del producto
+      operationId: ProductosPCT
+      description: Actualiza el producto de acuerdo con los parámetros recibidos.
+      parameters:
+        - name: idProducto
+          in: path
+          description: Id de producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductosPCTRq'
+            example: 
+              producto:
+                transportes:
+                  - transporte:
+                      id: 44092
+                
+        description: Producto a actualizar
+      responses:
+        '201':
+          description: Producto actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductoPCTRs'
+              example: 
+                evento:
+                  id: 1
+        '400':
+          description: 'Parametro Invalido'
+        '500':
+          description: Error del sistema
+    delete:
+      tags:
+        - Productos
+      summary: Borrar el evento por su id
+      operationId: ProductosDEL
+      description: Borra el evento de acuerdo al id recibido.
+      parameters:
+        - name: idProducto
+          in: path
+          description: Id de evento
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Evento borrado exitosamente
+        '400':
+          description: 'Parametro Invalido'
+        '500':
+          description: Error del sistema      
+    
+      
+  /productos/eventos:
+    get:
+      tags:
+        - Eventos
+      summary: Consulta al información de los eventos basado en parámetros de búsqueda
+      operationId: EventosGETAll
+      description: |
+        Consulta al información de los eventos basado en parámetros de búsqueda
+      parameters:
+        - in: query
+          name: offset
+          required: false
+          schema:
+            type: integer
+          description: El número de eventos a omitir antes de comenzar a recopilar el conjunto de resultados
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: El número de eventos a retornar
+        - in: query
+          name: nombre
+          schema:
+            type: integer
+          description: Nombre o parte para consultar
+        - in: query
+          name: fechaDesde
+          schema:
+            type: string
+            format: date
+          description: Fecha inferior para buscar por rango
+        - in: query
+          name: fechaHasta
+          schema:
+            type: string
+            format: date
+          description: Fecha superior para buscar por rango
+        - in: query
+          name: estado
+          schema:
+            type: string
+            enum:
+              - ACTIVO
+              - INACTIVO
+          description: Estado del evento.
+      responses:
+        '200':
+          description: Consulta exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventosGETAllRS'
+              example: 
+                eventos: 
+                  - evento:
+                    nombre: 'Partido Colombia -Argentina'
+                    descripcion: 'Eliminatorias almundial - Colombia Vs Argentina'
+                    fecha: '2020-03-28'
+                    hora: '15:30:00'
+                    zonaHoraria: 'America/Bogota'
+                    estado: 'ACTIVO'
+                    cantidad: 2
+                    direccion: 
+                      direccion: 
+                        direccion: 'Avenida 1'
+                      ubicacion: 
+                        latitud: 1223
+                        longitud: 3123
+                      tipo: 'CASA'
+                      pais:
+                        codigo: 'COL'
+                      ciudad:
+                        codigo: 'BAR'
+                      estado:
+                        codigo: 'ATL'
+                    localidades: 
+                      localidad:
+                        nombre: 'Occidental'
+                        precio: 100000.00
+                      localidad2:
+                        nombre: 'Oriental'
+                        precio: 80000.00
+                    asientos: 
+                      - '1'
+                      - '2'
+                    tipo: 'Futbol'
+                    imagenes: 
+                      imagen:
+                        descripcion: 'Imagen partido'
+                        nombre: 'Imagen'
+                        path: 'images/imagen.png'
+                    imagenPrincipal: 'images/colombia-argentina.png'
+        '400':
+          description: Parametro invalido
+        '500':
+          description: Error del sistema
+        '401':
+          description: No autorizado
+    post:
+      tags:
+        - Eventos
+      summary: Registrar un nuevo evento
+      operationId: EventosPST
+      description: Crea el evento de acuerdo con los parámetros recibidos.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventosPSTRq'
+            example: 
+              evento:
+                nombre: 'Partido Colombia - Argentina'
+                descripcion: 'Eliminatorias al mundial - Colombia Vs Argentina'
+                fecha: '2020-03-28'
+                hora: '15:30:00'
+                zonaHoraria: 'America/Bogota'
+                estado: 'ACTIVO'
+                cantidad: 2
+                direccion: 
+                  direccion: 
+                    direccion: 'Avenida 1'
+                  ubicacion: 
+                    latitud: 1223
+                    longitud: 3123
+                  tipo: 'CASA'
+                  pais:
+                    codigo: 'COL'
+                  ciudad:
+                    codigo: 'BAR'
+                  estado:
+                    codigo: 'ATL'
+                localidades: 
+                  localidad:
+                    nombre: 'Occidental'
+                    precio: 100000.00
+                  localidad2:
+                    nombre: 'Oriental'
+                    precio: 80000.00
+                asientos: 
+                  - '1'
+                  - '2'
+                tipo: 'Futbol'
+                imagenes: 
+                  imagen:
+                    descripcion: 'Imagen partido'
+                    nombre: 'Imagen'
+                    path: 'images/imagen.png'
+                imagenPrincipal: 'images/colombia-argentina.png'
+        description: Evento a registrar
+      responses:
+        '201':
+          description: Evento registrado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventosPSTRs'
+              example: 
+                evento:
+                  id: 1
+        '400':
+          description: 'Parametro Invalido'
+        '409':
+          description: Evento ya estaba registrado  
+        '500':
+          description: Error del sistema           
+          
+  /productos/eventos/{idEvento}:
+    get:
+      tags:
+        - Eventos
+      summary: Consulta al información de un evento por su id
+      operationId: EventosGETById
+      description: |
+        Consulta al información de un evento por su id
+      parameters:
+        - name: idEvento
+          in: path
+          description: Id de evento
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Consulta exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventosGETByIdRs'
+              example: 
+                evento:
+                  nombre: 'Partido Colombia - Argentina'
+                  descripcion: 'Eliminatorias al mundial - Colombia Vs Argentina'
+                  fecha: '2020-03-28'
+                  hora: '15:30:00'
+                  zonaHoraria: 'America/Bogota'
+                  estado: 'ACTIVO'
+                  cantidad: 2
+                  direccion: 
+                    direccion: 
+                      direccion: 'Avenida 1'
+                    ubicacion: 
+                      latitud: 1223
+                      longitud: 3123
+                    tipo: 'CASA'
+                    pais:
+                      codigo: 'COL'
+                    ciudad:
+                      codigo: 'BAR'
+                    estado:
+                      codigo: 'ATL'
+                  localidades: 
+                    localidad:
+                      nombre: 'Occidental'
+                      precio: 100000.00
+                    localidad2:
+                      nombre: 'Oriental'
+                      precio: 80000.00
+                  asientos: 
+                    - '1'
+                    - '2'
+                  tipo: 'Futbol'
+                  imagenes: 
+                    imagen:
+                      descripcion: 'Imagen partido'
+                      nombre: 'Imagen'
+                      path: 'images/imagen.png'
+                  imagenPrincipal: 1
+        '400':
+          description: Parametro invalido
+        '500':
+          description: Error del sistema
+        '401':
+          description: No autorizado
+    patch:
+      tags:
+        - Eventos
+      summary: Actualizar información del evento
+      operationId: EventosPCT
+      description: Actualiza el evento de acuerdo con los parámetros recibidos.
+      parameters:
+        - name: idEvento
+          in: path
+          description: Id de evento
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventosPCTRq'
+            example: 
+              evento:
+                nombre: 'Partido Colombia - Venezuela'
+                descripcion: 'Eliminatorias al mundial - Colombia Vs Venezuela'
+                fecha: '2020-03-29'
+                hora: '16:30:00'
+        description: Evento a actualizar
+      responses:
+        '201':
+          description: Evento actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventosPCTRs'
+              example: 
+                evento:
+                  id: 1
+        '400':
+          description: 'Parametro Invalido'
+        '500':
+          description: Error del sistema
+    delete:
+      tags:
+        - Eventos
+      summary: Borrar el evento por su id
+      operationId: EventosDEL
+      description: Borra el evento de acuerdo al id recibido.
+      parameters:
+        - name: idEvento
+          in: path
+          description: Id de evento
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Evento borrado exitosamente
+        '400':
+          description: 'Parametro Invalido'
+        '500':
+          description: Error del sistema
+  /productos/{idProducto}/eventos:
+    get:
+      tags:
+        - Eventos
+      summary: Consulta al información de los eventos basado en parámetros de búsqueda
+      operationId: EventosGETByProduct
+      description: |
+        Consulta al información de los eventos basado en parámetros de búsqueda
+      parameters:
+        - in: path
+          name: idProducto
+          schema:
+            type: integer
+          description: Identificador del producto
+          required: true
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: El número de eventos a omitir antes de comenzar a recopilar el conjunto de resultados
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: El número de eventos a retornar
+        - in: query
+          name: nombre
+          schema:
+            type: integer
+          description: Nombre o parte para consultar
+        - in: query
+          name: estado
+          schema:
+            type: string
+            enum:
+              - ACTIVO
+              - INACTIVO
+          description: Estado del evento.
+      responses:
+        '200':
+          description: Consulta exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventosGETAllRS'
+              example: 
+                eventos: 
+                  - evento:
+                    nombre: 'Partido Colombia -Argentina'
+                    descripcion: 'Eliminatorias almundial - Colombia Vs Argentina'
+                    fecha: '2020-03-28'
+                    hora: '15:30:00'
+                    zonaHoraria: 'America/Bogota'
+                    estado: 'ACTIVO'
+                    cantidad: 2
+                    direccion: 
+                      direccion: 
+                        direccion: 'Avenida 1'
+                      ubicacion: 
+                        latitud: 1223
+                        longitud: 3123
+                      tipo: 'OTRO'
+                      pais:
+                        codigo: 'COL'
+                      ciudad:
+                        codigo: 'BAR'
+                      estado:
+                        codigo: 'ATL'
+                    localidades: 
+                      localidad:
+                        nombre: 'Occidental'
+                        precio: 100000.00
+                      localidad2:
+                        nombre: 'Oriental'
+                        precio: 80000.00
+                    asientos: 
+                      - '1'
+                      - '2'
+                    tipo: 'Futbol'
+                    imagenes: 
+                      imagen:
+                        descripcion: 'Imagen partido'
+                        nombre: 'Imagen'
+                        path: 'images/imagen.png'
+                    imagenPrincipal: 1
+        '400':
+          description: Parametro invalido
+        '500':
+          description: Error del sistema
+        '401':
+          description: No autorizado
+
+  /productos/hospedaje/{codigo}:
+    get:
+      tags: 
+        - Hospedajes
+      description: Realiza la consulta de un hospedaje específico, trayendo toda la información del sitio.
+      operationId: HospedajesGetById
+      parameters: 
+      - name: codigo
+        in: path
+        description: Código del sitio.
+        required: true
+        schema:
+          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+      responses:
+        200:
+          description: Operación de consulta exitosa.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://api.swaggerhub.com/domains/manuelgonzalezb/ProductosDominio/1.0.0#/components/schemas/Hospedaje'
+        400: 
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto.
+        401: 
+          description: No tiene autorización de realizar esta operación.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: No tiene autorización de realizar esta operación.
+        403: 
+          description: Solicitud denegada.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: Solicitud denegada.
+        404: 
+          description: Operacion no encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: Operación no encontrada.
+        405: 
+          description: Operación no soportada.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: Operación no soportada.
+        500: 
+          description: Error en el procesamiento de la solicitud.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: Error en el procesamiento de la solicitud.
+                
+    patch:
+      tags:
+        - Hospedajes
+      summary: Actualizar la información de un hospedaje
+      operationId: HospedajesPCT
+      description: Actualizar los datos del hospedaje de acuerdo a los parametros de entrada.
+      parameters:
+        - in: path
+          name: codigo
+          required: true
+          description: 'Código del hospedaje seleccionado.'
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+      # BODY REQUEST
+      requestBody:
+        description: 'Datos para realizar la actualizacion de un hospedaje.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HospedajesPCTRq'
+      responses:
+        '201':
+          description: 'Hospedaje actualizado exitosamente'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HospedajesPCTRs'
+              example: # Creación de un hospedaje
+                transporte: 
+                  id: 3 
+        '400':
+          description: 'Error de parametros en request.'
+        '409':
+          description: 'error en parametros de entrada.'
+    
+    delete:
+      tags:
+        - Hospedajes
+      summary: Borra un transporte
+      operationId: HospedajesDEL
+      description: borra un transporte de acuerdo al id enviado
+      parameters:
+        - in: path
+          name: codigo
+          required: true
+          description: 'Código del hospedaje.'
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+      responses:
+        '200':
+          description: 'Hospedaje actualizado exitosamente'
+        '400':
+          description: 'Error de parametros del request.'
+        '409':
+          description: 'error en parametros de entrada.'
+    
+  /productos/hospedajes:
+    get:
+      tags: 
+        - Hospedajes
+      description: Realiza la consulta un grupo de hospedajes de acuerdo a características de uno de estos sitios.
+      operationId: HospedajesGetByType
+      parameters: 
+        - in: query
+          name: nombre
+          description: Nombre o fragmento del nombrte de un hospedaje.
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: tipoHospedaje
+          description: Tipo o tipos de hospedaje.
+          required: false
+          schema:
+            type: array
+            items:
+              $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/TipoHospedaje'
+        - in: query
+          name: calificacion
+          description: Calificaciones de lops hospedajes que el usuario quiere ver.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: geoLocalizacion
+          description: Posición geográfica en valores de latitud y logitud, para encontrar sitios aproximados.
+          required: false
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/UbicacionGeografica'
+        - in: query
+          name: pais
+          description: Código de país para filtrar por un país en específico.
+          required: false
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Pais'
+        - in: query
+          name: ciudad
+          description: Código de la ciudad para filtrar por una ciudad en específico.
+          required: false
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad'
+      responses:
+        200:
+          description: Operación de consulta exitosa.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HospedajesGetAllRs'
+        400: 
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto.
+        401: 
+          description: No tiene autorización de realizar esta operación.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: No tiene autorización de realizar esta operación.
+        403: 
+          description: Solicitud denegada.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: Solicitud denegada.
+        404: 
+          description: Operacion no encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://api.swaggerhub.com/domains/manuelgonzalezb/ProductosDominio/1.0.0#/components/schemas/ErrorResponse'
+              example:
+                message: Operación no encontrada.
+        405: 
+          description: Operación no soportada.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: Operación no soportada.
+        500: 
+          description: Error en el procesamiento de la solicitud.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: Error en el procesamiento de la solicitud.
+
+    post:
+      tags: 
+        - Hospedajes
+      summary: Crea un nuevo sitio de hospedaje.
+      operationId: hospedajesPST
+      description: Crea un hospedaje dentro del sistema.
+      requestBody:
+        description: Datos necesarios para la creación de un hospedaje.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HospedajesPSTRq'
+      responses:
+        '201':
+          description: 'Hospedaje creado exitosamente'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HospedajesPSTRs'
+              example: # Creación de un hospedaje
+                hospedaje: 
+                  id: 3 
+        '400':
+          description: 'Error de parametros en request'
+        '409':
+          description: 'Ya existe el hospedaje'
+          
+  /productos/transportes:
+    get:
+      tags:
+        - Transportes
+      summary: Consultar todos los transportes existentes
+      operationId: TransportesGETAll
+      description: |
+        Realiza la consulta completa de los transportes existentes para toures balon
+      parameters:
+        - in: query
+          name: convenio
+          description: parametro opcional de busqueda para filtrar por convenio
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: fechaLlegada
+          description: parametro opcional de busqueda para filtrar por fecha de llegada
+          required: false
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: fechaSalida
+          description: parametro opcional de busqueda para filtrar por fecha de salida
+          required: false
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: lugarDestino
+          description: parametro opcional de busqueda para filtrar por lugar de destino
+          required: false
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad'
+        - in: query
+          name: lugarPartida
+          description: parametro opcional de busqueda para filtrar por lugar de partida
+          required: false
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad'
+        - in: query
+          name: vehiculo
+          description: parametro opcional de busqueda para filtrar por vehiculo
+          required: false
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Vehiculo'
+      responses:
+        '200':
+          description: Se ha realizado la consulta exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportesGETAllRs'
+              example:
+                transportes:
+                  - transporte:
+                      id: AF4433
+                      descripcion: 'avion boing 777 avianca'
+                      vehiculo:
+                        id: 5556676
+                        tipoTransporte:
+                          id: 2
+                      fechaPartida: '2020-05-15 09:00:05'
+                      lugarPartida:
+                        codigo: 20
+                        nombre: 'CALI'
+                        pais:
+                          codigo: 7
+                          nombre: Colombia
+                      fechaLlegada: '2020-05-15 11:00:05'
+                      lugarLlegada:
+                        codigo: 6
+                        nombre: 'BOGOTA'
+                        pais:
+                          codigo: 7
+                          nombre: Colombia
+                      asientos:
+                        - asiento:
+                            id: F29
+                            tipo: TURISTA
+                        - asiento:
+                            id: F13
+                            tipo: TURISTA
+                        
+        '400':
+          description: Ha ocurrido un error en el mensaje
+        '500':
+          description: Ha ocurrido un error interno en el sistema
+    post:
+      tags:
+        - Transportes
+      summary: Crear un transporte
+      operationId: TransportesPST
+      description: Crea un transporte de acuerdo a los parametros dados
+      # BODY REQUEST
+      requestBody:
+        description: 'Datos para realizar la creación de un transporte.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransportesPSTRq'
+            example:
+              transporte:
+                descripcion: 'Van mediana'
+                vehiculo:
+                  id: 5556676
+                  tipoTransporte:
+                    id: 1
+                fechaPartida: '2020-05-15 09:00:05'
+                lugarPartida:
+                  codigo: 20
+                fechaLlegada: '2020-05-15 11:00:05'
+                lugarLlegada:
+                  codigo: 6
+                asientos:
+                  - asiento:
+                      id: 4
+                      tipo: TURISTA
+                  - asiento:
+                      id: 5
+                      tipo: TURISTA
+      responses:
+        '201':
+          description: 'Transporte creado exitosamente'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportesPSTRs'
+              example: # Creación de un transporte
+                transporte: 
+                  id: 3 
+        '400':
+          description: 'Error de parametros en request'
+        '409':
+          description: 'Ya existe el transporte'
+        
+  /productos/transportes/{idTransporte}:
+    get: 
+      tags:
+        - Transportes
+      summary: Consultar todos los transportes existentes
+      operationId: TransportesGETById
+      description: |
+        Realiza la consulta de un transporete existente de acuerdo a su id para toures balon
+      parameters:
+        - in: path
+          name: idTransporte
+          required: true
+          description: 'Código del transporte.'
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+      responses:
+        '200':
+          description: Se ha realizado la consulta exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportesGETByIdRs'
+              example:
+                transportes:
+                  - transporte:
+                      id: AF4433
+                      descripcion: 'avion boing 777 avianca'
+                      vehiculo:
+                        id: 5556676
+                        tipoTransporte:
+                          id: 2
+                      fechaPartida: '2020-05-15 09:00:05'
+                      lugarPartida:
+                        codigo: 20
+                        nombre: 'CALI'
+                        pais:
+                          codigo: 7
+                          nombre: Colombia
+                      fechaLlegada: '2020-05-15 11:00:05'
+                      lugarLlegada:
+                        codigo: 6
+                        nombre: 'BOGOTA'
+                        pais:
+                          codigo: 7
+                          nombre: Colombia
+                      asientos:
+                        - asiento:
+                            id: F29
+                            tipo: TURISTA
+                        - asiento:
+                            id: F13
+                            tipo: TURISTA
+                          
+                        
+        '400':
+          description: Ha ocurrido un error en el mensaje
+        '500':
+          description: Ha ocurrido un error interno en el sistema
+          
+    patch:
+      tags:
+        - Transportes
+      summary: Actualizar un transporte
+      operationId: TransportesPCT
+      description: Actualizar un transporte de acuerdo a los parametros dados
+      parameters:
+        - in: path
+          name: idTransporte
+          required: true
+          description: 'Código del transporte.'
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+      # BODY REQUEST
+      requestBody:
+        description: 'Datos para realizar la actualizacion de un transporte.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransportesPCTRq'
+            example:
+              transporte:
+                descripcion: 'Van mediana'
+                vehiculo:
+                  id: 5556676
+                  tipoTransporte:
+                    id: 1
+                fechaPartida: '2020-05-15 09:00:05'
+                lugarPartida:
+                  codigo: 20
+                fechaLlegada: '2020-05-15 11:00:05'
+                lugarLlegada:
+                  codigo: 6
+                asientos:
+                  - asiento:
+                      id: 4
+                      tipo: TURISTA
+      responses:
+        '201':
+          description: 'Transporte actualizado exitosamente'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportesPCTRs'
+              example: # Creación de un transporte
+                transporte: 
+                  id: 3 
+        '400':
+          description: 'Error de parametros en request'
+        '409':
+          description: 'error en parametros'
+          
+    delete:
+      tags:
+        - Transportes
+      summary: Borra un transporte
+      operationId: TransportesDEL
+      description: borra un transporte de acuerdo al id enviado
+      parameters:
+        - in: path
+          name: idTransporte
+          required: true
+          description: 'Código del transporte.'
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+      responses:
+        '200':
+          description: 'Transporte actualizado exitosamente'
+        '400':
+          description: 'Error de parametros en request'
+        '409':
+          description: 'error en parametros'    
+components:
+  schemas:
+    TransportesGETAllRs:
+      type: object
+      required:
+        - transportes
+      properties:
+        transportes:
+          type: array
+          items:
+            allOf:
+              - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+            properties:
+              vehiculo:
+                properties:
+                  id:
+                    nullable: true
+            required:
+              - id
+              - fechaPartida
+              - fechaLlegada
+              - lugarPartida
+              - lugarDestino
+              - convenio
+              
+    TransportesGETByIdRs:
+      type: object
+      required:
+        - transporte
+      properties:
+        transporte:
+          type: object
+          items:
+            allOf:
+              - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+              - type: object
+            properties:
+              vehiculo:
+                properties:
+                  id:
+                    nullable: true
+            required:
+              - id
+              - fechaPartida
+              - fechaLlegada
+              - lugarPartida
+              - lugarDestino
+              - convenio
+              
+    TransportesPSTRq:
+      type: object
+      required:
+        - transporte
+      properties:
+        transporte:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+            - type: object
+          required:
+            - id
+            - fechaPartida
+            - fechaLlegada
+            - lugarPartida
+            - lugarDestino
+            - convenio
+            
+    TransportesPSTRs:
+      description: 'Respuesta de  creación de un transporte.'
+      type: object
+      required:
+        - transporte
+      properties:
+        transporte:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+            - type: object
+          required:
+            - id
+            
+    TransportesPCTRq:
+      type: object
+      required:
+        - transporte
+      properties:
+        transporte:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+            - type: object
+            
+    TransportesPCTRs:
+      description: 'Respuesta de  actualizacion de un transporte.'
+      type: object
+      required:
+        - transporte
+      properties:
+        transporte:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+            - type: object
+          required:
+            - id
+            
+    HospedajesGetAllRs:
+      required: 
+      - hospedajes
+      type: object
+      properties:
+        hospedajes:
+          type: array
+          items:
+            required:
+            - codigo
+            - nombre
+            - tipoHospedaje
+            - direccion
+            - geolocalizacion
+            - pais
+            - ciudad
+            - cantidadCuartos
+            allOf:
+              - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+    HospedajesPSTRq:
+      type: object
+      required: 
+        - hospedaje
+      properties:
+        hospedaje:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+            - type: object
+          required: 
+            - codigo
+            - nombre
+            - tipoHospedaje
+            - direccion
+            - geolocalizacion
+            - pais
+            - ciudad
+            - cantidadCuartos
+    HospedajesPSTRs:
+      description: 'Respuesta de creación de un hospedaje.'
+      type: object
+      required:
+        - hospedaje
+      properties:
+        hospedaje:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+            - type: object
+          required:
+            - codigo
+    HospedajesPCTRq:
+      type: object
+      required:
+        - hospedaje
+      properties:
+        transporte:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+            - type: object
+    HospedajesPCTRs:
+      description: 'Respuesta de  actualizacion de un Hospedaje.'
+      type: object
+      required:
+        - hospedaje
+      properties:
+        transporte:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+            - type: object
+          required:
+            - codigo
+            
+    EventosGETAllRS:
+      description: Respuesta a consulta de todos los eventos
+      type: object
+      required:
+        - eventos
+      properties:
+        eventos:
+          type: array
+          items:
+            allOf:
+              - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Evento'
+            properties:
+              localidades:
+                required: 
+                  - localidad  
+              imagenes:
+                required: 
+                  - imagen  
+            required: 
+              - nombre
+              - fecha
+              - hora
+              - zonaHoraria
+              - cantidad
+              - ubicacionEvento
+              - tipo
+    EventosPSTRq:
+      description: Peticion de creacion de un evento
+      type: object
+      required:
+        - evento
+      properties:
+        evento:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Evento'
+            - type: object
+          required: 
+            - nombre
+            - fecha
+            - hora
+            - zonaHoraria
+            - cantidad
+            - ubicacionEvento
+            - tipo
+    EventosPSTRs:
+      description: Respuesta a la creacion de un evento
+      type: object
+      required:
+        - evento
+      properties:
+        evento:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Evento'
+            - type: object
+          required: 
+            - id
+    EventosGETByIdRs:
+      description: Respuesta a la consulta de un evento por Id
+      type: object
+      required:
+        - evento
+      properties:
+        evento:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Evento'
+            - type: object
+          properties:
+            localidades:
+              required: 
+                - localidad  
+            imagenes:
+              required: 
+                - imagen 
+          required: 
+            - id
+            - nombre
+            - fecha
+            - hora
+            - zonaHoraria
+            - cantidad
+            - ubicacionEvento
+            - tipo
+    EventosPCTRq:
+      description: Peticion de actualizacion de un evento
+      type: object
+      required:
+        - evento
+      properties:
+        evento:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Evento'
+            - type: object
+    EventosPCTRs:
+      description: Respuesta a la actualizacion de un evento
+      type: object
+      required:
+        - evento
+      properties:
+        evento:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Evento'
+            - type: object
+          required: 
+            - id
+    ProductosGETAllRS:
+      description: Respuesta de todos los productos existentes
+      type: object
+      required:
+        - prodductos
+      properties:
+        productos:
+           type: array
+           items:
+            allOf:
+              - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Producto'
+            properties:
+              productos:
+                required: 
+                  - eventos   
+            required: 
+              - id
+            
+    ProductosPSTRq:
+      description: Peticion de creacion de un producto
+      type: object
+      required:
+        - producto
+      properties:
+        producto:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Producto'
+            - type: object
+          required: 
+            - descripcion
+            - eventos
+    ProductosPSTRs:
+      description: Peticion de creacion de un producto
+      type: object
+      required:
+        - producto
+      properties:
+        producto:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Producto'
+            - type: object
+          required: 
+            - id
+    ProductosPCTRq:
+      description: Peticion de actualizacion de un producto
+      type: object
+      required:
+        - producto
+      properties:
+        producto:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Producto'
+            - type: object
+          required: 
+            - id
+    ProductoPCTRs:
+      description: Peticion de actualizacion de un producto
+      type: object
+      required:
+        - producto
+      properties:
+        producto:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Producto'
+            - type: object
+          required: 
+            - id

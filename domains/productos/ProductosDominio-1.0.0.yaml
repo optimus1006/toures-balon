@@ -29,6 +29,9 @@ components:
           type: number
         descripcion:
           type: string
+        fechaCreacion:
+          type: string
+          format: date-time
         transportes:
           type: array
           items:
