@@ -76,6 +76,14 @@ components:
         cantidadCupos:
           description: indica la cantidad de asientos que el convenio esta dispuesto a ofrecer
           type: integer
+        estado:
+          type: string
+          description: >
+              'Estado del transporte:'
+                * ACTIVO: Activo
+                * CANCELADO: Cancelado
+                * APLAZADO: Aplazado
+          enum: [ACTIVO, CANCELADO, APLAZADO]
         convenio:
             $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/convenios/DominioConvenios-1.0.0.yaml#/components/schemas/Convenio'
         
