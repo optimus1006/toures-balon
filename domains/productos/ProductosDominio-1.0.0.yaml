@@ -73,7 +73,7 @@ components:
           items:
             $ref: '#/components/schemas/Asiento'
         convenio:
-          type: string
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/convenios/DominioConvenios-1.0.0.yaml#/components/schemas/Convenio'
         
     Asiento:
       type: object
@@ -92,6 +92,8 @@ components:
         valor:
           type: number
           format: currency
+        idCliente:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/clientes/ClientesDominio-1.0.0.yaml#/components/schemas/Cliente'
             
     Vehiculo:
       type: object
