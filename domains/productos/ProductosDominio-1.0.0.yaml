@@ -103,12 +103,16 @@ components:
       description: Puestos, cillas asociadas a un medio de transporte
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
         valor:
           description: valor de asignacion del asiento
           type: string
         idCliente:
             $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/clientes/ClientesDominio-1.0.0.yaml#/components/schemas/Cliente'
+        fechaReserva:
+          type: string
+          format: date-time
             
     Vehiculo:
       type: object
