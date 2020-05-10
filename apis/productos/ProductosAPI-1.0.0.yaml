@@ -1160,8 +1160,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/TransportesGETByIdRs'
               example:
-                transportes:
-                  - transporte:
+                  transporte:
                       id: AF4433
                       descripcion: 'avion boing 777 avianca'
                       vehiculo:
@@ -1300,23 +1299,16 @@ components:
         - transporte
       properties:
         transporte:
-          type: object
-          items:
-            allOf:
-              - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
-              - type: object
-            properties:
-              vehiculo:
-                properties:
-                  id:
-                    nullable: true
-            required:
-              - id
-              - fechaPartida
-              - fechaLlegada
-              - lugarPartida
-              - lugarDestino
-              - convenio
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+            - type: object
+          required:
+            - id
+            - fechaPartida
+            - fechaLlegada
+            - lugarPartida
+            - lugarDestino
+            - convenio
               
     TransportesPSTRq:
       type: object
