@@ -193,9 +193,7 @@ components:
           type: integer
           format: int32
         idCliente:
-          description: id del cliente que lo reserva, si no esta reservado debe estar en 0 o null
-          type: integer
-          format: int64
+          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/clientes/ClientesDominio-1.0.0.yaml#/components/schemas/Cliente'
         fechaReservaInicio:
           description: fecha de inicio de la reserva del cuarto
           type: string
