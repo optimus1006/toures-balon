@@ -201,7 +201,7 @@
         "summary" : "Devuelve factura a pagar.",
         "operationId" : "obtenerFactura",
         "parameters" : [ {
-          "in" : "query",
+          "in" : "path",
           "name" : "facturaId",
           "description" : "Número de la orden a pagar.",
           "required" : true,
