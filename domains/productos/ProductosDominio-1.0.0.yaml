@@ -156,8 +156,6 @@ components:
           example: '23TH ST - CRAWROFD - 76005'
         geolocalizacion:
           $ref: '#/components/schemas/UbicacionGeografica'
-        pais:
-          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Pais'
         ciudad:
           $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad'
         informacion:
@@ -174,7 +172,43 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Imagen'
+        cuartos:
+          description: lista de cuartos que tienen las instalaciones del hospedaje.
+          type: array
+          items:
+            $ref: '#/components/schemas/Cuarto'
+        convenio:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/convenios/DominioConvenios-1.0.0.yaml#/components/schemas/Convenio'
             
+    Cuarto:
+      description: Espacio, habitacion o lugar que pertenece a un hospedaje
+      type: object
+      properties:
+        id:
+          description: identificador unico del cuarto
+          type: integer
+          format: int64
+        numeroCuarto:
+          description: identificador unico del cuarto en el hospedaje
+          type: integer
+          format: int32
+        idCliente:
+          description: id del cliente que lo reserva, si no esta reservado debe estar en 0 o null
+          type: integer
+          format: int64
+        fechaReservaInicio:
+          description: fecha de inicio de la reserva del cuarto
+          type: string
+          format: date-time
+        fechaReservaFin:
+          description: fecha de fin de la reserva del cuarto
+          type: string
+          format: date-time
+        fechaReserva:
+          description: fecha en que fue realizada la reserva
+          type: string
+          format: date-time
+
     UbicacionGeografica: 
       description: Ubicación geográfica de un sitio, definido por coordenadas polares (latitud y longitud).
       type: object
@@ -202,6 +236,9 @@ components:
       description: Contiene la información de la imagen que se mostrará del evento.
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
         nombre:
           type: string
         path:
@@ -211,9 +248,11 @@ components:
           properties:
             ancho:
               type: integer
+              format: int64
               minimum: 1
             alto: 
               type: integer
+              format: int64
               minimum: 1
         data:
           type: string

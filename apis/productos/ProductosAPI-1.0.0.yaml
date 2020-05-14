@@ -17,7 +17,6 @@ tags:
     description: Transportes que intervienen en la operacion de la empresa
   - name: Hospedajes
     description: Hospedajes que intervienen en la operacion de la empresa
-    
   - name: Eventos
     description: Operaciones de consulta, creación, actualización y borrado de eventos
   
@@ -1268,6 +1267,139 @@ paths:
           description: 'Error de parametros en request'
         '409':
           description: 'error en parametros'    
+
+  /productos/transportes/{idTransporte}/asientos:
+    post:
+      tags:
+        - Transportes
+      summary: Crear un asiento de acuerdo a un transporte
+      operationId: AsientosPST
+      description: crear un asiento de acuerdo a un id de transporte
+      parameters:
+        - in: path
+          name: idTransporte
+          required: true
+          description: Codigo del transporte.
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+      # BODY REQUEST
+      requestBody:
+        description: 'Datos para realizar la creacion de un asiento.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsientosPSTRq'
+            example:
+              asiento:
+                valor: 'I17'
+      responses:
+        '201':
+          description: 'Asiento creado exitosamente'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsientosPSTRs'
+              example: # Creación de un transporte
+                asiento: 
+                  id: 3 
+        '400':
+          description: 'Error de parametros en request'
+        '409':
+          description: 'error en parametros'
+    
+    get: 
+      tags:
+        - Transportes
+      summary: Consultar todos los asientos existentes por transporte
+      operationId: AsientosGETAll
+      description: |
+        Consultar todos los asientos existentes por transporte
+      parameters:
+        - in: path
+          name: idTransporte
+          required: true
+          description: 'Código del transporte.'
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+        - in: query
+          name: idCliente
+          required: false
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/clientes/ClientesDominio-1.0.0.yaml#/components/schemas/Cliente'
+        - in: query
+          name: idAsiento
+          required: false
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/clientes/ClientesDominio-1.0.0.yaml#/components/schemas/Asiento'
+      responses:
+        '200':
+          description: Se ha realizado la consulta exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsientosGETAllRs'
+              example:
+                asientos:
+                  asiento:
+                    id: 3
+                    valor: F23
+                    idCliente:
+                      id: 446
+                    fechaReserva: '2020-05-10T13:11:00.0'
+                  
+        '400':
+          description: Ha ocurrido un error en el mensaje
+        '500':
+          description: Ha ocurrido un error interno en el sistema
+
+  /productos/transportes/{idTransporte}/asientos/{idAsiento}:
+    patch:
+      tags:
+        - Transportes
+      summary: Actualizar o reservar un asiento de acuerdo a un transporte
+      operationId: AsientosPTC
+      description: Actualizar o reservar un asiento de acuerdo a un id de transporte
+      parameters:
+        - in: path
+          name: idTransporte
+          required: true
+          description: Codigo del transporte.
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+        - in: path
+          name: idAsiento
+          required: true
+          description: Codigo del asiento.
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Asiento'
+      # BODY REQUEST
+      requestBody:
+        description: 'Datos para realizar la actualizacion o reserva de un asiento.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsientosPTCRq'
+            example:
+              asiento:
+                idCliente:
+                  id: 5556676
+      responses:
+        '201':
+          description: 'Asiento creado exitosamente'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsientosPTCRs'
+              example: # Creación de un transporte
+                asiento: 
+                  id: 3 
+        '400':
+          description: 'Error de parametros en request'
+        '409':
+          description: 'error en parametros'
+    
 components:
   schemas:
     TransportesGETAllRs:
@@ -1605,3 +1737,64 @@ components:
             - type: object
           required: 
             - id
+    AsientosPSTRq:
+      description: Peticion de creacion de un asiento
+      type: object
+      required:
+       - asiento
+      properties:
+        asiento:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Asiento'
+          required:
+            - valor  
+    AsientosPSTRs:
+      description: Respuesta de creacion de un asiento
+      type: object
+      required:
+       - asiento
+      properties:
+        asiento:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Asiento'
+          required:
+            - id  
+    AsientosPTCRq:
+      description: Peticion de creacion de un asiento
+      type: object
+      required:
+       - asiento
+      properties:
+        asiento:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Asiento'
+          required:
+            - idCliente  
+    AsientosPTCRs:
+      description: Respuesta de creacion de un asiento
+      type: object
+      required:
+       - asiento
+      properties:
+        asiento:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Asiento'
+          required:
+            - id 
+    AsientosGETAllRs:
+      description: Respuesta de todos los asientos existentes de un transporte
+      type: object
+      required:
+        - asientos
+      properties:
+        asientos:
+           type: array
+           items:
+            allOf:
+              - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Asiento'
+            properties:
+              asientos:
+                required: 
+                  - asiento  
+            required: 
+              - id 
