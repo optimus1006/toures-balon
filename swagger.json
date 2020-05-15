@@ -9,15 +9,19 @@
     "application" : [ "read", "write" ]
   } ],
   "tags" : [ {
-    "name" : "Ordenes",
+    "name" : "Orden",
     "description" : "Define los servicios de ordenes, para consulta facturación y pago de estas."
   }, {
-    "name" : "Facturas",
+    "name" : "Factura",
     "description" : "Contiene la información del pago aprobado por una entidad bancaria."
+  }, {
+    "name" : "Cliente",
+    "description" : "Describe la información de una persona que contrata servicios con la empresa."
   } ],
   "paths" : {
     "/ordenes" : {
       "get" : {
+        "tags" : [ "Orden" ],
         "summary" : "Retorna lista de ordenes",
         "description" : "Metodo que retorna la lista de ordenes",
         "parameters" : [ {
@@ -54,6 +58,7 @@
         }
       },
       "post" : {
+        "tags" : [ "Orden" ],
         "operationId" : "adicionarOrden",
         "summary" : "Adiciona una nueva orden",
         "parameters" : [ {
@@ -71,7 +76,7 @@
     "/ordenes/cliente/{clienteId}" : {
       "get" : {
         "description" : "Devuelve la información de una orden asociada a un cliente.",
-        "tags" : [ "Ordenes" ],
+        "tags" : [ "Orden" ],
         "summary" : "devuelve informaicón de una orden.",
         "operationId" : "obtenerFacturaPorClienteId",
         "parameters" : [ {
@@ -79,7 +84,7 @@
           "in" : "path",
           "required" : true,
           "schema" : {
-            "$ref" : "https://github.com/optimus1006/toures-balon/blob/master/ujaveriana-Pais-1.0.0-domain.yaml"
+            "$ref" : "https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Pais"
           }
         } ],
         "responses" : {
@@ -98,7 +103,7 @@
     },
     "/ordenes/{id}" : {
       "get" : {
-        "tags" : [ "Ordenes" ],
+        "tags" : [ "Orden" ],
         "summary" : "Obtener una orden por ID.",
         "description" : "Obtener una orden por ID.\n",
         "operationId" : "obtenerOrdenPorId",
@@ -266,6 +271,7 @@
     },
     "/clientes" : {
       "get" : {
+        "tags" : [ "Cliente" ],
         "summary" : "Retorna lista de ordenes",
         "description" : "Metodo que retorna la lista de ordenes",
         "parameters" : [ {
@@ -309,12 +315,13 @@
         }
       },
       "post" : {
+        "tags" : [ "Cliente" ],
         "operationId" : "adicionarCliente",
         "summary" : "Adiciona un nuevo cliente",
         "parameters" : [ {
           "in" : "query",
           "name" : "cliente",
-          "$ref" : "#/components/schemas/Cliente"
+          "$ref" : "https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/clientes/ClientesDominio-1.0.0.yaml#/components/schemas/Cliente"
         } ],
         "responses" : {
           "200" : {
@@ -325,7 +332,7 @@
     },
     "/clientes/{id}" : {
       "get" : {
-        "tags" : [ "Clientes" ],
+        "tags" : [ "Cliente" ],
         "summary" : "Obtener un cliente por ID.",
         "description" : "Obtener un cliente por ID.\n",
         "operationId" : "obtenerClientePorId",
@@ -345,7 +352,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Cliente"
+                  "$ref" : "https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/clientes/ClientesDominio-1.0.0.yaml#/components/schemas/Cliente"
                 }
               }
             }
@@ -602,45 +609,6 @@
           }
         }
       },
-      "Pais" : {
-        "description" : "País",
-        "type" : "object",
-        "properties" : {
-          "codigo" : {
-            "description" : "Código del país.",
-            "format" : "int32",
-            "minimum" : 1,
-            "type" : "number"
-          },
-          "nombre" : {
-            "description" : "Nombre del país.",
-            "type" : "string",
-            "minLength" : 1,
-            "maxLength" : 64
-          }
-        }
-      },
-      "Ciudad" : {
-        "description" : "Ciudad",
-        "type" : "object",
-        "properties" : {
-          "codigo" : {
-            "description" : "Código de la ciudad.",
-            "format" : "int32",
-            "minimum" : 1,
-            "type" : "number"
-          },
-          "nombre" : {
-            "description" : "Nombre de la ciudad.",
-            "type" : "string",
-            "minLength" : 1,
-            "maxLength" : 64
-          },
-          "pais" : {
-            "$ref" : "#/components/schemas/Pais"
-          }
-        }
-      },
       "Estado" : {
         "description" : "Estado",
         "type" : "object",
@@ -658,7 +626,7 @@
             "maxLength" : 64
           },
           "pais" : {
-            "$ref" : "#/components/schemas/Pais"
+            "$ref" : "https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Pais"
           }
         }
       },
@@ -699,55 +667,6 @@
           "name" : "Factura"
         }
       },
-      "Cliente" : {
-        "type" : "object",
-        "required" : [ "id" ],
-        "properties" : {
-          "id" : {
-            "type" : "integer",
-            "format" : "int64"
-          },
-          "nombres" : {
-            "type" : "string",
-            "description" : "Nombres del cliente."
-          },
-          "apellidos" : {
-            "type" : "string",
-            "description" : "Apellidos."
-          },
-          "email" : {
-            "type" : "string",
-            "format" : "email"
-          },
-          "telefono" : {
-            "type" : "string"
-          },
-          "celular" : {
-            "type" : "string"
-          },
-          "password" : {
-            "type" : "string",
-            "format" : "password"
-          },
-          "estado" : {
-            "type" : "string",
-            "description" : "Estado del cliente.",
-            "enum" : [ "ACTIVO", "INACTIVO" ]
-          },
-          "direcciones" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/Direccion"
-            }
-          },
-          "tarjetas" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/Tarjeta"
-            }
-          }
-        }
-      },
       "Direccion" : {
         "description" : "Contiene la información de la direccion",
         "type" : "object",
@@ -765,10 +684,10 @@
             "enum" : [ "CASA", "OFICINA", "OTRO" ]
           },
           "pais" : {
-            "$ref" : "#/components/schemas/Pais"
+            "$ref" : "https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Pais"
           },
           "ciudad" : {
-            "$ref" : "#/components/schemas/Ciudad"
+            "$ref" : "https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad"
           },
           "estado" : {
             "$ref" : "#/components/schemas/Estado"
@@ -777,73 +696,6 @@
             "description" : "Fecha de creación de la dirección",
             "type" : "string",
             "format" : "date-time"
-          }
-        }
-      },
-      "Convenio" : {
-        "description" : "Afiliación de un comercio que ofrece servicios de hospedaje, transporte o eventos deportivos.",
-        "type" : "object",
-        "properties" : {
-          "nombreProveedor" : {
-            "description" : "Nombre del proveedor de servicios.",
-            "type" : "string",
-            "minLength" : 1,
-            "maxLength" : 254
-          },
-          "identificacion" : {
-            "description" : "Identificación del proveedor de servicios.",
-            "type" : "string",
-            "minLength" : 1,
-            "maxLength" : 40
-          },
-          "tipoConvenio" : {
-            "description" : "Tipo de convenio.",
-            "type" : "string",
-            "enum" : [ "TRANSPORTE", "HOSPEDAJE", "EVENTO" ]
-          },
-          "fechaVigencia" : {
-            "description" : "Vigencia del convenio.",
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "correo" : {
-            "description" : "Correo de contacto del convenio.",
-            "type" : "string",
-            "minLength" : 1,
-            "maxLength" : 90
-          },
-          "pais" : {
-            "description" : "País de origen de operación del convenio.",
-            "$ref" : "#/components/schemas/Pais"
-          },
-          "ciudad" : {
-            "description" : "Ciudad de operación de la empresa de convenio.",
-            "$ref" : "#/components/schemas/Ciudad"
-          }
-        }
-      },
-      "Tarjeta" : {
-        "description" : "Contiene la información de la tarjeta",
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "integer",
-            "readOnly" : true
-          },
-          "numero" : {
-            "type" : "string"
-          },
-          "tipo" : {
-            "type" : "string",
-            "enum" : [ "VISA", "MASTER_CARD" ]
-          },
-          "estado" : {
-            "type" : "string",
-            "enum" : [ "ACTIVA", "INACTIVA" ]
-          },
-          "principal" : {
-            "type" : "boolean",
-            "default" : false
           }
         }
       }
