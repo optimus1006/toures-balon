@@ -1331,7 +1331,7 @@ paths:
           name: idAsiento
           required: false
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/clientes/ClientesDominio-1.0.0.yaml#/components/schemas/Asiento'
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Asiento'
       responses:
         '200':
           description: Se ha realizado la consulta exitosamente

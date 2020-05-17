@@ -137,6 +137,7 @@ components:
         codigo:
           description: Código que identifica al hospedaje
           type: integer
+          format: int64
         nombre:
           description: Nombre del establecimiento de hospedaje.
           maxLength: 255
@@ -146,7 +147,8 @@ components:
           $ref: '#/components/schemas/TipoHospedaje'
         calificacion:
           description: Calificación del hotel según los clientes y/o expertos.
-          type: number
+          type: integer
+          format: int32
           minimum: 0
           maximum: 5
         direccion:
