@@ -208,6 +208,10 @@ components:
           description: fecha en que fue realizada la reserva
           type: string
           format: date-time
+        valorCuarto:
+          description: valor de reserva por noche del cuarto
+          type: string
+          format: currency
 
     UbicacionGeografica: 
       description: Ubicación geográfica de un sitio, definido por coordenadas polares (latitud y longitud).
