@@ -814,7 +814,7 @@ paths:
       tags:
         - Hospedajes
       summary: Actualizar la información de un hospedaje
-      operationId: HospedajesPCT
+      operationId: HospedajesPTC
       description: Actualizar los datos del hospedaje de acuerdo a los parametros de entrada.
       parameters:
         - in: path
@@ -872,7 +872,7 @@ paths:
       tags: 
         - Hospedajes
       description: Realiza la consulta un grupo de hospedajes de acuerdo a características de uno de estos sitios.
-      operationId: HospedajesGetByType
+      operationId: hospedajesGETAll
       parameters: 
         - in: query
           name: nombre
@@ -897,23 +897,17 @@ paths:
             items:
               type: string
         - in: query
-          name: geoLocalizacion
-          description: Posición geográfica en valores de latitud y logitud, para encontrar sitios aproximados.
-          required: false
-          schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/UbicacionGeografica'
-        - in: query
-          name: pais
-          description: Código de país para filtrar por un país en específico.
-          required: false
-          schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Pais'
-        - in: query
           name: ciudad
           description: Código de la ciudad para filtrar por una ciudad en específico.
           required: false
           schema:
             $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad'
+        - in: query
+          name: convenio
+          description: Código del convenio para filtrar por un convenio en específico.
+          required: false
+          schema:
+            type: string
       responses:
         200:
           description: Operación de consulta exitosa.
@@ -1399,6 +1393,143 @@ paths:
           description: 'Error de parametros en request'
         '409':
           description: 'error en parametros'
+
+  /productos/hospedajes/{codigo}/cuartos:
+    post:
+      tags:
+        - Hospedajes
+      summary: Crear un cuarto de acuerdo a un hospedaje
+      operationId: cuartosPST
+      description: crear un cuarto de acuerdo a al codigo de un hospedaje
+      parameters:
+        - in: path
+          name: codigo
+          required: true
+          description: Codigo del hospedaje.
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+      # BODY REQUEST
+      requestBody:
+        description: 'Datos para realizar la creacion de un cuarto.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CuartosPSTRq'
+            example:
+              cuarto:
+                numero: '17'
+                valor: '25.000'
+      responses:
+        '201':
+          description: 'Cuarto creado exitosamente'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CuartosPSTRs'
+              example: # Creación de un transporte
+                asiento: 
+                  id: 3 
+        '400':
+          description: 'Error de parametros en request'
+        '409':
+          description: 'error en parametros'
+    
+    get: 
+      tags:
+        - Hospedajes
+      summary: Consultar todos los cuartos existentes en un hospedaje
+      operationId: cuartosGETAll
+      description: |
+        Consultar todos los cuartos existentes para un hospedaje
+      parameters:
+        - in: path
+          name: codigo
+          required: true
+          description: 'Código del Hospedaje.'
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+        - in: query
+          name: idCliente
+          required: false
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/clientes/ClientesDominio-1.0.0.yaml#/components/schemas/Cliente'
+        - in: query
+          name: idCuarto
+          required: false
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Cuarto'
+      responses:
+        '200':
+          description: Se ha realizado la consulta exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CuartosGETAllRs'
+              example:
+                asientos:
+                  asiento:
+                    id: 3
+                    numeroCuarto: '17'
+                    valor: '25.000'
+                    idCliente:
+                      id: 446
+                    fechaReserva: '2020-05-10T13:11:00.0'
+                    fechaReservaInicio: '2020-06-10T13:11:00.0'
+                    fechaReservaFin: '2020-06-11T13:11:00.0'
+                  
+        '400':
+          description: Ha ocurrido un error en el mensaje
+        '500':
+          description: Ha ocurrido un error interno en el sistema
+
+  /productos/hospedajes/{codigo}/cuartos/{idCuarto}:
+    patch:
+      tags:
+        - Hospedajes
+      summary: Actualizar o reservar un cuarto de acuerdo a un hospedaje
+      operationId: cuartosPTC
+      description: Actualizar o reservar un cuarto de acuerdo a un codigo de hospedaje
+      parameters:
+        - in: path
+          name: codigo
+          required: true
+          description: Codigo del hospedaje.
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+        - in: path
+          name: idCuarto
+          required: true
+          description: Codigo del asiento.
+          schema:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Cuarto'
+      # BODY REQUEST
+      requestBody:
+        description: 'Datos para realizar la actualizacion o reserva de un cuarto.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CuartosPTCRq'
+            example:
+              asiento:
+                idCliente:
+                  id: 5556676
+      responses:
+        '201':
+          description: 'Asiento creado exitosamente'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CuartosPTCRs'
+              example: # Creación de un transporte
+                cuarto: 
+                  id: 3
+                  numeroCuarto: '17' 
+        '400':
+          description: 'Error de parametros en request'
+        '409':
+          description: 'error en parametros'
     
 components:
   schemas:
@@ -1549,7 +1680,7 @@ components:
       required:
         - hospedaje
       properties:
-        transporte:
+        hospedaje:
           allOf:
             - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
             - type: object
@@ -1559,7 +1690,7 @@ components:
       required:
         - hospedaje
       properties:
-        transporte:
+        hospedaje:
           allOf:
             - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
             - type: object
@@ -1796,5 +1927,66 @@ components:
               asientos:
                 required: 
                   - asiento  
+            required: 
+              - id 
+    CuartosPSTRq:
+      description: Peticion de creacion de un cuarto
+      type: object
+      required:
+       - cuarto
+      properties:
+        cuarto:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Cuarto'
+          required:
+            - numeroCuarto  
+    CuartosPSTRs:
+      description: Respuesta de creacion de un cuarto
+      type: object
+      required:
+       - cuarto
+      properties:
+        cuarto:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Cuarto'
+          required:
+            - id  
+    CuartosPTCRq:
+      description: Peticion de reservar un cuarto
+      type: object
+      required:
+       - cuarto
+      properties:
+        cuarto:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Cuarto'
+          required:
+            - cliente  
+    CuartosPTCRs:
+      description: Respuesta de creacion de un cuarto
+      type: object
+      required:
+       - cuarto
+      properties:
+        cuarto:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Cuarto'
+          required:
+            - id 
+    CuartosGETAllRs:
+      description: Respuesta de todos los cuartos existentes de un hospedaje
+      type: object
+      required:
+        - cuartos
+      properties:
+        cuartos:
+           type: array
+           items:
+            allOf:
+              - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Cuarto'
+            properties:
+              cuartos:
+                required: 
+                  - cuarto  
             required: 
               - id 

@@ -192,9 +192,8 @@ components:
           format: int64
         numeroCuarto:
           description: identificador unico del cuarto en el hospedaje
-          type: integer
-          format: int32
-        idCliente:
+          type: string
+        Cliente:
           $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/clientes/ClientesDominio-1.0.0.yaml#/components/schemas/Cliente'
         fechaReservaInicio:
           description: fecha de inicio de la reserva del cuarto
@@ -208,6 +207,10 @@ components:
           description: fecha en que fue realizada la reserva
           type: string
           format: date-time
+        valorCuarto:
+          description: valor de reserva por noche del cuarto
+          type: string
+          format: currency
 
     UbicacionGeografica: 
       description: Ubicación geográfica de un sitio, definido por coordenadas polares (latitud y longitud).
