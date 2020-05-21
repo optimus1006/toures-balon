@@ -267,6 +267,7 @@ components:
       properties:
         id: 
           type: integer
+          format: int64
         nombre:
           type: string
           maxLength: 100
@@ -289,11 +290,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Localidad'
-        asientos: 
-          type: array
-          minLength: 0
-          items:
-            type: string
         tipo:
           type: string
           description: Tipo de evento.
@@ -332,6 +328,11 @@ components:
           format: double
         aforo:
           type: integer
+        asientos:
+          description: indica la cantidad de voletos comprados para el evento
+          type: array
+          items:
+            $ref: '#/components/schemas/Asiento'
           
     Direccion: 
       description: Contiene la información de la direccion
