@@ -1,0 +1,28 @@
+may. 17, 2020 12:08:13 A. M. com.redhat.quarkus.ls.QuarkusLanguageServer initialize
+INFORMACIÓN: Initializing Quarkus server 0.0.4-20191120-1547 with C:\Program Files\JetBrains\IntelliJ IDEA 2019.2.4\jbr
+may. 17, 2020 12:22:13 A. M. org.eclipse.lsp4j.jsonrpc.RemoteEndpoint fallbackResponseError
+GRAVE: Internal error: java.lang.NullPointerException
+java.util.concurrent.CompletionException: java.lang.NullPointerException
+	at java.base/java.util.concurrent.CompletableFuture.encodeThrowable(CompletableFuture.java:314)
+	at java.base/java.util.concurrent.CompletableFuture.completeThrowable(CompletableFuture.java:319)
+	at java.base/java.util.concurrent.CompletableFuture$UniCompose.tryFire(CompletableFuture.java:1081)
+	at java.base/java.util.concurrent.CompletableFuture$Completion.exec(CompletableFuture.java:479)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:290)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1020)
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:177)
+Caused by: java.lang.NullPointerException
+	at java.base/java.util.concurrent.CompletableFuture$UniCompose.tryFire(CompletableFuture.java:1072)
+	... 6 more
+
+may. 17, 2020 12:22:23 A. M. com.redhat.quarkus.ls.QuarkusLanguageServer initialize
+INFORMACIÓN: Initializing Quarkus server 0.0.4-20191120-1547 with C:\Program Files\JetBrains\IntelliJ IDEA 2019.2.4\jbr
+may. 17, 2020 12:22:41 A. M. com.redhat.quarkus.ls.QuarkusLanguageServer initialize
+INFORMACIÓN: Initializing Quarkus server 0.0.4-20191120-1547 with C:\Program Files\JetBrains\IntelliJ IDEA 2019.2.4\jbr
+may. 17, 2020 5:02:20 A. M. com.redhat.quarkus.ls.QuarkusLanguageServer initialize
+INFORMACIÓN: Initializing Quarkus server 0.0.4-20191120-1547 with C:\Program Files\JetBrains\IntelliJ IDEA 2019.2.4\jbr
+may. 17, 2020 4:06:48 P. M. com.redhat.quarkus.ls.QuarkusLanguageServer initialize
+INFORMACIÓN: Initializing Quarkus server 0.0.4-20191120-1547 with C:\Program Files\JetBrains\IntelliJ IDEA 2019.2.4\jbr
+may. 17, 2020 10:07:27 P. M. com.redhat.quarkus.ls.QuarkusLanguageServer initialize
+INFORMACIÓN: Initializing Quarkus server 0.0.4-20191120-1547 with C:\Program Files\JetBrains\IntelliJ IDEA 2019.2.4\jbr
