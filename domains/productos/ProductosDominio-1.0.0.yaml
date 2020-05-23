@@ -24,6 +24,9 @@ components:
       description: paquete que contiene todos los componentes necesarios para un plan
       required:
         - id
+        - detalleProducto
+        - descripcion
+        - precio
       properties:
         id:
           type: integer
@@ -33,23 +36,31 @@ components:
         fechaCreacion:
           type: string
           format: date-time
-        transportes:
+        detalleProducto:
           type: array
           items:
-            $ref: '#/components/schemas/Transporte'
-        eventos:
-          type: array
-          items:
-            $ref: '#/components/schemas/Evento'
-        hospedajes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Hospedaje'
+            $ref: '#/components/schemas/DetalleProducto'
         cliente:
             $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/clientes/ClientesDominio-1.0.0.yaml#/components/schemas/Cliente'
         precio:
           type: number
           format: double
+        
+    DetalleProducto:
+      type: object
+      description: detalle de un producto que contiene todos los transportes, eventos u hospedajes comprados por un cliente o armados por un asesor
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+        transporte:
+          $ref: '#/components/schemas/Transporte'
+        hospedaje:
+          $ref: '#/components/schemas/Hospedaje'
+        eventos:
+          $ref: '#/components/schemas/Evento'
         asietosEvento:
           description: hace referencia si es compra de un cliente a los asientos comprados si es un producto nuevo a ofreser los asientos disponibles  
           type: integer
@@ -62,7 +73,7 @@ components:
           description: hace referencia si es compra de un cliente a los cuartos reservados si es un producto nuevo a ofreser los cuartos disponibles  
           type: integer
           format: int32
-    
+
     Transporte:
       type: object
       description: transportes habilitados para realizar un viaje a cualquier destino
