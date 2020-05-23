@@ -50,6 +50,18 @@ components:
         precio:
           type: number
           format: double
+        asietosEvento:
+          description: hace referencia si es compra de un cliente a los asientos comprados si es un producto nuevo a ofreser los asientos disponibles  
+          type: integer
+          format: int32
+        asietosTransporte:
+          description: hace referencia si es compra de un cliente a los asientos comprados si es un producto nuevo a ofreser los asientos disponibles  
+          type: integer
+          format: int32
+        cuartosHospedaje:
+          description: hace referencia si es compra de un cliente a los cuartos reservados si es un producto nuevo a ofreser los cuartos disponibles  
+          type: integer
+          format: int32
     
     Transporte:
       type: object
