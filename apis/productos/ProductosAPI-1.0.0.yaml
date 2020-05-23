@@ -1579,7 +1579,7 @@ paths:
           description: 'Error de parametros en request'
         '409':
           description: 'error en parametros'
-  /productos/eventos/{idEvento}/localidades/{idLocalidad}/asientos:
+  /productos/eventos/localidades/{idLocalidad}/asientos:
     post:
       tags:
         - Eventos
@@ -1587,13 +1587,6 @@ paths:
       operationId: asientosLocalidadPST
       description: Crear reservar un asiento de un evento en una localidad
       parameters:
-        - in: path
-          name: idEvento
-          required: true
-          description: Codigo del evento.
-          schema:
-            type: integer
-            format: int64
         - in: path
           name: idLocalidad
           required: true
@@ -1629,7 +1622,7 @@ paths:
         '409':
           description: 'error en parametros'
 
-  /productos/eventos/{idEvento}/localidades/{idLocalidad}/asientos/{idAsiento}:  
+  /productos/eventos/localidades/{idLocalidad}/asientos/{idAsiento}:  
     delete:
       tags:
         - Eventos
@@ -1637,13 +1630,6 @@ paths:
       operationId: AsientosLocalidadPTC
       description: cancelar la reserva de un asiento de acuerdo a una localidad y un evento
       parameters:
-        - in: path
-          name: idEvento
-          required: true
-          description: Codigo del evento.
-          schema:
-            type: integer
-            format: int64
         - in: path
           name: idLocalidad
           required: true
