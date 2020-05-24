@@ -1503,6 +1503,12 @@ paths:
           description: Codigo del asiento.
           schema:
             $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Cuarto'
+        - in: query
+          name: reserva
+          description: indica si se desea realizar una reserva o simplemente dejar un cuarto como disponible.
+          required: true
+          schema:
+            type: boolean
       # BODY REQUEST
       requestBody:
         description: 'Datos para realizar la actualizacion o reserva de un cuarto.'
@@ -1530,7 +1536,122 @@ paths:
           description: 'Error de parametros en request'
         '409':
           description: 'error en parametros'
-    
+
+  /productos/eventos/{idEvento}/localidades:
+    post:
+      tags:
+        - Eventos
+      summary: Crear una localidad de acuerdo a un evento
+      operationId: localidadesPST
+      description: crear una localidad de acuerdo a al codigo de un evento
+      parameters:
+        - in: path
+          name: idEvento
+          required: true
+          description: id del evento.
+          schema:
+            type: integer
+            format: int64
+      # BODY REQUEST
+      requestBody:
+        description: 'Datos para realizar la creacion de una localidad.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocalidadesPSTRq'
+            example:
+              localidad:
+                aforo: 300
+                nombre: 'PLATEA'
+                precio: 150000.00
+      responses:
+        '201':
+          description: 'Localidad creada exitosamente'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocalidadesPSTRs'
+              example: # Creación de un transporte
+                localidad: 
+                  id: 3 
+        '400':
+          description: 'Error de parametros en request'
+        '409':
+          description: 'error en parametros'
+  /productos/eventos/localidades/{idLocalidad}/asientos:
+    post:
+      tags:
+        - Eventos
+      summary: Crear reservar un asiento de un evento en una localidad
+      operationId: asientosLocalidadPST
+      description: Crear reservar un asiento de un evento en una localidad
+      parameters:
+        - in: path
+          name: idLocalidad
+          required: true
+          description: Codigo de la localidad donde se reservara el asiento.
+          schema:
+            type: integer
+            format: int64
+      # BODY REQUEST
+      requestBody:
+        description: 'Datos para realizar la creacion de un asiento.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsientosPSTRq'
+            example:
+              asiento:
+                Cliente:
+                  id: 5                
+
+      responses:
+        '201':
+          description: 'Asiento creado exitosamente'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsientosPSTRs'
+              example: 
+                asiento: 
+                  id: 3 
+        '400':
+          description: 'Error de parametros en request'
+        '409':
+          description: 'error en parametros'
+
+  /productos/eventos/localidades/{idLocalidad}/asientos/{idAsiento}:  
+    delete:
+      tags:
+        - Eventos
+      summary: cancelar la reserva de un asiento de acuerdo a una localidad y un evento
+      operationId: AsientosLocalidadPTC
+      description: cancelar la reserva de un asiento de acuerdo a una localidad y un evento
+      parameters:
+        - in: path
+          name: idLocalidad
+          required: true
+          description: Codigo de la localidad.
+          schema:
+            type: integer
+            format: int64
+        - in: path
+          name: idAsiento
+          required: true
+          description: Codigo del asiento.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Evento borrado exitosamente
+        '400':
+          description: 'Parametro Invalido'
+        '500':
+          description: Error del sistema  
+
 components:
   schemas:
     TransportesGETAllRs:
@@ -1990,3 +2111,26 @@ components:
                   - cuarto  
             required: 
               - id 
+    LocalidadesPSTRq:
+      description: Peticion de creacion de una localidad
+      type: object
+      required:
+       - localidad
+      properties:
+        localidad:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Localidad'
+          required:
+            - nombre  
+            - preceio
+    LocalidadesPSTRs:
+      description: Respuesta de creacion de una localidad
+      type: object
+      required:
+       - localidad
+      properties:
+        localidad:
+          allOf:
+            - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Localidad'
+          required:
+            - id 
