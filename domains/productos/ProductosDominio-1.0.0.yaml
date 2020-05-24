@@ -203,11 +203,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Imagen'
-        cuartos:
-          description: lista de cuartos que tienen las instalaciones del hospedaje.
+        acomodaciones:
+          description: lista de acomodaciones que tienen las instalaciones del hospedaje.
           type: array
           items:
-            $ref: '#/components/schemas/Cuarto'
+            $ref: '#/components/schemas/Acomodacion'
         convenio:
             $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/convenios/DominioConvenios-1.0.0.yaml#/components/schemas/Convenio'
             
@@ -363,6 +363,25 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Asiento'
+
+    Acomodacion: 
+      description: tipo de acomodacion para un hospedaje.
+      type: object
+      properties:
+        id: 
+          type: integer
+          format: int64
+          readOnly: true
+        nombre:
+          type: string
+        precio:
+          type: number
+          format: double
+        cuartos:
+          description: indica la cantidad de cuartos reservados en una acomodacion
+          type: array
+          items:
+            $ref: '#/components/schemas/Cuarto'
           
     Direccion: 
       description: Contiene la información de la direccion

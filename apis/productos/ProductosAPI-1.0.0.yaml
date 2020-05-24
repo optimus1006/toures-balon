@@ -1965,6 +1965,19 @@ components:
             - type: object
           required: 
             - id
+        asientosTransporte:
+          type: array
+          items:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Asiento'
+
+        asientosEvento:
+          type: array
+          items:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Asiento'
+        cuartosHospedaje:
+          type: array
+          items:
+            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Cuarto'
     ProductosPCTRq:
       description: Peticion de actualizacion de un producto
       type: object
