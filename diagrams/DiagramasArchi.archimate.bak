@@ -935,5 +935,6 @@
         </child>
       </child>
     </element>
+    <element xsi:type="archimate:ArchimateDiagramModel" name="New ArchiMate View" id="6666d3bb-eced-4e9b-8c09-9b47951fcf77"/>
   </folder>
 </archimate:model>
