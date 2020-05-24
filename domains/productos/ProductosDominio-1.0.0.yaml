@@ -128,7 +128,7 @@ components:
             $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/convenios/DominioConvenios-1.0.0.yaml#/components/schemas/Convenio'
         codigoExterno:
           type: string
-          descripcion: codigo designado por el convenio para la homologacion
+          description: codigo designado por el convenio para la homologacion
         
     Asiento:
       type: object
@@ -215,7 +215,7 @@ components:
             $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/convenios/DominioConvenios-1.0.0.yaml#/components/schemas/Convenio'
         codigoExterno:
           type: string
-          descripcion: codigo designado por el convenio para la homologacion
+          description: codigo designado por el convenio para la homologacion
             
     Cuarto:
       description: Espacio, habitacion o lugar que pertenece a un hospedaje
@@ -346,7 +346,7 @@ components:
             - INACTIVO
         codigoExterno:
           type: string
-          descripcion: codigo designado por el convenio para la homologacion
+          description: codigo designado por el convenio para la homologacion
             
     Localidad: 
       description: Contiene la información de la localidad dentro del evento, en caso de existir .
@@ -370,18 +370,16 @@ components:
             $ref: '#/components/schemas/Asiento'
         codigoExterno:
           type: string
-          descripcion: codigo designado por el convenio para la homologacion
+          description: codigo designado por el convenio para la homologacion
 
     ReservaExterna:
       description: lista de codigos retornados por los convenios externos luego de realizar la reserva
-      type: array
-      items:
-        type: object
-        properties:
-          idCodigoExterno:
-            type: string
-          idreserva:
-            type: string 
+      type: object
+      properties:
+        idCodigoExterno:
+          type: string
+        idreserva:
+          type: string 
 
     Acomodacion: 
       description: tipo de acomodacion para un hospedaje.
@@ -408,7 +406,7 @@ components:
             $ref: '#/components/schemas/Cuarto'
         codigoExterno:
           type: string
-          descripcion: codigo designado por el convenio para la homologacion
+          description: codigo designado por el convenio para la homologacion
           
     Direccion: 
       description: Contiene la información de la direccion
