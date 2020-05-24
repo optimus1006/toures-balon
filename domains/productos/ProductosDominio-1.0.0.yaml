@@ -375,13 +375,13 @@ components:
     ReservaExterna:
       description: lista de codigos retornados por los convenios externos luego de realizar la reserva
       type: array
-        items:
-          type: object
-          properties:
-            idCodigoExterno:
-              type: string
-            idreserva:
-              type: string 
+      items:
+        type: object
+        properties:
+          idCodigoExterno:
+            type: string
+          idreserva:
+            type: string 
 
     Acomodacion: 
       description: tipo de acomodacion para un hospedaje.

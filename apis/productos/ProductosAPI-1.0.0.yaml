@@ -1936,7 +1936,7 @@ components:
             properties:
               productos:
                 required: 
-                  - eventos   
+                  - codigoExterno   
             required: 
               - id
             
