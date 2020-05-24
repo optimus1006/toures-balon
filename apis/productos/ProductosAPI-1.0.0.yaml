@@ -1936,7 +1936,7 @@ components:
             properties:
               productos:
                 required: 
-                  - codigoExterno   
+                  - eventos   
             required: 
               - id
             
@@ -1968,6 +1968,10 @@ components:
         reserva:
           allOf:
             - $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Reserva'
+            - type: object
+          required:
+            - idCodigoExterno
+
     ProductosPCTRq:
       description: Peticion de actualizacion de un producto
       type: object
