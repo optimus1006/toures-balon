@@ -370,6 +370,11 @@ components:
           readOnly: true
         nombre:
           type: string
+        descripcion:
+          type: string
+        cantidadCuartos:
+          type: integer
+          format: int32  
         precio:
           type: number
           format: double
