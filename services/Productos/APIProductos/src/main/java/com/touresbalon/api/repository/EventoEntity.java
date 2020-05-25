@@ -46,4 +46,6 @@ public class EventoEntity {
 	private int id_ciudad;
 	
 	private String codigo_externo;
+	
+	private String id_convenio;
 }

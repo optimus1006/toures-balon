@@ -40,7 +40,7 @@ public class AcomodacionService {
 		} else {
 			throw new HospedajeException("El precio del hospedaje es obligatorio");
 		}
-		
+				
 		if (acomodacion.getCodigoExterno() != null) {
 			acomodacionEntity.setCodigo_externo(acomodacion.getCodigoExterno());
 		} else {

@@ -124,6 +124,12 @@ public class EventoService {
 			throw new TransporteException("Debe especificar el codigo de homologacion del evento.");
 		}
 		
+		if (evento.getConvenio() != null) {
+			eventoEntity.setId_convenio(evento.getConvenio().getIdentificacion());
+		} else {
+			throw new TransporteException("Debe especificar el convenio.");
+		}
+		
 		eventoRepository.save(eventoEntity);
 		eventoResponse.setId(eventoEntity.getId());
 		

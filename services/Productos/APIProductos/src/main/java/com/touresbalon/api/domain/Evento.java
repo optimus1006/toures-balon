@@ -4,6 +4,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.touresbalon.api.domain.Convenio;
 import com.touresbalon.api.domain.Direccion;
 import com.touresbalon.api.domain.Imagen;
 import com.touresbalon.api.domain.Localidad;
@@ -20,7 +21,7 @@ import javax.validation.constraints.*;
  * Contiene la información del evento al cual es cliente asistirá.
  */
 @ApiModel(description = "Contiene la información del evento al cual es cliente asistirá.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-24T16:31:00.109-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-25T17:35:55.123-05:00[America/Bogota]")
 
 public class Evento   {
   @JsonProperty("id")
@@ -58,6 +59,8 @@ public class Evento   {
     CONCIERTO("Concierto"),
     
     FUTBOL("Futbol"),
+    
+    DEPORTIVO("DEPORTIVO"),
     
     BALONCESTO("Baloncesto"),
     
@@ -134,6 +137,9 @@ public class Evento   {
 
   @JsonProperty("codigoExterno")
   private String codigoExterno;
+
+  @JsonProperty("convenio")
+  private Convenio convenio;
 
   public Evento id(Long id) {
     this.id = id;
@@ -435,6 +441,27 @@ public class Evento   {
     this.codigoExterno = codigoExterno;
   }
 
+  public Evento convenio(Convenio convenio) {
+    this.convenio = convenio;
+    return this;
+  }
+
+  /**
+   * Get convenio
+   * @return convenio
+  */
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public Convenio getConvenio() {
+    return convenio;
+  }
+
+  public void setConvenio(Convenio convenio) {
+    this.convenio = convenio;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -458,12 +485,13 @@ public class Evento   {
         Objects.equals(this.imagenes, evento.imagenes) &&
         Objects.equals(this.imagenPrincipal, evento.imagenPrincipal) &&
         Objects.equals(this.estado, evento.estado) &&
-        Objects.equals(this.codigoExterno, evento.codigoExterno);
+        Objects.equals(this.codigoExterno, evento.codigoExterno) &&
+        Objects.equals(this.convenio, evento.convenio);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nombre, descripcion, fecha, hora, zonaHoraria, cantidad, ubicacionEvento, localidades, tipo, imagenes, imagenPrincipal, estado, codigoExterno);
+    return Objects.hash(id, nombre, descripcion, fecha, hora, zonaHoraria, cantidad, ubicacionEvento, localidades, tipo, imagenes, imagenPrincipal, estado, codigoExterno, convenio);
   }
 
   @Override
@@ -485,6 +513,7 @@ public class Evento   {
     sb.append("    imagenPrincipal: ").append(toIndentedString(imagenPrincipal)).append("\n");
     sb.append("    estado: ").append(toIndentedString(estado)).append("\n");
     sb.append("    codigoExterno: ").append(toIndentedString(codigoExterno)).append("\n");
+    sb.append("    convenio: ").append(toIndentedString(convenio)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -112,7 +112,7 @@ public class EventoController {
 		try {
 			eventosPSTRs.setEvento(eventoService.crearEvento(eventosPSTRq.getEvento()));
         	return Response.status(Response.Status.ACCEPTED).entity(eventosPSTRs).type(MediaType.APPLICATION_JSON).build();
-    	}catch (TransporteException e) {
+    	}catch (EventoException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
@@ -120,6 +120,7 @@ public class EventoController {
 		}
     	catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
+			
 		}
 	}
 	
