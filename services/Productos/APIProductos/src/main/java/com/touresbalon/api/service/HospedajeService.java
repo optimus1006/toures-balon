@@ -103,7 +103,7 @@ public class HospedajeService {
 		if (hospedaje.getCodigoExterno() != null) {
 			hospedajeEntity.setCodigo_externo(hospedaje.getCodigoExterno());
 		} else {
-			throw new TransporteException("Debe especificar el codigo de homologacion del hospedaje.");
+			throw new HospedajeException("Debe especificar el codigo de homologacion del hospedaje.");
 		}
 		
 		hospedajeRepository.save(hospedajeEntity);
@@ -116,10 +116,10 @@ public class HospedajeService {
 		
 		if (hospedaje.getAcomodaciones() != null) {
 			for(Acomodacion acomodacion: hospedaje.getAcomodaciones()) {
-				acomodacion.setId(acomodacionService.crearAcomodacion(acomodacion).getId());
+				acomodacion.setId(acomodacionService.crearAcomodacion(acomodacion,hospedajeEntity.getCodigo()).getId());
 			}
 		} else {
-			throw new HospedajeException("debe definir los cuartos.");
+			throw new HospedajeException("debe definir las acomodaciones del hospedaje.");
 		}
 		
 		hospedajeResponse.setCodigo(hospedajeEntity.getCodigo());

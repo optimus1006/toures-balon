@@ -24,6 +24,7 @@ import com.touresbalon.api.domain.CuartosPTCRq;
 import com.touresbalon.api.domain.CuartosPTCRs;
 import com.touresbalon.api.domain.Error;
 import com.touresbalon.api.domain.Hospedaje;
+import com.touresbalon.api.domain.HospedajeException;
 import com.touresbalon.api.domain.HospedajesGetAllRs;
 import com.touresbalon.api.domain.HospedajesPCTRq;
 import com.touresbalon.api.domain.HospedajesPCTRs;
@@ -52,7 +53,7 @@ public class HospedajeController {
 		try {
     		response=hospedajeService.consultarPorId(codigo);
         	return Response.status(Response.Status.OK).entity(response).type(MediaType.APPLICATION_JSON).build();
-    	}catch (TransporteException e) {
+    	}catch (HospedajeException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
@@ -71,7 +72,7 @@ public class HospedajeController {
 		try {
     		hospedajesGetAllRs.setHospedajes(hospedajeService.consultarHospedajes(nombre, calificacion, tipoHospedaje, ciudad, convenio));
         	return Response.status(Response.Status.OK).entity(hospedajesGetAllRs).type(MediaType.APPLICATION_JSON).build();
-    	}catch (TransporteException e) {
+    	}catch (HospedajeException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
@@ -94,7 +95,7 @@ public class HospedajeController {
 			Hospedaje hospedaje = hospedajeService.actualizar(hospedajesPCTRq.getHospedaje(),codigo);
     		hospedajesPCTRs.setHospedaje(hospedaje);
         	return Response.status(Response.Status.OK).entity(hospedajesPCTRs).type(MediaType.APPLICATION_JSON).build();
-    	}catch (TransporteException e) {
+    	}catch (HospedajeException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
@@ -114,7 +115,7 @@ public class HospedajeController {
 			Hospedaje hospedaje = hospedajeService.crearHospedaje(hospedajesPCTRq.getHospedaje());
     		hospedajesPCTRs.setHospedaje(hospedaje);
         	return Response.status(Response.Status.OK).entity(hospedajesPCTRs).type(MediaType.APPLICATION_JSON).build();
-    	}catch (TransporteException e) {
+    	}catch (HospedajeException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
@@ -134,7 +135,7 @@ public class HospedajeController {
 		try {
 			cuartosGETAllRs.setCuartos(cuartoService.listarCuartos(codigo, cliente));
         	return Response.status(Response.Status.OK).entity(cuartosGETAllRs).type(MediaType.APPLICATION_JSON).build();
-    	}catch (TransporteException e) {
+    	}catch (HospedajeException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
@@ -155,7 +156,7 @@ public class HospedajeController {
 			Cuarto cuarto = cuartoService.crearCuarto(cuartosPSTRq.getCuarto(),codigo);
     		cuartosPSTRs.setCuarto(cuarto);
         	return Response.status(Response.Status.OK).entity(cuartosPSTRs).type(MediaType.APPLICATION_JSON).build();
-    	}catch (TransporteException e) {
+    	}catch (HospedajeException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
@@ -176,7 +177,7 @@ public class HospedajeController {
 			Cuarto cuarto = cuartoService.actualizarCuarto(cuartosPTCRq.getCuarto(), cuartoId, reservar);
     		cuartosPTCRs.setCuarto(cuarto);
         	return Response.status(Response.Status.OK).entity(cuartosPTCRs).type(MediaType.APPLICATION_JSON).build();
-    	}catch (TransporteException e) {
+    	}catch (HospedajeException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());

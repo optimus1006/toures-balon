@@ -21,7 +21,7 @@ public class AcomodacionService {
 	@Inject
 	AcomodacionRepository acomodacionRepository;
 
-	public Acomodacion crearAcomodacion(Acomodacion acomodacion) throws HospedajeException {
+	public Acomodacion crearAcomodacion(Acomodacion acomodacion,Long idHospedaje) throws HospedajeException {
 		AcomodacionEntity acomodacionEntity = new AcomodacionEntity();
 
 		if (acomodacion.getNombre() != null) {
@@ -46,6 +46,7 @@ public class AcomodacionService {
 		} else {
 			throw new TransporteException("Debe especificar el codigo de homologacion de la acomodacion.");
 		}
+		acomodacionEntity.setId_hospedaje(idHospedaje);
 		acomodacionRepository.save(acomodacionEntity);
 
 		Acomodacion acomodacionResponse = new Acomodacion();
