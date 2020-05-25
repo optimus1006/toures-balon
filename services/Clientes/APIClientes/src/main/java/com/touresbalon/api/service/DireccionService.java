@@ -10,9 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.touresbalon.api.repository.DireccionEntity;
-import com.touresbalon.api.repository.DireccionRepository;
+import com.touresbalon.api.repository.read.ReadDireccionEntity;
+import com.touresbalon.api.repository.read.ReadDireccionRepository;
+import com.touresbalon.api.repository.write.WriteDireccionEntity;
+import com.touresbalon.api.repository.write.WriteDireccionRepository;
 import com.touresbalon.service.domain.Ciudad;
+import com.touresbalon.service.domain.ClienteException;
 import com.touresbalon.service.domain.Direccion;
 import com.touresbalon.service.domain.Direccion.TipoEnum;
 import com.touresbalon.service.domain.Estado;
@@ -22,28 +25,39 @@ import com.touresbalon.service.domain.UbicacionGeografica;
 @Service
 @Transactional
 public class DireccionService {
+
+	private final ReadDireccionRepository readRepo;
+	private final WriteDireccionRepository writeRepo;
+
 	@Autowired
-    private DireccionRepository direccionRepository;
-	
-	public void crearDireccion(Direccion direccion,Long idCliente) {
-		Date fechaCreacion = new Date();
-		DireccionEntity direccionEntity = new DireccionEntity(
-				direccion.getDireccion(),
-				direccion.getTipo().name(),
-				direccion.getPais().getCodigo(),
-				direccion.getCiudad().getCodigo(),
-				direccion.getEstado().getCodigo(),
-				fechaCreacion,
-				idCliente,
-				direccion.getUbicacion().getLatitud(),
-				direccion.getUbicacion().getLongitud());
-		direccionRepository.save(direccionEntity);
+	DireccionService(WriteDireccionRepository writeRepo, ReadDireccionRepository readRepo) {
+		this.writeRepo = writeRepo;
+		this.readRepo = readRepo;
+	}
+
+	public void crearDireccion(Direccion direccion, Long idCliente) {
+		try {
+			Date fechaCreacion = new Date();
+			WriteDireccionEntity direccionEntity = new WriteDireccionEntity(direccion.getDireccion(),
+					direccion.getTipo().name(), direccion.getPais().getCodigo(), direccion.getCiudad().getCodigo(),
+					direccion.getEstado().getCodigo(), fechaCreacion, idCliente, direccion.getUbicacion().getLatitud(),
+					direccion.getUbicacion().getLongitud());
+			writeRepo.save(direccionEntity);
+
+			ReadDireccionEntity readdireccionEntity = new ReadDireccionEntity(direccion.getDireccion(),
+					direccion.getTipo().name(), direccion.getPais().getCodigo(), direccion.getCiudad().getCodigo(),
+					direccion.getEstado().getCodigo(), fechaCreacion, idCliente, direccion.getUbicacion().getLatitud(),
+					direccion.getUbicacion().getLongitud());
+			readRepo.save(readdireccionEntity);
+		} catch (Exception ex) {
+			throw new ClienteException("Error al crear la direccion", ex.getCause());
+		}
 	}
 	
 	public List<Direccion> getAllDireccionesByClienteId(Long clienteId){
-		List<DireccionEntity> direcciones = direccionRepository.findAllByIdCliente(clienteId);
+		List<ReadDireccionEntity> direcciones = readRepo.findAllByIdCliente(clienteId);
 		List<Direccion> direccionesResponse = new ArrayList<>();
-		for(DireccionEntity direccion: direcciones) {
+		for(ReadDireccionEntity direccion: direcciones) {
 			Direccion direccionResponse = new Direccion();
 			direccionResponse.setDireccion(direccion.getDireccion());
 			direccionResponse.setCodigo(direccion.getCodigo());
@@ -71,9 +85,15 @@ public class DireccionService {
 		return direccionesResponse;
 	}
 	
-	public void updateDirecciones(List<Direccion> direcciones) {
+	public void updateDirecciones(List<Direccion> direcciones, Long idCliente) {
+		Date fechaCreacion = new Date();
 		for(Direccion direccion: direcciones) {
-			DireccionEntity direccionEntity = direccionRepository.findByCodigo(direccion.getCodigo());
+			WriteDireccionEntity writeDireccionEntity = new WriteDireccionEntity(direccion.getDireccion(),
+					direccion.getTipo().name(), direccion.getPais().getCodigo(), direccion.getCiudad().getCodigo(),
+					direccion.getEstado().getCodigo(), fechaCreacion, idCliente, direccion.getUbicacion().getLatitud(),
+					direccion.getUbicacion().getLongitud());
+			writeRepo.save(writeDireccionEntity);
+			ReadDireccionEntity direccionEntity = readRepo.findByCodigo(direccion.getCodigo());
 			if(direccion.getCiudad()!=null) {
 				direccionEntity.setIdCiudad(direccion.getCiudad().getCodigo());
 				if(direccion.getCiudad().getPais()!=null) {
@@ -97,11 +117,7 @@ public class DireccionService {
 					direccionEntity.setLongitud(direccion.getUbicacion().getLongitud().toString());
 				}
 			}
-			direccionRepository.save(direccionEntity);
+			readRepo.save(direccionEntity);
 		}
-	}
-	
-	public void deleteDireccionesByIdCliente(Long idCliente) {
-		direccionRepository.deleteByIdCliente(idCliente);
 	}
 }

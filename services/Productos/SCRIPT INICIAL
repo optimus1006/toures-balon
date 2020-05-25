@@ -1,4 +1,362 @@
+-- Table: public.tipo_hospedaje
 
+-- DROP TABLE public.tipo_hospedaje;
+
+CREATE TABLE public.tipo_hospedaje
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    descripcion text COLLATE pg_catalog."default",
+    CONSTRAINT tipo_hospedaje_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.tipo_hospedaje
+    OWNER to postgres;
+
+-- Table: public.hospedaje
+
+-- DROP TABLE public.hospedaje;
+
+CREATE TABLE public.hospedaje
+(
+    codigo bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    nombre text COLLATE pg_catalog."default",
+    tipo_hospedaje integer,
+    calificacion integer,
+    direccion text COLLATE pg_catalog."default",
+    latitud text COLLATE pg_catalog."default",
+    longitud text COLLATE pg_catalog."default",
+    id_ciudad bigint,
+    informacion text COLLATE pg_catalog."default",
+    cantidad_cuartos integer,
+    id_convenio text COLLATE pg_catalog."default",
+    codigo_externo text COLLATE pg_catalog."default",
+    CONSTRAINT hospedaje_pkey PRIMARY KEY (codigo)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.hospedaje
+    OWNER to postgres;
+	
+-- Table: public.acomodacion
+
+-- DROP TABLE public.acomodacion;
+
+CREATE TABLE public.acomodacion
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    nombre text COLLATE pg_catalog."default",
+    precio double precision,
+    id_hospedaje bigint,
+    descripcion text COLLATE pg_catalog."default",
+    cantidad_cuartos integer,
+    codigo_externo text COLLATE pg_catalog."default",
+    CONSTRAINT acomodacion_pkey PRIMARY KEY (id),
+    CONSTRAINT fk_hospedaje FOREIGN KEY (id_hospedaje)
+        REFERENCES public.hospedaje (codigo) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.acomodacion
+    OWNER to postgres;
+	
+-- Table: public.tipo_transporte
+
+-- DROP TABLE public.tipo_transporte;
+
+CREATE TABLE public.tipo_transporte
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    descripcion text COLLATE pg_catalog."default",
+    capacidad_personas integer,
+    capacidad_equipaje integer,
+    tipo_capacidad_carga text COLLATE pg_catalog."default",
+    CONSTRAINT tipo_transporte_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.tipo_transporte
+    OWNER to postgres;
+	
+-- Table: public.vehiculo
+
+-- DROP TABLE public.vehiculo;
+
+CREATE TABLE public.vehiculo
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    marca text COLLATE pg_catalog."default",
+    modelo integer,
+    referencia text COLLATE pg_catalog."default",
+    tipo_vehiculo integer,
+    CONSTRAINT vehiculo_pkey PRIMARY KEY (id),
+    CONSTRAINT tipo_vehiculo_fk FOREIGN KEY (tipo_vehiculo)
+        REFERENCES public.tipo_transporte (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.vehiculo
+    OWNER to postgres;
+
+-- Table: public.transporte
+
+-- DROP TABLE public.transporte;
+
+CREATE TABLE public.transporte
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    descripcion text COLLATE pg_catalog."default",
+    id_vehiculo bigint,
+    fecha_partida timestamp without time zone,
+    lugar_partida integer,
+    fecha_llegada timestamp without time zone,
+    lugar_llegada integer,
+    cantidad_cupos integer,
+    convenio text COLLATE pg_catalog."default",
+    estado text COLLATE pg_catalog."default",
+    fecha_creacion timestamp without time zone,
+    tipo text COLLATE pg_catalog."default",
+    valor bigint,
+    codigo_externo text COLLATE pg_catalog."default",
+    CONSTRAINT transporte_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.transporte
+    OWNER to postgres;
+
+-- Table: public.asiento
+
+-- DROP TABLE public.asiento;
+
+CREATE TABLE public.asiento
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    valor text COLLATE pg_catalog."default",
+    id_transporte bigint,
+    id_cliente bigint,
+    fecha_reserva timestamp without time zone,
+    CONSTRAINT asiento_pkey PRIMARY KEY (id),
+    CONSTRAINT transporte_fk FOREIGN KEY (id_transporte)
+        REFERENCES public.transporte (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.asiento
+    OWNER to postgres;
+	
+-- Table: public.tipo_evento
+
+-- DROP TABLE public.tipo_evento;
+
+CREATE TABLE public.tipo_evento
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    descripcion text COLLATE pg_catalog."default",
+    CONSTRAINT tipo_evento_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.tipo_evento
+    OWNER to postgres;
+	
+-- Table: public.imagen
+
+-- DROP TABLE public.imagen;
+
+CREATE TABLE public.imagen
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    nombre text COLLATE pg_catalog."default",
+    path text COLLATE pg_catalog."default",
+    alto integer,
+    ancho integer,
+    id_hospedaje bigint,
+    id_evento bigint,
+    tipo_imagen text COLLATE pg_catalog."default",
+    CONSTRAINT imagen_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.imagen
+    OWNER to postgres;
+
+-- Table: public.evento
+
+-- DROP TABLE public.evento;
+
+CREATE TABLE public.evento
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    nombre text COLLATE pg_catalog."default",
+    descripcion text COLLATE pg_catalog."default",
+    fecha time without time zone,
+    hora text COLLATE pg_catalog."default",
+    zona_horaria text COLLATE pg_catalog."default",
+    cantidad integer,
+    estado text COLLATE pg_catalog."default",
+    tipo integer,
+    imagen_principal bigint,
+    direccion text COLLATE pg_catalog."default",
+    latitud text COLLATE pg_catalog."default",
+    longitud text COLLATE pg_catalog."default",
+    id_ciudad integer,
+    codigo_externo text COLLATE pg_catalog."default",
+    CONSTRAINT evento_pkey PRIMARY KEY (id),
+    CONSTRAINT imagen_fk FOREIGN KEY (imagen_principal)
+        REFERENCES public.imagen (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT tipo_fk FOREIGN KEY (tipo)
+        REFERENCES public.tipo_evento (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.evento
+    OWNER to postgres;
+
+-- Table: public.localidad
+
+-- DROP TABLE public.localidad;
+
+CREATE TABLE public.localidad
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    nombre text COLLATE pg_catalog."default",
+    aforo integer,
+    precio double precision,
+    id_evento bigint,
+    codigo_externo text COLLATE pg_catalog."default",
+    CONSTRAINT localidad_pkey PRIMARY KEY (id),
+    CONSTRAINT evento_fk FOREIGN KEY (id_evento)
+        REFERENCES public.evento (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.localidad
+    OWNER to postgres;
+
+-- Table: public.asiento_evento
+
+-- DROP TABLE public.asiento_evento;
+
+CREATE TABLE public.asiento_evento
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    numero text COLLATE pg_catalog."default",
+    id_cliente bigint,
+    id_localidad bigint,
+    fecha_reserva timestamp without time zone,
+    CONSTRAINT asiento_evento_pkey PRIMARY KEY (id),
+    CONSTRAINT localidad_fk FOREIGN KEY (id)
+        REFERENCES public.localidad (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.asiento_evento
+    OWNER to postgres;
+	
+-- Table: public.cuarto
+
+-- DROP TABLE public.cuarto;
+
+CREATE TABLE public.cuarto
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    numero_cuarto text COLLATE pg_catalog."default",
+    id_cliente bigint,
+    fecha_inicio timestamp without time zone,
+    fecha_fin timestamp without time zone,
+    fecha_reserva timestamp without time zone,
+    id_acomodacion bigint,
+    CONSTRAINT cuarto_pkey PRIMARY KEY (id),
+    CONSTRAINT fk_acomodacion FOREIGN KEY (id_acomodacion)
+        REFERENCES public.acomodacion (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.cuarto
+    OWNER to postgres;
+
+-- Table: public.producto
+
+-- DROP TABLE public.producto;
+
+CREATE TABLE public.producto
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    descripcion text COLLATE pg_catalog."default",
+    fecha_creacion timestamp with time zone,
+    id_cliente bigint,
+    precio double precision,
+    CONSTRAINT producto_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.producto
+    OWNER to postgres;
+	
+-- Table: public.producto_detalle
+
+-- DROP TABLE public.producto_detalle;
+
+CREATE TABLE public.producto_detalle
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    id_transporte bigint,
+    id_evento bigint,
+    id_hospedaje bigint,
+    id_producto bigint NOT NULL,
+    fecha_registro time without time zone,
+    fecha_ultimo_movimiento timestamp without time zone,
+    asientos_evento integer,
+    asientos_transporte integer,
+    cuartos_hospedaje integer,
+    CONSTRAINT producto_detalle_pkey PRIMARY KEY (id),
+    CONSTRAINT fk_producto FOREIGN KEY (id_producto)
+        REFERENCES public.producto (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.producto_detalle
+    OWNER to postgres;
 
 INSERT INTO public.tipo_transporte(
 	descripcion, capacidad_personas, capacidad_equipaje, tipo_capacidad_carga)

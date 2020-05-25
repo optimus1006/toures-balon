@@ -29,16 +29,16 @@ import com.touresbalon.api.repository.TipoEventoRepository;
 public class EventoService {
 
 	@Inject
-	private EventoRepository eventoRepository;
+	EventoRepository eventoRepository;
 	
 	@Inject
-	private TipoEventoRepository tipoEventoRepository;
+	TipoEventoRepository tipoEventoRepository;
 	
 	@Inject
-	private ImagenService imagenService;
+	ImagenService imagenService;
 	
 	@Inject
-	private LocalidadService localidadService;
+	LocalidadService localidadService;
 	
 	public Evento crearEvento(Evento evento) throws EventoException{
 		Evento eventoResponse = new Evento();

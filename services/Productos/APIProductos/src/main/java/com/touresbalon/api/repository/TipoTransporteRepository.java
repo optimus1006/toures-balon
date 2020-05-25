@@ -3,6 +3,6 @@ package com.touresbalon.api.repository;
 import org.springframework.data.repository.CrudRepository;
 
 
-public interface TipoTransporteRepository extends CrudRepository<TipoTransporteEntity, Long>{
+public interface TipoTransporteRepository extends CrudRepository<TipoTransporteEntity, Integer>{
 
 }

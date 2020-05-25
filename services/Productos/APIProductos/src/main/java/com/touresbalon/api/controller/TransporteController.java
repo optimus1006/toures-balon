@@ -40,7 +40,7 @@ import io.swagger.annotations.ApiOperation;
 public class TransporteController {
 
 	@Inject
-	private TransporteService transporteService;
+	TransporteService transporteService;
 	
 	@Inject
 	AsientoService asientoService;

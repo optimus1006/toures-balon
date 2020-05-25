@@ -111,14 +111,14 @@ public class CuartoService {
 		return cuartoResponse;
 	}
 	
-	public List<Cuarto> listarCuartos(Long idHospedaje,Long idCliente) throws HospedajeException{
+	public List<Cuarto> listarCuartos(Long idAcomodacion,Long idCliente) throws HospedajeException{
 		List<Cuarto> cuartos = new ArrayList<>();
 		List<CuartoEntity> cuartosEntity = new ArrayList<CuartoEntity>();
 		if(idCliente!=null) {
-			cuartosEntity=cuartoRepository.findById_hospedaje(idHospedaje);
+			cuartosEntity=cuartoRepository.findById_acomodacion(idAcomodacion);
 		}
 		else {
-			cuartosEntity=cuartoRepository.findById_hospedajeAndId_cliente(idHospedaje, idCliente);
+			cuartosEntity=cuartoRepository.findById_acomodacionAndId_cliente(idAcomodacion, idCliente);
 		}
 		
 		if(cuartosEntity.size()>0) {
