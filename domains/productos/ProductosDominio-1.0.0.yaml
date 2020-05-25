@@ -347,6 +347,8 @@ components:
         codigoExterno:
           type: string
           description: codigo designado por el convenio para la homologacion
+        convenio:
+          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/convenios/DominioConvenios-1.0.0.yaml#/components/schemas/Convenio'
             
     Localidad: 
       description: Contiene la información de la localidad dentro del evento, en caso de existir .
@@ -424,8 +426,6 @@ components:
             - CASA
             - OFICINA
             - OTRO
-        pais:
-          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Pais'
         ciudad:
           $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad'
         estado:
