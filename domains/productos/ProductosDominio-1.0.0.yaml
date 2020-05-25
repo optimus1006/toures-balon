@@ -315,6 +315,7 @@ components:
           type: string
         cantidad: 
           type: integer
+          format: int32
         ubicacionEvento: 
           $ref: '#/components/schemas/Direccion'
         localidades: 
