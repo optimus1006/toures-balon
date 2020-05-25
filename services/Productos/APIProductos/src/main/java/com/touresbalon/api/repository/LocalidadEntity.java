@@ -1,6 +1,5 @@
 package com.touresbalon.api.repository;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,32 +10,20 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "hospedaje")
-public class HospedajeEntity {
+@Table(name = "localidad")
+public class LocalidadEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long codigo;
+	private Long id;
 	
 	private String nombre;
 	
-	private int tipo_hospedaje;
+	private int aforo;
 	
-	private int calificacion;
+	private double precio;
 	
-	private String direccion;
-	
-	private String latitud;
-	
-	private String longitud;
-	
-	private int id_ciudad;
-	
-	private String informacion;
-	
-	private int cantidad_cuartos;
-	
-	private String id_convenio;
+	private Long id_evento;
 	
 	private String codigo_externo;
 }

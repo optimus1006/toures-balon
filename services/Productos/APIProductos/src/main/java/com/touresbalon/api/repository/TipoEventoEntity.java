@@ -1,7 +1,5 @@
 package com.touresbalon.api.repository;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,22 +10,12 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "cuarto")
-public class CuartoEntity {
+@Table(name = "tipo_evento")
+public class TipoEventoEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private int id;
 	
-	private String numero_cuarto;
-	
-	private Long id_cliente;
-	
-	private Timestamp fecha_inicio;
-	
-	private Timestamp fecha_fin;
-	
-	private Timestamp fecha_reserva;
-	
-	private Long id_acomodacion;
+	private String descripcion;
 }

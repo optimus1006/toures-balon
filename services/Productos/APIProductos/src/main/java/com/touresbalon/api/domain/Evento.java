@@ -20,11 +20,11 @@ import javax.validation.constraints.*;
  * Contiene la información del evento al cual es cliente asistirá.
  */
 @ApiModel(description = "Contiene la información del evento al cual es cliente asistirá.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-10T10:11:38.301-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-24T16:31:00.109-05:00[America/Bogota]")
 
 public class Evento   {
   @JsonProperty("id")
-  private Integer id;
+  private Long id;
 
   @JsonProperty("nombre")
   private String nombre;
@@ -50,10 +50,6 @@ public class Evento   {
   @JsonProperty("localidades")
   @Valid
   private List<Localidad> localidades = null;
-
-  @JsonProperty("asientos")
-  @Valid
-  private List<String> asientos = null;
 
   /**
    * Tipo de evento.
@@ -136,7 +132,10 @@ public class Evento   {
   @JsonProperty("estado")
   private EstadoEnum estado;
 
-  public Evento id(Integer id) {
+  @JsonProperty("codigoExterno")
+  private String codigoExterno;
+
+  public Evento id(Long id) {
     this.id = id;
     return this;
   }
@@ -148,11 +147,11 @@ public class Evento   {
   @ApiModelProperty(value = "")
 
 
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -327,34 +326,6 @@ public class Evento   {
     this.localidades = localidades;
   }
 
-  public Evento asientos(List<String> asientos) {
-    this.asientos = asientos;
-    return this;
-  }
-
-  public Evento addAsientosItem(String asientosItem) {
-    if (this.asientos == null) {
-      this.asientos = new ArrayList<>();
-    }
-    this.asientos.add(asientosItem);
-    return this;
-  }
-
-  /**
-   * Get asientos
-   * @return asientos
-  */
-  @ApiModelProperty(value = "")
-
-
-  public List<String> getAsientos() {
-    return asientos;
-  }
-
-  public void setAsientos(List<String> asientos) {
-    this.asientos = asientos;
-  }
-
   public Evento tipo(TipoEnum tipo) {
     this.tipo = tipo;
     return this;
@@ -444,6 +415,26 @@ public class Evento   {
     this.estado = estado;
   }
 
+  public Evento codigoExterno(String codigoExterno) {
+    this.codigoExterno = codigoExterno;
+    return this;
+  }
+
+  /**
+   * codigo designado por el convenio para la homologacion
+   * @return codigoExterno
+  */
+  @ApiModelProperty(value = "codigo designado por el convenio para la homologacion")
+
+
+  public String getCodigoExterno() {
+    return codigoExterno;
+  }
+
+  public void setCodigoExterno(String codigoExterno) {
+    this.codigoExterno = codigoExterno;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -463,16 +454,16 @@ public class Evento   {
         Objects.equals(this.cantidad, evento.cantidad) &&
         Objects.equals(this.ubicacionEvento, evento.ubicacionEvento) &&
         Objects.equals(this.localidades, evento.localidades) &&
-        Objects.equals(this.asientos, evento.asientos) &&
         Objects.equals(this.tipo, evento.tipo) &&
         Objects.equals(this.imagenes, evento.imagenes) &&
         Objects.equals(this.imagenPrincipal, evento.imagenPrincipal) &&
-        Objects.equals(this.estado, evento.estado);
+        Objects.equals(this.estado, evento.estado) &&
+        Objects.equals(this.codigoExterno, evento.codigoExterno);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nombre, descripcion, fecha, hora, zonaHoraria, cantidad, ubicacionEvento, localidades, asientos, tipo, imagenes, imagenPrincipal, estado);
+    return Objects.hash(id, nombre, descripcion, fecha, hora, zonaHoraria, cantidad, ubicacionEvento, localidades, tipo, imagenes, imagenPrincipal, estado, codigoExterno);
   }
 
   @Override
@@ -489,11 +480,11 @@ public class Evento   {
     sb.append("    cantidad: ").append(toIndentedString(cantidad)).append("\n");
     sb.append("    ubicacionEvento: ").append(toIndentedString(ubicacionEvento)).append("\n");
     sb.append("    localidades: ").append(toIndentedString(localidades)).append("\n");
-    sb.append("    asientos: ").append(toIndentedString(asientos)).append("\n");
     sb.append("    tipo: ").append(toIndentedString(tipo)).append("\n");
     sb.append("    imagenes: ").append(toIndentedString(imagenes)).append("\n");
     sb.append("    imagenPrincipal: ").append(toIndentedString(imagenPrincipal)).append("\n");
     sb.append("    estado: ").append(toIndentedString(estado)).append("\n");
+    sb.append("    codigoExterno: ").append(toIndentedString(codigoExterno)).append("\n");
     sb.append("}");
     return sb.toString();
   }

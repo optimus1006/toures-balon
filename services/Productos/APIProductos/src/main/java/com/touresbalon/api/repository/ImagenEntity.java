@@ -27,4 +27,8 @@ public class ImagenEntity {
 	private int ancho;
 	
 	private Long id_hospedaje;
+	
+	private Long id_evento;
+	
+	private String tipo_imagen;
 }

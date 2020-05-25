@@ -100,6 +100,12 @@ public class TransporteService {
 		} else {
 			throw new TransporteException("Debe especificar el valor del transporte");
 		}
+		
+		if (transporte.getCodigoExterno() != null) {
+			transporteEntity.setCodigo_externo(transporte.getCodigoExterno());
+		} else {
+			throw new TransporteException("Debe especificar el codigo de homologacion del transporte.");
+		}
 
 		transporteEntity.setEstado(EstadoEnum.ACTIVO.name());
 

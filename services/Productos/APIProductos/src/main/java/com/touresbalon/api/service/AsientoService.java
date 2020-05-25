@@ -11,8 +11,11 @@ import javax.transaction.Transactional;
 
 import com.touresbalon.api.domain.Asiento;
 import com.touresbalon.api.domain.Cliente;
+import com.touresbalon.api.domain.EventoException;
 import com.touresbalon.api.domain.TransporteException;
 import com.touresbalon.api.repository.AsientoEntity;
+import com.touresbalon.api.repository.AsientoEventoEntity;
+import com.touresbalon.api.repository.AsientoEventoRepository;
 import com.touresbalon.api.repository.AsientoRepository;
 
 @ApplicationScoped
@@ -21,6 +24,9 @@ public class AsientoService {
 	
 	@Inject
 	AsientoRepository asientoRepository;
+	
+	@Inject
+	AsientoEventoRepository asientoEventoRepository;
 	
 	public Long crearAsiento(Asiento asiento,Long idTransporte) throws TransporteException{
 		AsientoEntity asientoEntity = new AsientoEntity();
@@ -118,6 +124,31 @@ public class AsientoService {
 			throw new TransporteException("No se encontro asiento con este id");
 		}
 		return asiento;
+	}
+	
+	public Long reservarAsientoEvento(Asiento asiento,Long idLocalidad) throws TransporteException{
+		AsientoEventoEntity asientoEventoEntity = new AsientoEventoEntity();
+		asientoEventoEntity.setId_localidad(idLocalidad);
+		asientoEventoEntity.setId_cliente(asiento.getIdCliente().getId());
+		
+		if(asiento.getValor()!=null) {
+			asientoEventoEntity.setNumero(asiento.getValor());
+		}
+		
+		asientoEventoRepository.save(asientoEventoEntity);
+		
+		return asientoEventoEntity.getId();
+		
+	}
+	
+	public void borrarAsiento(Long idLocalidad, Long idAsiento) throws EventoException{
+		AsientoEventoEntity asientoEventoEntity = asientoEventoRepository.findAsientoByIdAndId_localidad(idAsiento, idLocalidad);
+		if(asientoEventoEntity!=null) {
+			asientoEventoRepository.deleteById(idAsiento);
+		}
+		else {
+			throw new EventoException("No Existe el asiento");
+		}
 	}
 
 }

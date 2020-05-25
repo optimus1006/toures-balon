@@ -42,5 +42,7 @@ public class TransporteEntity {
 	private Long valor;
 
 	private Timestamp fecha_creacion;
+	
+	private String codigo_externo;
 
 }

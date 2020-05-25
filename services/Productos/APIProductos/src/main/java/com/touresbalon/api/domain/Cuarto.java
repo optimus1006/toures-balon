@@ -2,22 +2,16 @@ package com.touresbalon.api.domain;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.touresbalon.api.domain.Cliente;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import org.openapitools.jackson.nullable.JsonNullable;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
 
 /**
  * Espacio, habitacion o lugar que pertenece a un hospedaje
  */
 @ApiModel(description = "Espacio, habitacion o lugar que pertenece a un hospedaje")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-13T20:28:44.608-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-24T13:46:35.218-05:00[America/Bogota]")
 
 public class Cuarto   {
   @JsonProperty("id")
@@ -26,8 +20,8 @@ public class Cuarto   {
   @JsonProperty("numeroCuarto")
   private String numeroCuarto;
 
-  @JsonProperty("idCliente")
-  private Cliente idCliente;
+  @JsonProperty("Cliente")
+  private Cliente cliente;
 
   @JsonProperty("fechaReservaInicio")
   private LocalDateTime fechaReservaInicio;
@@ -78,25 +72,25 @@ public class Cuarto   {
     this.numeroCuarto = numeroCuarto;
   }
 
-  public Cuarto idCliente(Cliente idCliente) {
-    this.idCliente = idCliente;
+  public Cuarto cliente(Cliente cliente) {
+    this.cliente = cliente;
     return this;
   }
 
   /**
-   * Get idCliente
-   * @return idCliente
+   * Get cliente
+   * @return cliente
   */
   @ApiModelProperty(value = "")
 
   @Valid
 
-  public Cliente getIdCliente() {
-    return idCliente;
+  public Cliente getCliente() {
+    return cliente;
   }
 
-  public void setIdCliente(Cliente idCliente) {
-    this.idCliente = idCliente;
+  public void setCliente(Cliente cliente) {
+    this.cliente = cliente;
   }
 
   public Cuarto fechaReservaInicio(LocalDateTime fechaReservaInicio) {
@@ -174,7 +168,7 @@ public class Cuarto   {
     Cuarto cuarto = (Cuarto) o;
     return Objects.equals(this.id, cuarto.id) &&
         Objects.equals(this.numeroCuarto, cuarto.numeroCuarto) &&
-        Objects.equals(this.idCliente, cuarto.idCliente) &&
+        Objects.equals(this.cliente, cuarto.cliente) &&
         Objects.equals(this.fechaReservaInicio, cuarto.fechaReservaInicio) &&
         Objects.equals(this.fechaReservaFin, cuarto.fechaReservaFin) &&
         Objects.equals(this.fechaReserva, cuarto.fechaReserva);
@@ -182,7 +176,7 @@ public class Cuarto   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, numeroCuarto, idCliente, fechaReservaInicio, fechaReservaFin, fechaReserva);
+    return Objects.hash(id, numeroCuarto, cliente, fechaReservaInicio, fechaReservaFin, fechaReserva);
   }
 
   @Override
@@ -192,7 +186,7 @@ public class Cuarto   {
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    numeroCuarto: ").append(toIndentedString(numeroCuarto)).append("\n");
-    sb.append("    idCliente: ").append(toIndentedString(idCliente)).append("\n");
+    sb.append("    cliente: ").append(toIndentedString(cliente)).append("\n");
     sb.append("    fechaReservaInicio: ").append(toIndentedString(fechaReservaInicio)).append("\n");
     sb.append("    fechaReservaFin: ").append(toIndentedString(fechaReservaFin)).append("\n");
     sb.append("    fechaReserva: ").append(toIndentedString(fechaReserva)).append("\n");

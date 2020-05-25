@@ -3,7 +3,7 @@ package com.touresbalon.api.domain;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.touresbalon.api.domain.Hospedaje;
+import com.touresbalon.api.domain.Cuarto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -11,34 +11,35 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Respuesta de  actualizacion de un Hospedaje.
+ * Respuesta de creacion de un cuarto
  */
-@ApiModel(description = "Respuesta de  actualizacion de un Hospedaje.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-10T10:11:38.301-05:00[America/Bogota]")
+@ApiModel(description = "Respuesta de creacion de un cuarto")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-17T17:16:40.601-05:00[America/Bogota]")
 
-public class HospedajesPCTRs   {
-  @JsonProperty("hospedaje")
-  private Hospedaje hospedaje = null;
+public class CuartosPSTRs   {
+  @JsonProperty("cuarto")
+  private Cuarto cuarto = null;
 
-  public HospedajesPCTRs hospedaje(Hospedaje hospedaje) {
-    this.hospedaje = hospedaje;
+  public CuartosPSTRs cuarto(Cuarto cuarto) {
+    this.cuarto = cuarto;
     return this;
   }
 
   /**
-   * Get transporte
-   * @return transporte
+   * Get cuarto
+   * @return cuarto
   */
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
   @Valid
 
-  public Hospedaje getHospedaje() {
-    return hospedaje;
+  public Cuarto getCuarto() {
+    return cuarto;
   }
 
-  public void setHospedaje(Hospedaje hospedaje) {
-    this.hospedaje = hospedaje;
+  public void setCuarto(Cuarto cuarto) {
+    this.cuarto = cuarto;
   }
 
 
@@ -50,21 +51,21 @@ public class HospedajesPCTRs   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    HospedajesPCTRs hospedajesPCTRs = (HospedajesPCTRs) o;
-    return Objects.equals(this.hospedaje, hospedajesPCTRs.hospedaje);
+    CuartosPSTRs cuartosPSTRs = (CuartosPSTRs) o;
+    return Objects.equals(this.cuarto, cuartosPSTRs.cuarto);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(hospedaje);
+    return Objects.hash(cuarto);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class HospedajesPCTRs {\n");
+    sb.append("class CuartosPSTRs {\n");
     
-    sb.append("    hospedaje: ").append(toIndentedString(hospedaje)).append("\n");
+    sb.append("    cuarto: ").append(toIndentedString(cuarto)).append("\n");
     sb.append("}");
     return sb.toString();
   }

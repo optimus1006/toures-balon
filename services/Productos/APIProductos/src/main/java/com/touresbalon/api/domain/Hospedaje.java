@@ -3,15 +3,14 @@ package com.touresbalon.api.domain;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.touresbalon.api.domain.Acomodacion;
 import com.touresbalon.api.domain.Ciudad;
 import com.touresbalon.api.domain.Convenio;
-import com.touresbalon.api.domain.Cuarto;
 import com.touresbalon.api.domain.Imagen;
 import com.touresbalon.api.domain.TipoHospedaje;
 import com.touresbalon.api.domain.UbicacionGeografica;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -22,7 +21,7 @@ import javax.validation.constraints.*;
  * Contiene la información del sitio donde se hospedará un cliente que pagó por una habitación en un hotel.
  */
 @ApiModel(description = "Contiene la información del sitio donde se hospedará un cliente que pagó por una habitación en un hotel.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-13T20:28:44.608-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-24T16:31:00.109-05:00[America/Bogota]")
 
 public class Hospedaje   {
   @JsonProperty("codigo")
@@ -56,12 +55,15 @@ public class Hospedaje   {
   @Valid
   private List<Imagen> fotos = null;
 
-  @JsonProperty("cuartos")
+  @JsonProperty("acomodaciones")
   @Valid
-  private List<Cuarto> cuartos = null;
+  private List<Acomodacion> acomodaciones = null;
 
   @JsonProperty("convenio")
   private Convenio convenio;
+
+  @JsonProperty("codigoExterno")
+  private String codigoExterno;
 
   public Hospedaje codigo(Long codigo) {
     this.codigo = codigo;
@@ -124,7 +126,7 @@ public class Hospedaje   {
     this.tipoHospedaje = tipoHospedaje;
   }
 
-  public Hospedaje calificacion(int calificacion) {
+  public Hospedaje calificacion(Integer calificacion) {
     this.calificacion = calificacion;
     return this;
   }
@@ -137,13 +139,12 @@ public class Hospedaje   {
   */
   @ApiModelProperty(value = "Calificación del hotel según los clientes y/o expertos.")
 
-  @Valid
-@DecimalMin("0") @DecimalMax("5") 
-  public int getCalificacion() {
+@Min(0) @Max(5) 
+  public Integer getCalificacion() {
     return calificacion;
   }
 
-  public void setCalificacion(int calificacion) {
+  public void setCalificacion(Integer calificacion) {
     this.calificacion = calificacion;
   }
 
@@ -279,33 +280,33 @@ public class Hospedaje   {
     this.fotos = fotos;
   }
 
-  public Hospedaje cuartos(List<Cuarto> cuartos) {
-    this.cuartos = cuartos;
+  public Hospedaje acomodaciones(List<Acomodacion> acomodaciones) {
+    this.acomodaciones = acomodaciones;
     return this;
   }
 
-  public Hospedaje addCuartosItem(Cuarto cuartosItem) {
-    if (this.cuartos == null) {
-      this.cuartos = new ArrayList<>();
+  public Hospedaje addAcomodacionesItem(Acomodacion acomodacionesItem) {
+    if (this.acomodaciones == null) {
+      this.acomodaciones = new ArrayList<>();
     }
-    this.cuartos.add(cuartosItem);
+    this.acomodaciones.add(acomodacionesItem);
     return this;
   }
 
   /**
-   * lista de cuartos que tienen las instalaciones del hospedaje.
-   * @return cuartos
+   * lista de acomodaciones que tienen las instalaciones del hospedaje.
+   * @return acomodaciones
   */
-  @ApiModelProperty(value = "lista de cuartos que tienen las instalaciones del hospedaje.")
+  @ApiModelProperty(value = "lista de acomodaciones que tienen las instalaciones del hospedaje.")
 
   @Valid
 
-  public List<Cuarto> getCuartos() {
-    return cuartos;
+  public List<Acomodacion> getAcomodaciones() {
+    return acomodaciones;
   }
 
-  public void setCuartos(List<Cuarto> cuartos) {
-    this.cuartos = cuartos;
+  public void setAcomodaciones(List<Acomodacion> acomodaciones) {
+    this.acomodaciones = acomodaciones;
   }
 
   public Hospedaje convenio(Convenio convenio) {
@@ -329,6 +330,26 @@ public class Hospedaje   {
     this.convenio = convenio;
   }
 
+  public Hospedaje codigoExterno(String codigoExterno) {
+    this.codigoExterno = codigoExterno;
+    return this;
+  }
+
+  /**
+   * codigo designado por el convenio para la homologacion
+   * @return codigoExterno
+  */
+  @ApiModelProperty(value = "codigo designado por el convenio para la homologacion")
+
+
+  public String getCodigoExterno() {
+    return codigoExterno;
+  }
+
+  public void setCodigoExterno(String codigoExterno) {
+    this.codigoExterno = codigoExterno;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -349,13 +370,14 @@ public class Hospedaje   {
         Objects.equals(this.informacion, hospedaje.informacion) &&
         Objects.equals(this.cantidadCuartos, hospedaje.cantidadCuartos) &&
         Objects.equals(this.fotos, hospedaje.fotos) &&
-        Objects.equals(this.cuartos, hospedaje.cuartos) &&
-        Objects.equals(this.convenio, hospedaje.convenio);
+        Objects.equals(this.acomodaciones, hospedaje.acomodaciones) &&
+        Objects.equals(this.convenio, hospedaje.convenio) &&
+        Objects.equals(this.codigoExterno, hospedaje.codigoExterno);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(codigo, nombre, tipoHospedaje, calificacion, direccion, geolocalizacion, ciudad, informacion, cantidadCuartos, fotos, cuartos, convenio);
+    return Objects.hash(codigo, nombre, tipoHospedaje, calificacion, direccion, geolocalizacion, ciudad, informacion, cantidadCuartos, fotos, acomodaciones, convenio, codigoExterno);
   }
 
   @Override
@@ -373,8 +395,9 @@ public class Hospedaje   {
     sb.append("    informacion: ").append(toIndentedString(informacion)).append("\n");
     sb.append("    cantidadCuartos: ").append(toIndentedString(cantidadCuartos)).append("\n");
     sb.append("    fotos: ").append(toIndentedString(fotos)).append("\n");
-    sb.append("    cuartos: ").append(toIndentedString(cuartos)).append("\n");
+    sb.append("    acomodaciones: ").append(toIndentedString(acomodaciones)).append("\n");
     sb.append("    convenio: ").append(toIndentedString(convenio)).append("\n");
+    sb.append("    codigoExterno: ").append(toIndentedString(codigoExterno)).append("\n");
     sb.append("}");
     return sb.toString();
   }

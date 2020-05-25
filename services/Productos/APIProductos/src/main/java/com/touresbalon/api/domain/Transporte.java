@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -23,7 +22,7 @@ import javax.validation.constraints.*;
  * transportes habilitados para realizar un viaje a cualquier destino
  */
 @ApiModel(description = "transportes habilitados para realizar un viaje a cualquier destino")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-10T10:11:38.301-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-24T16:31:00.109-05:00[America/Bogota]")
 
 public class Transporte   {
   @JsonProperty("id")
@@ -131,6 +130,9 @@ public class Transporte   {
 
   @JsonProperty("convenio")
   private Convenio convenio;
+
+  @JsonProperty("codigoExterno")
+  private String codigoExterno;
 
   public Transporte id(Long id) {
     this.id = id;
@@ -410,6 +412,26 @@ public class Transporte   {
     this.convenio = convenio;
   }
 
+  public Transporte codigoExterno(String codigoExterno) {
+    this.codigoExterno = codigoExterno;
+    return this;
+  }
+
+  /**
+   * codigo designado por el convenio para la homologacion
+   * @return codigoExterno
+  */
+  @ApiModelProperty(value = "codigo designado por el convenio para la homologacion")
+
+
+  public String getCodigoExterno() {
+    return codigoExterno;
+  }
+
+  public void setCodigoExterno(String codigoExterno) {
+    this.codigoExterno = codigoExterno;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -432,12 +454,13 @@ public class Transporte   {
         Objects.equals(this.estado, transporte.estado) &&
         Objects.equals(this.tipo, transporte.tipo) &&
         Objects.equals(this.valor, transporte.valor) &&
-        Objects.equals(this.convenio, transporte.convenio);
+        Objects.equals(this.convenio, transporte.convenio) &&
+        Objects.equals(this.codigoExterno, transporte.codigoExterno);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, description, vehiculo, fechaPartida, lugarPartida, fechaLlegada, lugarDestino, asientos, cantidadCupos, estado, tipo, valor, convenio);
+    return Objects.hash(id, description, vehiculo, fechaPartida, lugarPartida, fechaLlegada, lugarDestino, asientos, cantidadCupos, estado, tipo, valor, convenio, codigoExterno);
   }
 
   @Override
@@ -458,6 +481,7 @@ public class Transporte   {
     sb.append("    tipo: ").append(toIndentedString(tipo)).append("\n");
     sb.append("    valor: ").append(toIndentedString(valor)).append("\n");
     sb.append("    convenio: ").append(toIndentedString(convenio)).append("\n");
+    sb.append("    codigoExterno: ").append(toIndentedString(codigoExterno)).append("\n");
     sb.append("}");
     return sb.toString();
   }

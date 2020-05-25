@@ -3,7 +3,7 @@ package com.touresbalon.api.domain;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.touresbalon.api.domain.Asiento;
+import com.touresbalon.api.domain.Cuarto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
@@ -13,32 +13,35 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Contiene la información de la localidad dentro del evento, en caso de existir .
+ * tipo de acomodacion para un hospedaje.
  */
-@ApiModel(description = "Contiene la información de la localidad dentro del evento, en caso de existir .")
+@ApiModel(description = "tipo de acomodacion para un hospedaje.")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-24T16:31:00.109-05:00[America/Bogota]")
 
-public class Localidad   {
+public class Acomodacion   {
   @JsonProperty("id")
   private Long id;
 
   @JsonProperty("nombre")
   private String nombre;
 
+  @JsonProperty("descripcion")
+  private String descripcion;
+
+  @JsonProperty("cantidadCuartos")
+  private Integer cantidadCuartos;
+
   @JsonProperty("precio")
   private Double precio;
 
-  @JsonProperty("aforo")
-  private Integer aforo;
-
-  @JsonProperty("asientos")
+  @JsonProperty("cuartos")
   @Valid
-  private List<Asiento> asientos = null;
+  private List<Cuarto> cuartos = null;
 
   @JsonProperty("codigoExterno")
   private String codigoExterno;
 
-  public Localidad id(Long id) {
+  public Acomodacion id(Long id) {
     this.id = id;
     return this;
   }
@@ -58,7 +61,7 @@ public class Localidad   {
     this.id = id;
   }
 
-  public Localidad nombre(String nombre) {
+  public Acomodacion nombre(String nombre) {
     this.nombre = nombre;
     return this;
   }
@@ -78,7 +81,47 @@ public class Localidad   {
     this.nombre = nombre;
   }
 
-  public Localidad precio(Double precio) {
+  public Acomodacion descripcion(String descripcion) {
+    this.descripcion = descripcion;
+    return this;
+  }
+
+  /**
+   * Get descripcion
+   * @return descripcion
+  */
+  @ApiModelProperty(value = "")
+
+
+  public String getDescripcion() {
+    return descripcion;
+  }
+
+  public void setDescripcion(String descripcion) {
+    this.descripcion = descripcion;
+  }
+
+  public Acomodacion cantidadCuartos(Integer cantidadCuartos) {
+    this.cantidadCuartos = cantidadCuartos;
+    return this;
+  }
+
+  /**
+   * Get cantidadCuartos
+   * @return cantidadCuartos
+  */
+  @ApiModelProperty(value = "")
+
+
+  public Integer getCantidadCuartos() {
+    return cantidadCuartos;
+  }
+
+  public void setCantidadCuartos(Integer cantidadCuartos) {
+    this.cantidadCuartos = cantidadCuartos;
+  }
+
+  public Acomodacion precio(Double precio) {
     this.precio = precio;
     return this;
   }
@@ -98,56 +141,36 @@ public class Localidad   {
     this.precio = precio;
   }
 
-  public Localidad aforo(Integer aforo) {
-    this.aforo = aforo;
+  public Acomodacion cuartos(List<Cuarto> cuartos) {
+    this.cuartos = cuartos;
     return this;
   }
 
-  /**
-   * Get aforo
-   * @return aforo
-  */
-  @ApiModelProperty(value = "")
-
-
-  public Integer getAforo() {
-    return aforo;
-  }
-
-  public void setAforo(Integer aforo) {
-    this.aforo = aforo;
-  }
-
-  public Localidad asientos(List<Asiento> asientos) {
-    this.asientos = asientos;
-    return this;
-  }
-
-  public Localidad addAsientosItem(Asiento asientosItem) {
-    if (this.asientos == null) {
-      this.asientos = new ArrayList<>();
+  public Acomodacion addCuartosItem(Cuarto cuartosItem) {
+    if (this.cuartos == null) {
+      this.cuartos = new ArrayList<>();
     }
-    this.asientos.add(asientosItem);
+    this.cuartos.add(cuartosItem);
     return this;
   }
 
   /**
-   * indica la cantidad de voletos comprados para el evento
-   * @return asientos
+   * indica la cantidad de cuartos reservados en una acomodacion
+   * @return cuartos
   */
-  @ApiModelProperty(value = "indica la cantidad de voletos comprados para el evento")
+  @ApiModelProperty(value = "indica la cantidad de cuartos reservados en una acomodacion")
 
   @Valid
 
-  public List<Asiento> getAsientos() {
-    return asientos;
+  public List<Cuarto> getCuartos() {
+    return cuartos;
   }
 
-  public void setAsientos(List<Asiento> asientos) {
-    this.asientos = asientos;
+  public void setCuartos(List<Cuarto> cuartos) {
+    this.cuartos = cuartos;
   }
 
-  public Localidad codigoExterno(String codigoExterno) {
+  public Acomodacion codigoExterno(String codigoExterno) {
     this.codigoExterno = codigoExterno;
     return this;
   }
@@ -176,30 +199,32 @@ public class Localidad   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Localidad localidad = (Localidad) o;
-    return Objects.equals(this.id, localidad.id) &&
-        Objects.equals(this.nombre, localidad.nombre) &&
-        Objects.equals(this.precio, localidad.precio) &&
-        Objects.equals(this.aforo, localidad.aforo) &&
-        Objects.equals(this.asientos, localidad.asientos) &&
-        Objects.equals(this.codigoExterno, localidad.codigoExterno);
+    Acomodacion acomodacion = (Acomodacion) o;
+    return Objects.equals(this.id, acomodacion.id) &&
+        Objects.equals(this.nombre, acomodacion.nombre) &&
+        Objects.equals(this.descripcion, acomodacion.descripcion) &&
+        Objects.equals(this.cantidadCuartos, acomodacion.cantidadCuartos) &&
+        Objects.equals(this.precio, acomodacion.precio) &&
+        Objects.equals(this.cuartos, acomodacion.cuartos) &&
+        Objects.equals(this.codigoExterno, acomodacion.codigoExterno);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nombre, precio, aforo, asientos, codigoExterno);
+    return Objects.hash(id, nombre, descripcion, cantidadCuartos, precio, cuartos, codigoExterno);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Localidad {\n");
+    sb.append("class Acomodacion {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    nombre: ").append(toIndentedString(nombre)).append("\n");
+    sb.append("    descripcion: ").append(toIndentedString(descripcion)).append("\n");
+    sb.append("    cantidadCuartos: ").append(toIndentedString(cantidadCuartos)).append("\n");
     sb.append("    precio: ").append(toIndentedString(precio)).append("\n");
-    sb.append("    aforo: ").append(toIndentedString(aforo)).append("\n");
-    sb.append("    asientos: ").append(toIndentedString(asientos)).append("\n");
+    sb.append("    cuartos: ").append(toIndentedString(cuartos)).append("\n");
     sb.append("    codigoExterno: ").append(toIndentedString(codigoExterno)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -16,11 +16,11 @@ import javax.validation.constraints.*;
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-10T10:11:38.301-05:00[America/Bogota]")
 
 public class HospedajesPCTRq   {
-  @JsonProperty("transporte")
-  private Hospedaje transporte = null;
+  @JsonProperty("hospedaje")
+  private Hospedaje hospedaje = null;
 
-  public HospedajesPCTRq transporte(Hospedaje transporte) {
-    this.transporte = transporte;
+  public HospedajesPCTRq hospedaje(Hospedaje hospedaje) {
+    this.hospedaje = hospedaje;
     return this;
   }
 
@@ -32,12 +32,12 @@ public class HospedajesPCTRq   {
 
   @Valid
 
-  public Hospedaje getTransporte() {
-    return transporte;
+  public Hospedaje getHospedaje() {
+    return hospedaje;
   }
 
-  public void setTransporte(Hospedaje transporte) {
-    this.transporte = transporte;
+  public void setHospedaje(Hospedaje hospedaje) {
+    this.hospedaje = hospedaje;
   }
 
 
@@ -50,12 +50,12 @@ public class HospedajesPCTRq   {
       return false;
     }
     HospedajesPCTRq hospedajesPCTRq = (HospedajesPCTRq) o;
-    return Objects.equals(this.transporte, hospedajesPCTRq.transporte);
+    return Objects.equals(this.hospedaje, hospedajesPCTRq.hospedaje);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(transporte);
+    return Objects.hash(hospedaje);
   }
 
   @Override
@@ -63,7 +63,7 @@ public class HospedajesPCTRq   {
     StringBuilder sb = new StringBuilder();
     sb.append("class HospedajesPCTRq {\n");
     
-    sb.append("    transporte: ").append(toIndentedString(transporte)).append("\n");
+    sb.append("    hospedaje: ").append(toIndentedString(hospedaje)).append("\n");
     sb.append("}");
     return sb.toString();
   }

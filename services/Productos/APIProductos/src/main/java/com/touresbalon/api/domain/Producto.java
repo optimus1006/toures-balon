@@ -3,12 +3,10 @@ package com.touresbalon.api.domain;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.touresbalon.api.domain.Evento;
-import com.touresbalon.api.domain.Hospedaje;
-import com.touresbalon.api.domain.Transporte;
+import com.touresbalon.api.domain.Cliente;
+import com.touresbalon.api.domain.DetalleProducto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +18,11 @@ import javax.validation.constraints.*;
  * paquete que contiene todos los componentes necesarios para un plan
  */
 @ApiModel(description = "paquete que contiene todos los componentes necesarios para un plan")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-10T10:11:38.301-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-23T10:55:03.920-05:00[America/Bogota]")
 
 public class Producto   {
   @JsonProperty("id")
-  private BigDecimal id;
+  private Long id;
 
   @JsonProperty("descripcion")
   private String descripcion;
@@ -32,19 +30,17 @@ public class Producto   {
   @JsonProperty("fechaCreacion")
   private OffsetDateTime fechaCreacion;
 
-  @JsonProperty("transportes")
+  @JsonProperty("detalleProducto")
   @Valid
-  private List<Transporte> transportes = null;
+  private List<DetalleProducto> detalleProducto = new ArrayList<>();
 
-  @JsonProperty("eventos")
-  @Valid
-  private List<Evento> eventos = null;
+  @JsonProperty("cliente")
+  private Cliente cliente;
 
-  @JsonProperty("hospedajes")
-  @Valid
-  private List<Hospedaje> hospedajes = null;
+  @JsonProperty("precio")
+  private Double precio;
 
-  public Producto id(BigDecimal id) {
+  public Producto id(Long id) {
     this.id = id;
     return this;
   }
@@ -56,13 +52,12 @@ public class Producto   {
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
-  @Valid
 
-  public BigDecimal getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(BigDecimal id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -75,7 +70,8 @@ public class Producto   {
    * Get descripcion
    * @return descripcion
   */
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
   public String getDescripcion() {
@@ -107,91 +103,73 @@ public class Producto   {
     this.fechaCreacion = fechaCreacion;
   }
 
-  public Producto transportes(List<Transporte> transportes) {
-    this.transportes = transportes;
+  public Producto detalleProducto(List<DetalleProducto> detalleProducto) {
+    this.detalleProducto = detalleProducto;
     return this;
   }
 
-  public Producto addTransportesItem(Transporte transportesItem) {
-    if (this.transportes == null) {
-      this.transportes = new ArrayList<>();
-    }
-    this.transportes.add(transportesItem);
+  public Producto addDetalleProductoItem(DetalleProducto detalleProductoItem) {
+    this.detalleProducto.add(detalleProductoItem);
     return this;
   }
 
   /**
-   * Get transportes
-   * @return transportes
+   * Get detalleProducto
+   * @return detalleProducto
+  */
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
+
+  @Valid
+
+  public List<DetalleProducto> getDetalleProducto() {
+    return detalleProducto;
+  }
+
+  public void setDetalleProducto(List<DetalleProducto> detalleProducto) {
+    this.detalleProducto = detalleProducto;
+  }
+
+  public Producto cliente(Cliente cliente) {
+    this.cliente = cliente;
+    return this;
+  }
+
+  /**
+   * Get cliente
+   * @return cliente
   */
   @ApiModelProperty(value = "")
 
   @Valid
 
-  public List<Transporte> getTransportes() {
-    return transportes;
+  public Cliente getCliente() {
+    return cliente;
   }
 
-  public void setTransportes(List<Transporte> transportes) {
-    this.transportes = transportes;
+  public void setCliente(Cliente cliente) {
+    this.cliente = cliente;
   }
 
-  public Producto eventos(List<Evento> eventos) {
-    this.eventos = eventos;
-    return this;
-  }
-
-  public Producto addEventosItem(Evento eventosItem) {
-    if (this.eventos == null) {
-      this.eventos = new ArrayList<>();
-    }
-    this.eventos.add(eventosItem);
+  public Producto precio(Double precio) {
+    this.precio = precio;
     return this;
   }
 
   /**
-   * Get eventos
-   * @return eventos
+   * Get precio
+   * @return precio
   */
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
-  @Valid
 
-  public List<Evento> getEventos() {
-    return eventos;
+  public Double getPrecio() {
+    return precio;
   }
 
-  public void setEventos(List<Evento> eventos) {
-    this.eventos = eventos;
-  }
-
-  public Producto hospedajes(List<Hospedaje> hospedajes) {
-    this.hospedajes = hospedajes;
-    return this;
-  }
-
-  public Producto addHospedajesItem(Hospedaje hospedajesItem) {
-    if (this.hospedajes == null) {
-      this.hospedajes = new ArrayList<>();
-    }
-    this.hospedajes.add(hospedajesItem);
-    return this;
-  }
-
-  /**
-   * Get hospedajes
-   * @return hospedajes
-  */
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public List<Hospedaje> getHospedajes() {
-    return hospedajes;
-  }
-
-  public void setHospedajes(List<Hospedaje> hospedajes) {
-    this.hospedajes = hospedajes;
+  public void setPrecio(Double precio) {
+    this.precio = precio;
   }
 
 
@@ -207,14 +185,14 @@ public class Producto   {
     return Objects.equals(this.id, producto.id) &&
         Objects.equals(this.descripcion, producto.descripcion) &&
         Objects.equals(this.fechaCreacion, producto.fechaCreacion) &&
-        Objects.equals(this.transportes, producto.transportes) &&
-        Objects.equals(this.eventos, producto.eventos) &&
-        Objects.equals(this.hospedajes, producto.hospedajes);
+        Objects.equals(this.detalleProducto, producto.detalleProducto) &&
+        Objects.equals(this.cliente, producto.cliente) &&
+        Objects.equals(this.precio, producto.precio);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, descripcion, fechaCreacion, transportes, eventos, hospedajes);
+    return Objects.hash(id, descripcion, fechaCreacion, detalleProducto, cliente, precio);
   }
 
   @Override
@@ -225,9 +203,9 @@ public class Producto   {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    descripcion: ").append(toIndentedString(descripcion)).append("\n");
     sb.append("    fechaCreacion: ").append(toIndentedString(fechaCreacion)).append("\n");
-    sb.append("    transportes: ").append(toIndentedString(transportes)).append("\n");
-    sb.append("    eventos: ").append(toIndentedString(eventos)).append("\n");
-    sb.append("    hospedajes: ").append(toIndentedString(hospedajes)).append("\n");
+    sb.append("    detalleProducto: ").append(toIndentedString(detalleProducto)).append("\n");
+    sb.append("    cliente: ").append(toIndentedString(cliente)).append("\n");
+    sb.append("    precio: ").append(toIndentedString(precio)).append("\n");
     sb.append("}");
     return sb.toString();
   }

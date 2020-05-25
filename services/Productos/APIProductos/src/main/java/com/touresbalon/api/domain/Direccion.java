@@ -4,14 +4,9 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.touresbalon.api.domain.Ciudad;
-import com.touresbalon.api.domain.Estado;
-import com.touresbalon.api.domain.Pais;
-import com.touresbalon.api.domain.UbicacionGeografica2;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
-import org.openapitools.jackson.nullable.JsonNullable;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -26,7 +21,7 @@ public class Direccion   {
   private String direccion;
 
   @JsonProperty("ubicacion")
-  private UbicacionGeografica2 ubicacion;
+  private UbicacionGeografica ubicacion;
 
   /**
    * Gets or Sets tipo
@@ -96,7 +91,7 @@ public class Direccion   {
     this.direccion = direccion;
   }
 
-  public Direccion ubicacion(UbicacionGeografica2 ubicacion) {
+  public Direccion ubicacion(UbicacionGeografica ubicacion) {
     this.ubicacion = ubicacion;
     return this;
   }
@@ -109,11 +104,11 @@ public class Direccion   {
 
   @Valid
 
-  public UbicacionGeografica2 getUbicacion() {
+  public UbicacionGeografica getUbicacion() {
     return ubicacion;
   }
 
-  public void setUbicacion(UbicacionGeografica2 ubicacion) {
+  public void setUbicacion(UbicacionGeografica ubicacion) {
     this.ubicacion = ubicacion;
   }
 

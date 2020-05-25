@@ -12,22 +12,18 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "cuarto")
-public class CuartoEntity {
+@Table(name = "producto")
+public class ProductoEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String numero_cuarto;
+	private String descripcion;
+	
+	private Timestamp fecha_creacion;
 	
 	private Long id_cliente;
 	
-	private Timestamp fecha_inicio;
-	
-	private Timestamp fecha_fin;
-	
-	private Timestamp fecha_reserva;
-	
-	private Long id_acomodacion;
+	private double precio;
 }

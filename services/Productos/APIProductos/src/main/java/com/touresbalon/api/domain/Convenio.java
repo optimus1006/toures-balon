@@ -4,12 +4,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.touresbalon.api.domain.Ciudad2;
-import com.touresbalon.api.domain.Pais2;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
-import org.openapitools.jackson.nullable.JsonNullable;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -68,10 +64,10 @@ public class Convenio   {
   private String correo;
 
   @JsonProperty("pais")
-  private Pais2 pais;
+  private Pais pais;
 
   @JsonProperty("ciudad")
-  private Ciudad2 ciudad;
+  private Ciudad ciudad;
 
   public Convenio nombreProveedor(String nombreProveedor) {
     this.nombreProveedor = nombreProveedor;
@@ -174,7 +170,7 @@ public class Convenio   {
     this.correo = correo;
   }
 
-  public Convenio pais(Pais2 pais) {
+  public Convenio pais(Pais pais) {
     this.pais = pais;
     return this;
   }
@@ -187,15 +183,15 @@ public class Convenio   {
 
   @Valid
 
-  public Pais2 getPais() {
+  public Pais getPais() {
     return pais;
   }
 
-  public void setPais(Pais2 pais) {
+  public void setPais(Pais pais) {
     this.pais = pais;
   }
 
-  public Convenio ciudad(Ciudad2 ciudad) {
+  public Convenio ciudad(Ciudad ciudad) {
     this.ciudad = ciudad;
     return this;
   }
@@ -208,11 +204,11 @@ public class Convenio   {
 
   @Valid
 
-  public Ciudad2 getCiudad() {
+  public Ciudad getCiudad() {
     return ciudad;
   }
 
-  public void setCiudad(Ciudad2 ciudad) {
+  public void setCiudad(Ciudad ciudad) {
     this.ciudad = ciudad;
   }
 

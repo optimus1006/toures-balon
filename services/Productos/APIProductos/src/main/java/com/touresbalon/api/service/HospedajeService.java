@@ -9,6 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import com.touresbalon.api.domain.Acomodacion;
 import com.touresbalon.api.domain.Ciudad;
 import com.touresbalon.api.domain.Convenio;
 import com.touresbalon.api.domain.Cuarto;
@@ -38,6 +39,9 @@ public class HospedajeService {
 	
 	@Inject
 	ImagenService imagenService;
+	
+	@Inject
+	AcomodacionService acomodacionService;
 	
 	public Hospedaje crearHospedaje(Hospedaje hospedaje) throws HospedajeException{
 		Hospedaje hospedajeResponse = new Hospedaje();
@@ -96,17 +100,23 @@ public class HospedajeService {
 			throw new HospedajeException("La información es obligatoria.");
 		}
 		
+		if (hospedaje.getCodigoExterno() != null) {
+			hospedajeEntity.setCodigo_externo(hospedaje.getCodigoExterno());
+		} else {
+			throw new TransporteException("Debe especificar el codigo de homologacion del hospedaje.");
+		}
+		
 		hospedajeRepository.save(hospedajeEntity);
 		
 		if(hospedaje.getFotos()!=null) {
 			for(Imagen imagen: hospedaje.getFotos()) {
-				imagen.setId(imagenService.crearImagen(imagen, hospedajeEntity.getCodigo()).getId());
+				imagen.setId(imagenService.crearImagen(imagen, hospedajeEntity.getCodigo(),"HOSPEDAJE").getId());
 			}
 		}
 		
-		if (hospedaje.getCuartos() != null) {
-			for(Cuarto cuarto: hospedaje.getCuartos()) {
-				cuartoService.crearCuarto(cuarto,hospedajeEntity.getCodigo());
+		if (hospedaje.getAcomodaciones() != null) {
+			for(Acomodacion acomodacion: hospedaje.getAcomodaciones()) {
+				acomodacion.setId(acomodacionService.crearAcomodacion(acomodacion).getId());
 			}
 		} else {
 			throw new HospedajeException("debe definir los cuartos.");
@@ -167,45 +177,40 @@ public class HospedajeService {
 		return hospedajeResponse;
 	}
 	
-	public List<Hospedaje> consultarHospedajes(String idConvenio){
+	public List<Hospedaje> consultarHospedajes(String nombre, int calificacion, String tipoHospedaje,Long ciudad,String idConvenio){
 		List<Hospedaje> hospedajes = new ArrayList<>();
+		List<HospedajeEntity> hospedajesEntityA = new ArrayList<>();
 		
-		if(idConvenio!=null || idConvenio.isEmpty()) {
-			Iterable<HospedajeEntity> hospedajesEntity=hospedajeRepository.findAll();
-			
-			for(HospedajeEntity hospedajeEntity: hospedajesEntity) {
-				Hospedaje hospedaje = new Hospedaje();
-				hospedaje.setCalificacion(hospedajeEntity.getCalificacion());
-				hospedaje.setCantidadCuartos(hospedajeEntity.getCantidad_cuartos());
-				Ciudad ciudad = new Ciudad();
-				ciudad.setCodigo(hospedajeEntity.getId_ciudad());
-				hospedaje.setCiudad(ciudad);
-				hospedaje.setCodigo(hospedajeEntity.getCodigo());
-				Convenio convenio = new Convenio();
-				convenio.setIdentificacion(hospedajeEntity.getId_convenio());
-				hospedaje.setConvenio(convenio);
-				hospedaje.setDireccion(hospedajeEntity.getDireccion());
-				UbicacionGeografica geolocalizacion = new UbicacionGeografica();
-				geolocalizacion.setLatitud(Float.parseFloat(hospedajeEntity.getLatitud()));
-				geolocalizacion.setLongitud(Float.parseFloat(hospedajeEntity.getLongitud()));
-				hospedaje.setGeolocalizacion(geolocalizacion);
-				hospedaje.setInformacion(hospedajeEntity.getInformacion());
-				hospedaje.setNombre(hospedajeEntity.getNombre());
-				Optional<TipoHospedajeEntity> tipoHospedaje= tipoHospedajeRepository.findById(hospedajeEntity.getTipo_hospedaje());
-				hospedaje.setTipoHospedaje(TipoHospedaje.valueOf(tipoHospedaje.get().getDescripcion()));
-				hospedajes.add(hospedaje);
+		if(idConvenio!=null) {
+			hospedajesEntityA = hospedajeRepository.findById_convenio(idConvenio);
+		}
+		else if(nombre!=null) {
+			hospedajesEntityA = hospedajeRepository.findByNombre(nombre);
+		}
+		else if(tipoHospedaje!=null) {
+			TipoHospedajeEntity tipoHospedajeEntity=tipoHospedajeRepository.findByDescripcion(tipoHospedaje);
+			if(tipoHospedajeEntity!=null) {
+				hospedajesEntityA = hospedajeRepository.findByTipo_hospedaje(tipoHospedajeEntity.getId());
 			}
+			else {
+				throw new HospedajeException("el tipo de hospedaje no existe.");
+			}
+		}
+		else if(ciudad!=null) {
+			hospedajesEntityA = hospedajeRepository.findById_ciudad(ciudad);
+		}
+		else if(calificacion!=0) {
+			hospedajesEntityA = hospedajeRepository.findByCalificacion(calificacion);
 		}
 		else {
-			List<HospedajeEntity> hospedajesEntity = hospedajeRepository.findById_convenio(idConvenio);
-			
-			for(HospedajeEntity hospedajeEntity: hospedajesEntity) {
+			Iterable<HospedajeEntity> hospedajesEntityI=hospedajeRepository.findAll();
+			for(HospedajeEntity hospedajeEntity: hospedajesEntityI) {
 				Hospedaje hospedaje = new Hospedaje();
 				hospedaje.setCalificacion(hospedajeEntity.getCalificacion());
 				hospedaje.setCantidadCuartos(hospedajeEntity.getCantidad_cuartos());
-				Ciudad ciudad = new Ciudad();
-				ciudad.setCodigo(hospedajeEntity.getId_ciudad());
-				hospedaje.setCiudad(ciudad);
+				Ciudad ciudadR = new Ciudad();
+				ciudadR.setCodigo(hospedajeEntity.getId_ciudad());
+				hospedaje.setCiudad(ciudadR);
 				hospedaje.setCodigo(hospedajeEntity.getCodigo());
 				Convenio convenio = new Convenio();
 				convenio.setIdentificacion(hospedajeEntity.getId_convenio());
@@ -217,12 +222,63 @@ public class HospedajeService {
 				hospedaje.setGeolocalizacion(geolocalizacion);
 				hospedaje.setInformacion(hospedajeEntity.getInformacion());
 				hospedaje.setNombre(hospedajeEntity.getNombre());
-				Optional<TipoHospedajeEntity> tipoHospedaje= tipoHospedajeRepository.findById(hospedajeEntity.getTipo_hospedaje());
-				hospedaje.setTipoHospedaje(TipoHospedaje.valueOf(tipoHospedaje.get().getDescripcion()));
+				Optional<TipoHospedajeEntity> tipoHospedajeO= tipoHospedajeRepository.findById(hospedajeEntity.getTipo_hospedaje());
+				hospedaje.setTipoHospedaje(TipoHospedaje.valueOf(tipoHospedajeO.get().getDescripcion()));
 				hospedajes.add(hospedaje);
 			}
+		}	
 		
-		}
+		if(hospedajesEntityA.size()>0) {
+			for(HospedajeEntity hospedajeEntity: hospedajesEntityA) {
+				Hospedaje hospedaje = new Hospedaje();
+				hospedaje.setCalificacion(hospedajeEntity.getCalificacion());
+				hospedaje.setCantidadCuartos(hospedajeEntity.getCantidad_cuartos());
+				Ciudad ciudadR = new Ciudad();
+				ciudadR.setCodigo(hospedajeEntity.getId_ciudad());
+				hospedaje.setCiudad(ciudadR);
+				hospedaje.setCodigo(hospedajeEntity.getCodigo());
+				Convenio convenio = new Convenio();
+				convenio.setIdentificacion(hospedajeEntity.getId_convenio());
+				hospedaje.setConvenio(convenio);
+				hospedaje.setDireccion(hospedajeEntity.getDireccion());
+				UbicacionGeografica geolocalizacion = new UbicacionGeografica();
+				geolocalizacion.setLatitud(Float.parseFloat(hospedajeEntity.getLatitud()));
+				geolocalizacion.setLongitud(Float.parseFloat(hospedajeEntity.getLongitud()));
+				hospedaje.setGeolocalizacion(geolocalizacion);
+				hospedaje.setInformacion(hospedajeEntity.getInformacion());
+				hospedaje.setNombre(hospedajeEntity.getNombre());
+				Optional<TipoHospedajeEntity> tipoHospedajeO= tipoHospedajeRepository.findById(hospedajeEntity.getTipo_hospedaje());
+				hospedaje.setTipoHospedaje(TipoHospedaje.valueOf(tipoHospedajeO.get().getDescripcion()));
+				hospedajes.add(hospedaje);
+			}
+		}	
+			
+			
 		return hospedajes;
+	}
+	
+	public Hospedaje consultarPorId(Long id) {
+		Hospedaje hospedaje = new Hospedaje();
+		Optional<HospedajeEntity> hospedajeEntity = hospedajeRepository.findById(id);
+		hospedaje.setCalificacion(hospedajeEntity.get().getCalificacion());
+		hospedaje.setCantidadCuartos(hospedajeEntity.get().getCantidad_cuartos());
+		Ciudad ciudad = new Ciudad();
+		ciudad.setCodigo(hospedajeEntity.get().getId_ciudad());
+		hospedaje.setCiudad(ciudad);
+		hospedaje.setCodigo(hospedajeEntity.get().getCodigo());
+		Convenio convenio = new Convenio();
+		convenio.setIdentificacion(hospedajeEntity.get().getId_convenio());
+		hospedaje.setConvenio(convenio);
+		hospedaje.setDireccion(hospedajeEntity.get().getDireccion());
+		UbicacionGeografica geolocalizacion = new UbicacionGeografica();
+		geolocalizacion.setLatitud(Float.parseFloat(hospedajeEntity.get().getLatitud()));
+		geolocalizacion.setLongitud(Float.parseFloat(hospedajeEntity.get().getLongitud()));
+		hospedaje.setGeolocalizacion(geolocalizacion);
+		hospedaje.setInformacion(hospedajeEntity.get().getInformacion());
+		hospedaje.setNombre(hospedajeEntity.get().getNombre());
+		Optional<TipoHospedajeEntity> tipoHospedaje= tipoHospedajeRepository.findById(hospedajeEntity.get().getTipo_hospedaje());
+		hospedaje.setTipoHospedaje(TipoHospedaje.valueOf(tipoHospedaje.get().getDescripcion()));
+		
+		return hospedaje;
 	}
 }

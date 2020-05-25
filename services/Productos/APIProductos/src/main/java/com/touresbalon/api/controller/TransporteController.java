@@ -18,7 +18,6 @@ import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 
 import com.touresbalon.api.domain.Asiento;
 import com.touresbalon.api.domain.AsientosGETAllRs;
-import com.touresbalon.api.domain.AsientosGETByIdRs;
 import com.touresbalon.api.domain.AsientosPSTRq;
 import com.touresbalon.api.domain.AsientosPSTRs;
 import com.touresbalon.api.domain.AsientosPTCRq;

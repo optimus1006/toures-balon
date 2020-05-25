@@ -3,7 +3,7 @@ package com.touresbalon.api.domain;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.touresbalon.api.domain.Hospedaje;
+import com.touresbalon.api.domain.Localidad;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -11,34 +11,35 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Respuesta de  actualizacion de un Hospedaje.
+ * Respuesta de creacion de una localidad
  */
-@ApiModel(description = "Respuesta de  actualizacion de un Hospedaje.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-10T10:11:38.301-05:00[America/Bogota]")
+@ApiModel(description = "Respuesta de creacion de una localidad")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-21T22:42:58.217-05:00[America/Bogota]")
 
-public class HospedajesPCTRs   {
-  @JsonProperty("hospedaje")
-  private Hospedaje hospedaje = null;
+public class LocalidadesPSTRs   {
+  @JsonProperty("localidad")
+  private Localidad localidad = null;
 
-  public HospedajesPCTRs hospedaje(Hospedaje hospedaje) {
-    this.hospedaje = hospedaje;
+  public LocalidadesPSTRs localidad(Localidad localidad) {
+    this.localidad = localidad;
     return this;
   }
 
   /**
-   * Get transporte
-   * @return transporte
+   * Get localidad
+   * @return localidad
   */
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
   @Valid
 
-  public Hospedaje getHospedaje() {
-    return hospedaje;
+  public Localidad getLocalidad() {
+    return localidad;
   }
 
-  public void setHospedaje(Hospedaje hospedaje) {
-    this.hospedaje = hospedaje;
+  public void setLocalidad(Localidad localidad) {
+    this.localidad = localidad;
   }
 
 
@@ -50,21 +51,21 @@ public class HospedajesPCTRs   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    HospedajesPCTRs hospedajesPCTRs = (HospedajesPCTRs) o;
-    return Objects.equals(this.hospedaje, hospedajesPCTRs.hospedaje);
+    LocalidadesPSTRs localidadesPSTRs = (LocalidadesPSTRs) o;
+    return Objects.equals(this.localidad, localidadesPSTRs.localidad);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(hospedaje);
+    return Objects.hash(localidad);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class HospedajesPCTRs {\n");
+    sb.append("class LocalidadesPSTRs {\n");
     
-    sb.append("    hospedaje: ").append(toIndentedString(hospedaje)).append("\n");
+    sb.append("    localidad: ").append(toIndentedString(localidad)).append("\n");
     sb.append("}");
     return sb.toString();
   }
