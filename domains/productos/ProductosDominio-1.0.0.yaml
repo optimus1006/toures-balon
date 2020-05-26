@@ -59,13 +59,13 @@ components:
           $ref: '#/components/schemas/Transporte'
         hospedaje:
           $ref: '#/components/schemas/Hospedaje'
-        eventos:
+        evento:
           $ref: '#/components/schemas/Evento'
-        asietosEvento:
+        asientosEvento:
           description: hace referencia si es compra de un cliente a los asientos comprados si es un producto nuevo a ofreser los asientos disponibles  
           type: integer
           format: int32
-        asietosTransporte:
+        asientosTransporte:
           description: hace referencia si es compra de un cliente a los asientos comprados si es un producto nuevo a ofreser los asientos disponibles  
           type: integer
           format: int32
