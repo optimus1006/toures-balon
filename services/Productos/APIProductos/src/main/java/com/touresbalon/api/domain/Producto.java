@@ -7,7 +7,7 @@ import com.touresbalon.api.domain.Cliente;
 import com.touresbalon.api.domain.DetalleProducto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -28,7 +28,7 @@ public class Producto   {
   private String descripcion;
 
   @JsonProperty("fechaCreacion")
-  private OffsetDateTime fechaCreacion;
+  private LocalDateTime fechaCreacion;
 
   @JsonProperty("detalleProducto")
   @Valid
@@ -82,7 +82,7 @@ public class Producto   {
     this.descripcion = descripcion;
   }
 
-  public Producto fechaCreacion(OffsetDateTime fechaCreacion) {
+  public Producto fechaCreacion(LocalDateTime fechaCreacion) {
     this.fechaCreacion = fechaCreacion;
     return this;
   }
@@ -95,11 +95,11 @@ public class Producto   {
 
   @Valid
 
-  public OffsetDateTime getFechaCreacion() {
+  public LocalDateTime getFechaCreacion() {
     return fechaCreacion;
   }
 
-  public void setFechaCreacion(OffsetDateTime fechaCreacion) {
+  public void setFechaCreacion(LocalDateTime fechaCreacion) {
     this.fechaCreacion = fechaCreacion;
   }
 

@@ -1,0 +1,247 @@
+{
+	"info": {
+		"_postman_id": "8b227644-fc2a-493f-b7c5-04100a8d5de1",
+		"name": "Transportes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "transporte",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"transporte\": {\n    \t\"description\":\"Vuelo Bogota Cali\",\n    \t\"lugarPartida\":{\n    \t\t\"codigo\": 1\n    \t},\n    \t\"fechaPartida\":\"2020-05-10T16:23:00.0\",\n    \t\"lugarDestino\":{\n    \t\t\"codigo\":3\n    \t},\n    \t\"fechaLlegada\":\"2020-05-10T17:23:00.0\",\n    \t\"convenio\":{\n    \t\t\"identificacion\": \"AVIANCA1112223\"\n    \t},\n    \t\"cantidadCupos\":200\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/transportes",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transportes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "transporteGETAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/productos/transportes",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"productos",
+						"transportes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "transporteGETById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/productos/transportes/4",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"productos",
+						"transportes",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "transporteAsientoPST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"asiento\":{\n    \t\"valor\":\"I29\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/productos/transportes/4/asientos",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"productos",
+						"transportes",
+						"4",
+						"asientos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "transporteAsientoPCT",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"asiento\":{\n    \t\"idCliente\":{\n    \t\t\"id\":2\n    \t}\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/productos/transportes/4/asientos/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"productos",
+						"transportes",
+						"4",
+						"asientos",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "transporteAsientoGETAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/productos/transportes/4/asientos?idAsiento=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"productos",
+						"transportes",
+						"4",
+						"asientos"
+					],
+					"query": [
+						{
+							"key": "idAsiento",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "hospedaesPST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"hospedaje\": {\n    \t\"nombre\": \"HOTELES DE CAMERON\",\n    \t\"informacion\":\"Hotel 5 eestrellas ubicado en el norte de bogota, con mas de 300 habitaciones y un buen servicio.\",\n    \t\"tipoHospedaje\": \"HOTEL\",\n    \t\"calificacion\": 5,\n    \t\"direccion\": \"AV SIEMPRE VIVA #123\",\n    \t\"cantidadCuartos\": 300,\n    \t\"ciudad\":{\n    \t\t\"id\":1\n    \t},\n    \t\"convenio\":{\n    \t\t\"identificacion\": \"9999115444\"\n    \t},\n    \t\"geolocalizacion\":{\n    \t\t\"latitud\":\"1.111445575\",\n    \t\t\"longitud\":\"677544.4454447\"\n    \t},\n    \t\"codigoExterno\": \"11154454\",\n    \t\"acomodaciones\":[{\n    \t\t\t\"nombre\": \"SENCILLA\",\n    \t\t\t\"precio\": 8700.00,\n    \t\t\t\"descripcion\": \"cuarto con cama doble\",\n    \t\t\t\"cantidadCuartos\": 250,\n    \t\t\t\"codigoExterno\": \"44544454\"\n    \t\t},\n    \t\t{\n    \t\t\t\"nombre\": \"DOBLE\",\n    \t\t\t\"precio\": 16500.00,\n    \t\t\t\"descripcion\": \"cuarto con 3 camas doble\",\n    \t\t\t\"cantidadCuartos\": 20,\n    \t\t\t\"codigoExterno\": \"445445\"\n    \t\t},\n    \t\t{\n    \t\t\t\"nombre\": \"TRIPLE\",\n    \t\t\t\"precio\": 300000.00,\n    \t\t\t\"descripcion\": \"cuarto con 5 camas doble\",\n    \t\t\t\"cantidadCuartos\": 30,\n    \t\t\t\"codigoExterno\": \"445445\"\n    \t\t}\n    \t\t]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/productos/hospedajes",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"productos",
+						"hospedajes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "eventosPST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"evento\": {\n    \t\"nombre\": \"FINAL CHAMPIONS LEAGUE 2020\",\n    \t\"descripcion\":\"Partido final de la copa champions league 2020\",\n    \t\"cantidad\":4500,\n    \t\"fecha\":\"2020-06-10\",\n    \t\"hora\": \"19:00:00.0\",\n    \t\"tipo\": \"DEPORTIVO\",\n    \t\"ubicacionEvento\":{\n    \t\t\"direccion\":\"Calle falsa #123\",\n    \t\t\"ubicacion\":{\n    \t\t\t\"latitud\":\"1.111445575\",\n    \t\t\t\"longitud\":\"677544.4454447\"\n    \t\t},\n    \t\t\"ciudad\":{\n    \t\t\t\"id\": 1\n    \t\t}\n    \t},\n    \t\"zonaHoraria\":\"GTL\",\n    \t\"convenio\":{\n    \t\t\"identificacion\": \"9999115444\"\n    \t},\n    \t\"codigoExterno\": \"11154454\",\n    \t\"localidades\":[{\n    \t\t\t\"nombre\": \"VIP\",\n    \t\t\t\"precio\": 8700.00,\n    \t\t\t\"aforo\": 500,\n    \t\t\t\"codigoExterno\": \"44544454\"\n    \t\t},\n    \t\t{\n    \t\t\t\"nombre\": \"MEDIA\",\n    \t\t\t\"precio\": 16500.00,\n    \t\t\t\"aforo\": 2000,\n    \t\t\t\"codigoExterno\": \"445445\"\n    \t\t},\n    \t\t{\n    \t\t\t\"nombre\": \"BAJA\",\n    \t\t\t\"precio\": 300000.00,\n    \t\t\t\"aforo\": 2000,\n    \t\t\t\"codigoExterno\": \"445445\"\n    \t\t}\n    \t\t]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/productos/eventos",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"productos",
+						"eventos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "productosPST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"producto\": {\n    \t\"cliente\":{\n    \t\t\"id\": 1\n    \t},\n    \t\"precio\": 1300000.00,\n    \t\"detalleProducto\":[\n    \t\t{\n    \t\t\t\"eventos\":{\n    \t\t\t\t\"id\":1,\n    \t\t\t\t\"localidades\":[\n    \t\t\t\t\t{\n    \t\t\t\t\t\t\"id\":1\n    \t\t\t\t\t}\n    \t\t\t\t]\n    \t\t\t},\n    \t\t\t\"asientosEvento\":2\n    \t\t}\n    \t]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/productos",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"productos"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

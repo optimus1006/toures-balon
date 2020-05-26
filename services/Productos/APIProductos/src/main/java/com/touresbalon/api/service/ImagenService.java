@@ -123,10 +123,7 @@ public class ImagenService {
 				imagen.setPath(imagenEntity.getPath());
 				imagenes.add(imagen);
 			}
-			return imagenes;
 		}
-		else {
-			throw new HospedajeException("las imagenes con el id " + id + " No existe");
-		}
+		return imagenes;
 	}
 }

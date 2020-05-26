@@ -68,9 +68,6 @@ public class ProductoService {
 		if(producto.getDescripcion()!=null) {
 			productoEntity.setDescripcion(producto.getDescripcion());
 		}
-		else {
-			throw new ProductoException("La descripcion es obligatoria");
-		}
 		
 		if(producto.getPrecio()!=null) {
 			productoEntity.setPrecio(producto.getPrecio());
@@ -85,28 +82,23 @@ public class ProductoService {
 		
 		if(producto.getDetalleProducto()!=null) {
 			for(DetalleProducto detalleProducto : producto.getDetalleProducto()) {
-				if(detalleProducto.getEventos()!=null && detalleProducto.getAsietosEvento()!=null) {
-					Evento eventoDetalle = eventoService.consultarPorId(detalleProducto.getEventos().getId());
+				if(detalleProducto.getEvento()!=null && detalleProducto.getAsientosEvento()!=null) {
+					Evento eventoDetalle = eventoService.consultarPorId(detalleProducto.getEvento().getId());
 					if(eventoDetalle!=null) {
 						ProductoDetalleEntity productoDetalleEntity = new ProductoDetalleEntity();
 						productoDetalleEntity.setFecha_registro(new Timestamp(System.currentTimeMillis()));
 						productoDetalleEntity.setId_evento(eventoDetalle.getId());
 						productoDetalleEntity.setId_producto(productoEntity.getId());
-						productoDetalleEntity.setAsientos_evento(detalleProducto.getAsietosEvento());
+						productoDetalleEntity.setAsientos_evento(detalleProducto.getAsientosEvento());
 						productoDetalleRepository.save(productoDetalleEntity);
 						if(producto.getCliente()!=null) {
-							for(int i=0;i<=detalleProducto.getAsietosEvento();i++) {
+							for(int i=1;i<=detalleProducto.getAsientosEvento();i++) {
 								if(eventoDetalle.getLocalidades()!=null) {
-									Localidad localidad = localidadService.buscarPorId(eventoDetalle.getLocalidades().get(0).getId());
+									Localidad localidad = localidadService.buscarPorId(detalleProducto.getEvento().getLocalidades().get(0).getId());
 									if(localidad!=null) {
 										Asiento asiento = new Asiento();
-										Asiento asientoReserva = new Asiento();
 										asiento.setIdCliente(producto.getCliente());
-										asientoReserva.setId(asientoService.reservarAsientoEvento(asiento, localidad.getId()));
-										ReservaExterna reservaExterna = new ReservaExterna();
-										reservaExterna.setIdCodigoExterno("ssss");
-										reservaExterna.setIdreserva("ssss");
-										reservas.add(reservaExterna);
+										asientoService.reservarAsientoEvento(asiento, localidad.getId());
 									}
 									else {
 										throw new ProductoException("Dado a que es una compra debe especificar en que localidad comprara los asientos para el cliente, la localidad con el id "+eventoDetalle.getLocalidades().get(0).getId()+" no existe");
@@ -115,12 +107,17 @@ public class ProductoService {
 								else {
 									throw new ProductoException("Dado a que es una compra debe especificar en que localidad comprara los asientos para el cliente con el evento "+eventoDetalle.getId());
 								}
+								
+								ReservaExterna reservaExterna = new ReservaExterna();
+								reservaExterna.setIdCodigoExterno("ssss");
+								reservaExterna.setIdreserva("ssss");
+								reservas.add(reservaExterna);
 							}
 						}
 						
 					}
 					else {
-						throw new ProductoException("El evento con id "+detalleProducto.getEventos().getId()+" no existe o no indico la cantidad de asientos del evento ");
+						throw new ProductoException("El evento con id "+detalleProducto.getEvento().getId()+" no existe o no indico la cantidad de asientos del evento ");
 					}
 				}
 				
@@ -152,17 +149,17 @@ public class ProductoService {
 					}
 				}
 				
-				if(detalleProducto.getTransporte()!=null && detalleProducto.getAsietosTransporte()!=null) {
+				if(detalleProducto.getTransporte()!=null && detalleProducto.getAsientosTransporte()!=null) {
 					Transporte transporteDetalle = transporteService.getTransportePorId(detalleProducto.getTransporte().getId());
 					if(transporteDetalle!=null) {
 						ProductoDetalleEntity productoDetalleEntity = new ProductoDetalleEntity();
 						productoDetalleEntity.setFecha_registro(new Timestamp(System.currentTimeMillis()));
 						productoDetalleEntity.setId_transporte(transporteDetalle.getId());
 						productoDetalleEntity.setId_producto(productoEntity.getId());
-						productoDetalleEntity.setAsientos_transporte(detalleProducto.getAsietosTransporte());
+						productoDetalleEntity.setAsientos_transporte(detalleProducto.getAsientosTransporte());
 						productoDetalleRepository.save(productoDetalleEntity);
 						if(producto.getCliente()!=null) {
-							for(int i=0;i<=detalleProducto.getAsietosTransporte();i++) {
+							for(int i=0;i<=detalleProducto.getAsientosTransporte();i++) {
 								Asiento asiento = new Asiento();
 								asiento.setIdCliente(producto.getCliente());
 								asiento.setId(asientoService.crearAsiento(asiento, transporteDetalle.getId()));

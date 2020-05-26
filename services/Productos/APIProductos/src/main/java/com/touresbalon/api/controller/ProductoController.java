@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 
 import com.touresbalon.api.domain.Error;
+import com.touresbalon.api.domain.ProductoException;
 import com.touresbalon.api.domain.ProductosPSTRq;
 import com.touresbalon.api.domain.ProductosPSTRs;
 import com.touresbalon.api.domain.TransporteException;
@@ -31,7 +32,7 @@ public class ProductoController {
 		try {
 			productosPSTRs=productoService.crearProducto(productosPSTRq.getProducto());
         	return Response.status(Response.Status.OK).entity(productosPSTRs).type(MediaType.APPLICATION_JSON).build();
-    	}catch (TransporteException e) {
+    	}catch (ProductoException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());

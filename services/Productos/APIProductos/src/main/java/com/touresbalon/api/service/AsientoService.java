@@ -135,6 +135,8 @@ public class AsientoService {
 			asientoEventoEntity.setNumero(asiento.getValor());
 		}
 		
+		asientoEventoEntity.setFecha_reserva(new Timestamp(System.currentTimeMillis()));
+		
 		asientoEventoRepository.save(asientoEventoEntity);
 		
 		return asientoEventoEntity.getId();

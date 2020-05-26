@@ -252,10 +252,13 @@ public class EventoService {
 			eventoResponse.setFecha(eventoEntity.get().getFecha().toLocalDateTime().toLocalDate());
 			eventoResponse.setHora(eventoEntity.get().getHora());
 			eventoResponse.setId(eventoEntity.get().getId());
-			eventoResponse.setImagenes(imagenService.buscarImagenesPorTipoPorId("EVENTO", eventoEntity.get().getId()));
+			List<Imagen> listaImagenes = imagenService.buscarImagenesPorTipoPorId("EVENTO", eventoEntity.get().getId());
+			if(listaImagenes.size()>0) {
+				eventoResponse.setImagenes(listaImagenes);
+			}			
 			eventoResponse.setLocalidades(localidadService.buscarPorIdEvento(eventoEntity.get().getId()));
 			eventoResponse.setNombre(eventoEntity.get().getNombre());
-			eventoResponse.setTipo(TipoEnum.fromValue(tipoEventoRepository.findById(eventoEntity.get().getTipo()).toString()));
+			eventoResponse.setTipo(TipoEnum.valueOf(tipoEventoRepository.findById(eventoEntity.get().getTipo()).get().getDescripcion()));
 			Direccion ubicacionEvento = new Direccion();
 			Ciudad ciudad = new Ciudad();
 			ciudad.setCodigo(eventoEntity.get().getId_ciudad());
@@ -286,7 +289,10 @@ public class EventoService {
 			evento.setFecha(eventoEntity.getFecha().toLocalDateTime().toLocalDate());
 			evento.setHora(eventoEntity.getHora());
 			evento.setId(eventoEntity.getId());
-			evento.setImagenes(imagenService.buscarImagenesPorTipoPorId("EVENTO", eventoEntity.getId()));
+			List<Imagen> listaImagenes = imagenService.buscarImagenesPorTipoPorId("EVENTO", eventoEntity.getId());
+			if(listaImagenes.size()>0) {
+				evento.setImagenes(listaImagenes);
+			}
 			evento.setLocalidades(localidadService.buscarPorIdEvento(eventoEntity.getId()));
 			evento.setNombre(eventoEntity.getNombre());
 			evento.setTipo(TipoEnum.fromValue(tipoEventoRepository.findById(eventoEntity.getTipo()).toString()));

@@ -16,7 +16,7 @@ import javax.validation.constraints.*;
  * detalle de un producto que contiene todos los transportes, eventos u hospedajes comprados por un cliente o armados por un asesor
  */
 @ApiModel(description = "detalle de un producto que contiene todos los transportes, eventos u hospedajes comprados por un cliente o armados por un asesor")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-23T10:55:03.920-05:00[America/Bogota]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-25T20:13:38.885-05:00[America/Bogota]")
 
 public class DetalleProducto   {
   @JsonProperty("id")
@@ -28,14 +28,14 @@ public class DetalleProducto   {
   @JsonProperty("hospedaje")
   private Hospedaje hospedaje;
 
-  @JsonProperty("eventos")
-  private Evento eventos;
+  @JsonProperty("evento")
+  private Evento evento;
 
-  @JsonProperty("asietosEvento")
-  private Integer asietosEvento;
+  @JsonProperty("asientosEvento")
+  private Integer asientosEvento;
 
-  @JsonProperty("asietosTransporte")
-  private Integer asietosTransporte;
+  @JsonProperty("asientosTransporte")
+  private Integer asientosTransporte;
 
   @JsonProperty("cuartosHospedaje")
   private Integer cuartosHospedaje;
@@ -103,65 +103,65 @@ public class DetalleProducto   {
     this.hospedaje = hospedaje;
   }
 
-  public DetalleProducto eventos(Evento eventos) {
-    this.eventos = eventos;
+  public DetalleProducto evento(Evento evento) {
+    this.evento = evento;
     return this;
   }
 
   /**
-   * Get eventos
-   * @return eventos
+   * Get evento
+   * @return evento
   */
   @ApiModelProperty(value = "")
 
   @Valid
 
-  public Evento getEventos() {
-    return eventos;
+  public Evento getEvento() {
+    return evento;
   }
 
-  public void setEventos(Evento eventos) {
-    this.eventos = eventos;
+  public void setEvento(Evento evento) {
+    this.evento = evento;
   }
 
-  public DetalleProducto asietosEvento(Integer asietosEvento) {
-    this.asietosEvento = asietosEvento;
+  public DetalleProducto asientosEvento(Integer asientosEvento) {
+    this.asientosEvento = asientosEvento;
     return this;
   }
 
   /**
    * hace referencia si es compra de un cliente a los asientos comprados si es un producto nuevo a ofreser los asientos disponibles
-   * @return asietosEvento
+   * @return asientosEvento
   */
   @ApiModelProperty(value = "hace referencia si es compra de un cliente a los asientos comprados si es un producto nuevo a ofreser los asientos disponibles")
 
 
-  public Integer getAsietosEvento() {
-    return asietosEvento;
+  public Integer getAsientosEvento() {
+    return asientosEvento;
   }
 
-  public void setAsietosEvento(Integer asietosEvento) {
-    this.asietosEvento = asietosEvento;
+  public void setAsientosEvento(Integer asientosEvento) {
+    this.asientosEvento = asientosEvento;
   }
 
-  public DetalleProducto asietosTransporte(Integer asietosTransporte) {
-    this.asietosTransporte = asietosTransporte;
+  public DetalleProducto asientosTransporte(Integer asientosTransporte) {
+    this.asientosTransporte = asientosTransporte;
     return this;
   }
 
   /**
    * hace referencia si es compra de un cliente a los asientos comprados si es un producto nuevo a ofreser los asientos disponibles
-   * @return asietosTransporte
+   * @return asientosTransporte
   */
   @ApiModelProperty(value = "hace referencia si es compra de un cliente a los asientos comprados si es un producto nuevo a ofreser los asientos disponibles")
 
 
-  public Integer getAsietosTransporte() {
-    return asietosTransporte;
+  public Integer getAsientosTransporte() {
+    return asientosTransporte;
   }
 
-  public void setAsietosTransporte(Integer asietosTransporte) {
-    this.asietosTransporte = asietosTransporte;
+  public void setAsientosTransporte(Integer asientosTransporte) {
+    this.asientosTransporte = asientosTransporte;
   }
 
   public DetalleProducto cuartosHospedaje(Integer cuartosHospedaje) {
@@ -197,15 +197,15 @@ public class DetalleProducto   {
     return Objects.equals(this.id, detalleProducto.id) &&
         Objects.equals(this.transporte, detalleProducto.transporte) &&
         Objects.equals(this.hospedaje, detalleProducto.hospedaje) &&
-        Objects.equals(this.eventos, detalleProducto.eventos) &&
-        Objects.equals(this.asietosEvento, detalleProducto.asietosEvento) &&
-        Objects.equals(this.asietosTransporte, detalleProducto.asietosTransporte) &&
+        Objects.equals(this.evento, detalleProducto.evento) &&
+        Objects.equals(this.asientosEvento, detalleProducto.asientosEvento) &&
+        Objects.equals(this.asientosTransporte, detalleProducto.asientosTransporte) &&
         Objects.equals(this.cuartosHospedaje, detalleProducto.cuartosHospedaje);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, transporte, hospedaje, eventos, asietosEvento, asietosTransporte, cuartosHospedaje);
+    return Objects.hash(id, transporte, hospedaje, evento, asientosEvento, asientosTransporte, cuartosHospedaje);
   }
 
   @Override
@@ -216,9 +216,9 @@ public class DetalleProducto   {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    transporte: ").append(toIndentedString(transporte)).append("\n");
     sb.append("    hospedaje: ").append(toIndentedString(hospedaje)).append("\n");
-    sb.append("    eventos: ").append(toIndentedString(eventos)).append("\n");
-    sb.append("    asietosEvento: ").append(toIndentedString(asietosEvento)).append("\n");
-    sb.append("    asietosTransporte: ").append(toIndentedString(asietosTransporte)).append("\n");
+    sb.append("    evento: ").append(toIndentedString(evento)).append("\n");
+    sb.append("    asientosEvento: ").append(toIndentedString(asientosEvento)).append("\n");
+    sb.append("    asientosTransporte: ").append(toIndentedString(asientosTransporte)).append("\n");
     sb.append("    cuartosHospedaje: ").append(toIndentedString(cuartosHospedaje)).append("\n");
     sb.append("}");
     return sb.toString();
