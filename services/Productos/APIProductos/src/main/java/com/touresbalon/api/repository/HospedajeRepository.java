@@ -1,6 +1,7 @@
 package com.touresbalon.api.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -10,4 +11,5 @@ public interface HospedajeRepository extends CrudRepository<HospedajeEntity, Lon
 	public List<HospedajeEntity> findByCalificacion(int calificacion);
 	public List<HospedajeEntity> findByTipo_hospedaje(int tipo_hospedaje);
 	public List<HospedajeEntity> findById_ciudad(Long id_ciudad);
+	public Optional<HospedajeEntity> findById(Long id_hospedaje);
 }

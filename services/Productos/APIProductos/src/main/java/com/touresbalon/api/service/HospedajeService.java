@@ -257,27 +257,32 @@ public class HospedajeService {
 		return hospedajes;
 	}
 	
-	public Hospedaje consultarPorId(Long id) {
+	public Hospedaje consultarPorId(Long idHospedaje) {
 		Hospedaje hospedaje = new Hospedaje();
-		Optional<HospedajeEntity> hospedajeEntity = hospedajeRepository.findById(id);
-		hospedaje.setCalificacion(hospedajeEntity.get().getCalificacion());
-		hospedaje.setCantidadCuartos(hospedajeEntity.get().getCantidad_cuartos());
-		Ciudad ciudad = new Ciudad();
-		ciudad.setCodigo(hospedajeEntity.get().getId_ciudad());
-		hospedaje.setCiudad(ciudad);
-		hospedaje.setCodigo(hospedajeEntity.get().getCodigo());
-		Convenio convenio = new Convenio();
-		convenio.setIdentificacion(hospedajeEntity.get().getId_convenio());
-		hospedaje.setConvenio(convenio);
-		hospedaje.setDireccion(hospedajeEntity.get().getDireccion());
-		UbicacionGeografica geolocalizacion = new UbicacionGeografica();
-		geolocalizacion.setLatitud(Float.parseFloat(hospedajeEntity.get().getLatitud()));
-		geolocalizacion.setLongitud(Float.parseFloat(hospedajeEntity.get().getLongitud()));
-		hospedaje.setGeolocalizacion(geolocalizacion);
-		hospedaje.setInformacion(hospedajeEntity.get().getInformacion());
-		hospedaje.setNombre(hospedajeEntity.get().getNombre());
-		Optional<TipoHospedajeEntity> tipoHospedaje= tipoHospedajeRepository.findById(hospedajeEntity.get().getTipo_hospedaje());
-		hospedaje.setTipoHospedaje(TipoHospedaje.valueOf(tipoHospedaje.get().getDescripcion()));
+		Optional<HospedajeEntity> hospedajeEntity = hospedajeRepository.findById(idHospedaje);
+		if(hospedajeEntity.isPresent()) {
+			hospedaje.setCalificacion(hospedajeEntity.get().getCalificacion());
+			hospedaje.setCantidadCuartos(hospedajeEntity.get().getCantidad_cuartos());
+			Ciudad ciudad = new Ciudad();
+			ciudad.setCodigo(hospedajeEntity.get().getId_ciudad());
+			hospedaje.setCiudad(ciudad);
+			hospedaje.setCodigo(hospedajeEntity.get().getCodigo());
+			Convenio convenio = new Convenio();
+			convenio.setIdentificacion(hospedajeEntity.get().getId_convenio());
+			hospedaje.setConvenio(convenio);
+			hospedaje.setDireccion(hospedajeEntity.get().getDireccion());
+			UbicacionGeografica geolocalizacion = new UbicacionGeografica();
+			geolocalizacion.setLatitud(Float.parseFloat(hospedajeEntity.get().getLatitud()));
+			geolocalizacion.setLongitud(Float.parseFloat(hospedajeEntity.get().getLongitud()));
+			hospedaje.setGeolocalizacion(geolocalizacion);
+			hospedaje.setInformacion(hospedajeEntity.get().getInformacion());
+			hospedaje.setNombre(hospedajeEntity.get().getNombre());
+			Optional<TipoHospedajeEntity> tipoHospedaje= tipoHospedajeRepository.findById(hospedajeEntity.get().getTipo_hospedaje());
+			hospedaje.setTipoHospedaje(TipoHospedaje.valueOf(tipoHospedaje.get().getDescripcion()));
+		}
+		else {
+			throw new HospedajeException("el hospedaje no existe.");
+		}
 		
 		return hospedaje;
 	}

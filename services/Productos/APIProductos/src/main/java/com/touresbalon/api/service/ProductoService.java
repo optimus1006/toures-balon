@@ -53,6 +53,9 @@ public class ProductoService {
 	@Inject
 	CuartoService cuartoService;
 	
+	@Inject
+	AcomodacionService acomodacionService;
+	
  	
 	public ProductosPSTRs crearProducto(Producto producto) throws ProductoException{
 		
@@ -107,12 +110,11 @@ public class ProductoService {
 								else {
 									throw new ProductoException("Dado a que es una compra debe especificar en que localidad comprara los asientos para el cliente con el evento "+eventoDetalle.getId());
 								}
-								
-								ReservaExterna reservaExterna = new ReservaExterna();
-								reservaExterna.setIdCodigoExterno("ssss");
-								reservaExterna.setIdreserva("ssss");
-								reservas.add(reservaExterna);
 							}
+							ReservaExterna reservaExterna = new ReservaExterna();
+							reservaExterna.setIdCodigoExterno("ssss");
+							reservaExterna.setIdreserva("ssss");
+							reservas.add(reservaExterna);
 						}
 						
 					}
@@ -130,20 +132,27 @@ public class ProductoService {
 						productoDetalleEntity.setId_producto(productoEntity.getId());
 						productoDetalleEntity.setCuartos_hospedaje(detalleProducto.getCuartosHospedaje());
 						productoDetalleRepository.save(productoDetalleEntity);
+						
 						if(producto.getCliente()!=null) {
-							if(hospedajeDetalle.getAcomodaciones()!=null) {
-								for(Acomodacion acomodacion: hospedajeDetalle.getAcomodaciones()) {
-									for(Cuarto cuarto : acomodacion.getCuartos()) {
-										cuartoService.crearCuarto(cuarto, acomodacion.getId());
+							if(detalleProducto.getHospedaje().getAcomodaciones()!=null) {
+								for(Acomodacion acomodacion: detalleProducto.getHospedaje().getAcomodaciones()) {
+									if(acomodacionService.buscarAcomodacionPorId(acomodacion.getId())!=null) {
+										for(Cuarto cuarto : acomodacion.getCuartos()) {
+											cuarto.setCliente(producto.getCliente());
+											cuartoService.crearCuarto(cuarto, acomodacion.getId());
+										}
 									}
-									ReservaExterna reservaExterna = new ReservaExterna();
-									reservaExterna.setIdCodigoExterno("ssss");
-									reservaExterna.setIdreserva("ssss");
-									reservas.add(reservaExterna);
+									else {
+										throw new ProductoException("la acomodacion con el id "+ acomodacion.getId()+" no existe.");
+									}
 								}
+								ReservaExterna reservaExterna = new ReservaExterna();
+								reservaExterna.setIdCodigoExterno("ssss");
+								reservaExterna.setIdreserva("ssss");
+								reservas.add(reservaExterna);
 							}
 							else {
-								throw new ProductoException("debe indicar en q  acomodacion realizara la compra");
+								throw new ProductoException("debe indicar en que  acomodacion realizara la compra");
 							}
 						}
 					}

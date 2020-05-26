@@ -28,9 +28,6 @@ public class CuartoService {
 		if(cuarto.getNumeroCuarto()!=null) {
 			cuartoEntity.setNumero_cuarto(cuarto.getNumeroCuarto());
 		}
-		else {
-			throw new HospedajeException("el numero del cuarto es obligatorio.");
-		}
 		
 		cuartoEntity.setId_acomodacion(acomodacion);
 		
