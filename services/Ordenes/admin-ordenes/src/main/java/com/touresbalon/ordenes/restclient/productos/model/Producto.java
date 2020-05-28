@@ -1,13 +1,15 @@
 package com.touresbalon.ordenes.restclient.productos.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.touresbalon.ordenes.api.model.Cliente;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +28,9 @@ public class Producto   {
   private String descripcion;
 
   @JsonProperty("fechaCreacion")
-  private OffsetDateTime fechaCreacion;
+  @JsonDeserialize(using = com.touresbalon.ordenes.util.LocalDateTimeDeserializer.class)
+  @JsonSerialize(using = com.touresbalon.ordenes.util.LocalDateTimeSerializer.class)
+  private LocalDateTime fechaCreacion;
 
   @JsonProperty("detalleProducto")
   @Valid
@@ -80,7 +84,7 @@ public class Producto   {
     this.descripcion = descripcion;
   }
 
-  public Producto fechaCreacion(OffsetDateTime fechaCreacion) {
+  public Producto fechaCreacion(LocalDateTime fechaCreacion) {
     this.fechaCreacion = fechaCreacion;
     return this;
   }
@@ -93,11 +97,11 @@ public class Producto   {
 
   @Valid
 
-  public OffsetDateTime getFechaCreacion() {
+  public LocalDateTime getFechaCreacion() {
     return fechaCreacion;
   }
 
-  public void setFechaCreacion(OffsetDateTime fechaCreacion) {
+  public void setFechaCreacion(LocalDateTime fechaCreacion) {
     this.fechaCreacion = fechaCreacion;
   }
 

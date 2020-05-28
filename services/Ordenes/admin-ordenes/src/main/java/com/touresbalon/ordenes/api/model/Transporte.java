@@ -3,6 +3,8 @@ package com.touresbalon.ordenes.api.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -31,12 +33,16 @@ public class Transporte   {
   private com.touresbalon.ordenes.api.model.Vehiculo vehiculo;
 
   @JsonProperty("fechaPartida")
+  @JsonDeserialize(using = com.touresbalon.ordenes.util.LocalDateTimeDeserializer.class)
+  @JsonSerialize(using = com.touresbalon.ordenes.util.LocalDateTimeSerializer.class)
   private LocalDateTime fechaPartida;
 
   @JsonProperty("lugarPartida")
   private com.touresbalon.ordenes.api.model.Ciudad lugarPartida;
 
   @JsonProperty("fechaLlegada")
+  @JsonDeserialize(using = com.touresbalon.ordenes.util.LocalDateTimeDeserializer.class)
+  @JsonSerialize(using = com.touresbalon.ordenes.util.LocalDateTimeSerializer.class)
   private LocalDateTime fechaLlegada;
 
   @JsonProperty("lugarDestino")

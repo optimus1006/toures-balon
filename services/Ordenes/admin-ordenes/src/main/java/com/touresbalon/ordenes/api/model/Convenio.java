@@ -3,10 +3,13 @@ package com.touresbalon.ordenes.api.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
@@ -59,7 +62,9 @@ public class Convenio   {
   private TipoConvenioEnum tipoConvenio;
 
   @JsonProperty("fechaVigencia")
-  private OffsetDateTime fechaVigencia;
+  @JsonDeserialize(using = com.touresbalon.ordenes.util.LocalDateTimeDeserializer.class)
+  @JsonSerialize(using = com.touresbalon.ordenes.util.LocalDateTimeSerializer.class)
+  private LocalDateTime fechaVigencia;
 
   @JsonProperty("correo")
   private String correo;
@@ -130,7 +135,7 @@ public class Convenio   {
     this.tipoConvenio = tipoConvenio;
   }
 
-  public com.touresbalon.ordenes.api.model.Convenio fechaVigencia(OffsetDateTime fechaVigencia) {
+  public com.touresbalon.ordenes.api.model.Convenio fechaVigencia(LocalDateTime fechaVigencia) {
     this.fechaVigencia = fechaVigencia;
     return this;
   }
@@ -143,11 +148,11 @@ public class Convenio   {
 
   @Valid
 
-  public OffsetDateTime getFechaVigencia() {
+  public LocalDateTime getFechaVigencia() {
     return fechaVigencia;
   }
 
-  public void setFechaVigencia(OffsetDateTime fechaVigencia) {
+  public void setFechaVigencia(LocalDateTime fechaVigencia) {
     this.fechaVigencia = fechaVigencia;
   }
 
