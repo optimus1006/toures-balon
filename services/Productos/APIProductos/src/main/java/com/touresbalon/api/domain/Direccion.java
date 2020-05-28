@@ -6,7 +6,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -69,7 +70,8 @@ public class Direccion   {
   private Estado estado;
 
   @JsonProperty("fechaCreacion")
-  private OffsetDateTime fechaCreacion;
+  @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+  private LocalDateTime fechaCreacion;
 
   public Direccion direccion(String direccion) {
     this.direccion = direccion;
@@ -195,7 +197,7 @@ public class Direccion   {
     this.estado = estado;
   }
 
-  public Direccion fechaCreacion(OffsetDateTime fechaCreacion) {
+  public Direccion fechaCreacion(LocalDateTime fechaCreacion) {
     this.fechaCreacion = fechaCreacion;
     return this;
   }
@@ -208,11 +210,11 @@ public class Direccion   {
 
   @Valid
 
-  public OffsetDateTime getFechaCreacion() {
+  public LocalDateTime getFechaCreacion() {
     return fechaCreacion;
   }
 
-  public void setFechaCreacion(OffsetDateTime fechaCreacion) {
+  public void setFechaCreacion(LocalDateTime fechaCreacion) {
     this.fechaCreacion = fechaCreacion;
   }
 

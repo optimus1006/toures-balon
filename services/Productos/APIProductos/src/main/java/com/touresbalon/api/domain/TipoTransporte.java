@@ -18,7 +18,7 @@ import javax.validation.constraints.*;
 
 public class TipoTransporte   {
   @JsonProperty("id")
-  private int id;
+  private Integer id;
 
   @JsonProperty("description")
   private String description;
@@ -63,7 +63,7 @@ public class TipoTransporte   {
   @JsonProperty("tipoCapacidadCarga")
   private TipoCapacidadCargaEnum tipoCapacidadCarga;
 
-  public TipoTransporte id(int id) {
+  public TipoTransporte id(Integer id) {
     this.id = id;
     return this;
   }
@@ -76,11 +76,11 @@ public class TipoTransporte   {
   @NotNull
 
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

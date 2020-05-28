@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.time.LocalDateTime;
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.validation.Valid;
 
 /**
@@ -25,6 +26,7 @@ public class Asiento   {
   private Cliente idCliente;
 
   @JsonProperty("fechaReserva")
+  @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private LocalDateTime fechaReserva;
 
   public Asiento id(Long id) {
