@@ -35,14 +35,22 @@ public interface IClientesApi {
     public ResponseEntity<Void> clientesDEL(@ApiParam(value = "Id de cliente",required=true) @PathVariable("idCliente") Long idCliente);
 
 
-    public ClientesGETAllRS clientesGETAll(@ApiParam(value = "El número de clientes a omitir antes de comenzar a recopilar el conjunto de resultados") @Valid @RequestParam(value = "offset", required = false) Integer offset,@ApiParam(value = "El número de clientes a retornar") @Valid @RequestParam(value = "limit", required = false) Integer limit,@ApiParam(value = "Nombres para consultar") @Valid @RequestParam(value = "nombres", required = false) Integer nombres,@ApiParam(value = "Apellidos para consultar") @Valid @RequestParam(value = "apellidos", required = false) Integer apellidos,@ApiParam(value = "Estado del cliente.", allowableValues = "ACTIVO, INACTIVO") @Valid @RequestParam(value = "estado", required = false) String estado);
+    public ClientesGETAllRS clientesGETAll(@ApiParam(value = "El número de clientes a omitir antes de comenzar a recopilar el conjunto de resultados")
+                                           @Valid @RequestParam(value = "offset", required = false) Integer offset,
+                                           @ApiParam(value = "El número de clientes a retornar") @Valid @RequestParam(value = "limit", required = false) Integer limit,
+                                           @ApiParam(value = "Nombres para consultar") @Valid @RequestParam(value = "nombres", required = false) String nombres,
+                                           @ApiParam(value = "Apellidos para consultar") @Valid @RequestParam(value = "apellidos", required = false) String apellidos,
+                                           @ApiParam(value = "Identificacion para consultar") @Valid @RequestParam(value = "identificacion", required = false) String identificacion,
+                                           @ApiParam(value = "Tipo Identificacion para consultar") @Valid @RequestParam(value = "tipoIdentificacion", required = false) String tipoIdentificacion,
+                                           @ApiParam(value = "Estado del cliente.", allowableValues = "ACTIVO, INACTIVO")
+    @Valid @RequestParam(value = "estado", required = false) String estado);
 
 
-    public ClientesGETByIdRs clientesGETById(@ApiParam(value = "Id de cliente",required=true) @PathVariable("identificacion") String identificacion);
+    public ClientesGETByIdRs clientesGETById(@ApiParam(value = "Id de cliente",required=true) @PathVariable("id") Long id);
 
 
 
-    public ResponseEntity<ClientesPCTRs> clientesPCT(@ApiParam(value = "Id de cliente", required = true) @PathVariable("identificacion") String identificacion,@ApiParam(value = "Cliente a actualizar"  )  @Valid @RequestBody ClientesPCTRq clientesPCTRq);
+    public ResponseEntity<ClientesPCTRs> clientesPCT(@ApiParam(value = "Id de cliente", required = true) @PathVariable("id") Long id,@ApiParam(value = "Cliente a actualizar"  )  @Valid @RequestBody ClientesPCTRq clientesPCTRq);
 
     public ResponseEntity<ClientesPSTRs> clientesPST(@ApiParam(value = "Cliente a registrar"  )  @Valid @RequestBody ClientesPSTRq clientesPSTRq);
 

@@ -18,12 +18,12 @@ import java.util.Objects;
 
 public class TipoIdentificacion   {
   @JsonProperty("codigo")
-  private BigDecimal codigo;
+  private String codigo;
 
   @JsonProperty("nombre")
   private String nombre;
 
-  public com.touresbalon.ordenes.api.model.TipoIdentificacion codigo(BigDecimal codigo) {
+  public com.touresbalon.ordenes.api.model.TipoIdentificacion codigo(String codigo) {
     this.codigo = codigo;
     return this;
   }
@@ -37,11 +37,11 @@ public class TipoIdentificacion   {
 
   @Valid
 @DecimalMin("1")
-  public BigDecimal getCodigo() {
+  public String getCodigo() {
     return codigo;
   }
 
-  public void setCodigo(BigDecimal codigo) {
+  public void setCodigo(String codigo) {
     this.codigo = codigo;
   }
 

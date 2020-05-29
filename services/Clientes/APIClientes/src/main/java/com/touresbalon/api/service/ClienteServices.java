@@ -1,9 +1,12 @@
 package com.touresbalon.api.service;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.touresbalon.api.repository.read.ReadCategoriaEntity;
+import com.touresbalon.api.repository.read.ReadCategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +33,9 @@ public class ClienteServices {
 	
 	@Autowired
     private DireccionService direccionService;
+
+	@Autowired
+	private ReadCategoriaRepository readCategoriaRepository;
 	
 	private final ReadClienteRepository readRepo;
 	private final WriteClienteRepository writeRepo;
@@ -55,6 +61,7 @@ public class ClienteServices {
 					new Timestamp(System.currentTimeMillis())
 	        );
 			writeRepo.save(clienteEntity);
+			Long idClienteW= clienteEntity.getId();
 			
 			ReadClienteEntity clienteReadEntity = new ReadClienteEntity(
 					cliente.getIdentificacion(),
@@ -72,11 +79,13 @@ public class ClienteServices {
 			Long idCliente= clienteReadEntity.getId();
 			
 			for(Tarjeta tarjeta: cliente.getTarjetas()) {
-				tarjetaService.createTarjeta(tarjeta, idCliente);
+				tarjetaService.createTarjetaWrite(tarjeta, idClienteW);
+				tarjetaService.createTarjetaRead(tarjeta, idCliente);
 			}
 			
 			for(Direccion direccion: cliente.getDirecciones()) {
-				direccionService.crearDireccion(direccion, idCliente);
+				direccionService.crearDireccionWrite(direccion, idClienteW);
+				direccionService.crearDireccionRead(direccion, idCliente);
 			}
 			
 			return idCliente;
@@ -117,8 +126,8 @@ public class ClienteServices {
 		return clientesResponse;
 	}
 	
-	public Cliente getByIdentificacion(String identificacion) throws ClienteException{
-		ReadClienteEntity cliente= readRepo.findByIdentificacion(identificacion);
+	public Cliente getById(Long id) throws ClienteException{
+		ReadClienteEntity cliente= readRepo.findById(id);
 		Cliente clienteResponse = new Cliente();
 		clienteResponse.setId(cliente.getId());
 		clienteResponse.setNombres(cliente.getNombres());
@@ -130,8 +139,10 @@ public class ClienteServices {
 		Estado estado = new Estado();
 		estado.setCodigo(cliente.getEstado());
 		clienteResponse.setEstado(estado);
+		ReadCategoriaEntity categoriaEntity = readCategoriaRepository.getOne(cliente.getCategoria());
 		Categoria categoria = new Categoria();
-		categoria.setCodigo(cliente.getCategoria());
+		categoria.setCodigo(categoriaEntity.getCodigo());
+		categoria.setNombre(categoriaEntity.getNombre());
 		clienteResponse.setCategoria(categoria);
 		TipoIdentificacion tipoIdentificacion =  new TipoIdentificacion();
 		tipoIdentificacion.setCodigo(cliente.getTipoIdentificacion());
@@ -143,11 +154,11 @@ public class ClienteServices {
 		return clienteResponse;
 	}
 	
-	public void updateCliente(Cliente cliente,String identificacion) throws ClienteException {
+	public void updateCliente(Cliente cliente,Long id) throws ClienteException {
 		WriteClienteEntity clienteWriteEntity = new WriteClienteEntity();
-		ReadClienteEntity clienteReadEntity = readRepo.findByIdentificacion(identificacion);
+		ReadClienteEntity clienteReadEntity = readRepo.findById(id);
 		
-		clienteWriteEntity.setIdentificacion(identificacion);
+		clienteWriteEntity.setIdentificacion(clienteReadEntity.getIdentificacion());
 		
 		
 		if(cliente.getNombres()!=null) {

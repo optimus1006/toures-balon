@@ -1,0 +1,5 @@
+com\avianca\vuelos\vo\RequestRest.class
+com\avianca\vuelos\vo\Response.class
+com\avianca\vuelos\service\RestVuelo.class
+com\avianca\vuelos\App.class
+com\avianca\vuelos\vo\VOVuelo.class

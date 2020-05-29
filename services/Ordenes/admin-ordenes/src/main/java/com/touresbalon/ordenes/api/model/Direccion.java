@@ -21,6 +21,17 @@ import java.util.Objects;
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-10T10:11:38.301-05:00[America/Bogota]")
 
 public class Direccion   {
+
+  @JsonProperty("codigo")
+  private Long codigo;
+
+  public Long getCodigo() {
+    return codigo;
+  }
+
+  public void setCodigo(Long codigo) {
+    this.codigo = codigo;
+  }
   @JsonProperty("direccion")
   private String direccion;
 

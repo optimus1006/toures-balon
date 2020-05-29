@@ -27,12 +27,19 @@ public class TarjetaService {
 		this.readRepo = readRepo;
 	}
 
-	public void createTarjeta(Tarjeta tarjeta, Long idCliente) throws ClienteException {
+	public void createTarjetaWrite(Tarjeta tarjeta, Long idCliente) throws ClienteException {
 		try {
 			WriteTarjetaEntity tarjetaEntity = new WriteTarjetaEntity(tarjeta.getNumero(), tarjeta.getTipo().name(),
 					tarjeta.getEstado().name(), tarjeta.getPrincipal(), idCliente);
 			writeRepo.save(tarjetaEntity);
+		} catch (Exception ex) {
+			throw new ClienteException("Error al crear la tarjeta", ex.getCause());
+		}
 
+	}
+
+	public void createTarjetaRead(Tarjeta tarjeta, Long idCliente) throws ClienteException {
+		try {
 			ReadTarjetaEntity readtarjetaEntity = new ReadTarjetaEntity(tarjeta.getNumero(), tarjeta.getTipo().name(),
 					tarjeta.getEstado().name(), tarjeta.getPrincipal(), idCliente);
 			readRepo.save(readtarjetaEntity);
