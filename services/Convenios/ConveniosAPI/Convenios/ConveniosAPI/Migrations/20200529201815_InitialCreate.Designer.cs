@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Javeriana.Convenios.Api.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20200527160223_InitialCreate")]
+    [Migration("20200529201815_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,7 @@ namespace Javeriana.Convenios.Api.Migrations
                     b.Property<string>("Nombre")
                         .HasColumnType("text");
 
-                    b.Property<int?>("PaisCodigo")
+                    b.Property<int>("PaisCodigo")
                         .HasColumnType("integer");
 
                     b.HasKey("Codigo");
@@ -46,14 +46,11 @@ namespace Javeriana.Convenios.Api.Migrations
                     b.Property<string>("Identificacion")
                         .HasColumnType("text");
 
+                    b.Property<int>("CiudadCodigo")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Correo")
                         .HasColumnType("text");
-
-                    b.Property<int?>("FK_Convenio_Ciudad_CiudadCodigo")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("FK_Convenio_Pais_PaisCodigo")
-                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("FechaVigencia")
                         .HasColumnType("timestamp without time zone");
@@ -66,9 +63,7 @@ namespace Javeriana.Convenios.Api.Migrations
 
                     b.HasKey("Identificacion");
 
-                    b.HasIndex("FK_Convenio_Ciudad_CiudadCodigo");
-
-                    b.HasIndex("FK_Convenio_Pais_PaisCodigo");
+                    b.HasIndex("CiudadCodigo");
 
                     b.ToTable("Convenio");
                 });
@@ -92,18 +87,18 @@ namespace Javeriana.Convenios.Api.Migrations
                 {
                     b.HasOne("Javeriana.Convenios.Api.Models.Pais", "Pais")
                         .WithMany()
-                        .HasForeignKey("PaisCodigo");
+                        .HasForeignKey("PaisCodigo")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Javeriana.Convenios.Api.Models.Convenio", b =>
                 {
                     b.HasOne("Javeriana.Convenios.Api.Models.Ciudad", "Ciudad")
                         .WithMany()
-                        .HasForeignKey("FK_Convenio_Ciudad_CiudadCodigo");
-
-                    b.HasOne("Javeriana.Convenios.Api.Models.Pais", "Pais")
-                        .WithMany()
-                        .HasForeignKey("FK_Convenio_Pais_PaisCodigo");
+                        .HasForeignKey("CiudadCodigo")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

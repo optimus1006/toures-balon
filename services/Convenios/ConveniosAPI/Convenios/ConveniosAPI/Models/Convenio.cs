@@ -24,7 +24,6 @@ namespace Javeriana.Convenios.Api.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
     [Table("Convenio")]
     public class Convenio : IEquatable<Convenio>
     { 
@@ -87,20 +86,24 @@ namespace Javeriana.Convenios.Api.Models
         /// <value>Correo de contacto del convenio.</value>
         //[DataMember(Name="correo")]
         public string Correo { get; set; }
-
+        /*
+        public int PaisCodigo { get; set; }
+        
         /// <summary>
         /// Gets or Sets Pais
         /// </summary>
         //[DataMember(Name="pais")]
-        [ForeignKey("FK_Convenio_Pais_PaisCodigo")]
-        public Pais Pais { get; set; }
+        //[ForeignKey("FK_Convenio_Pais_PaisCodigo")]
+        public virtual Pais Pais { get; set; }
+        */
+        public int CiudadCodigo { get; set; }
 
         /// <summary>
         /// Gets or Sets Ciudad
         /// </summary>
         //[DataMember(Name="ciudad")]
-        [ForeignKey("FK_Convenio_Ciudad_CiudadCodigo")]
-        public Ciudad Ciudad { get; set; }
+        //[ForeignKey("FK_Convenio_Ciudad_CiudadCodigo")]
+        public virtual Ciudad Ciudad { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -115,7 +118,7 @@ namespace Javeriana.Convenios.Api.Models
             sb.Append("  TipoConvenio: ").Append(TipoConvenio).Append("\n");
             sb.Append("  FechaVigencia: ").Append(FechaVigencia).Append("\n");
             sb.Append("  Correo: ").Append(Correo).Append("\n");
-            sb.Append("  Pais: ").Append(Pais).Append("\n");
+            //sb.Append("  Pais: ").Append(Pais).Append("\n");
             sb.Append("  Ciudad: ").Append(Ciudad).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -177,12 +180,12 @@ namespace Javeriana.Convenios.Api.Models
                     Correo == other.Correo ||
                     Correo != null &&
                     Correo.Equals(other.Correo)
-                ) && 
+                ) /*&& 
                 (
                     Pais == other.Pais ||
                     Pais != null &&
                     Pais.Equals(other.Pais)
-                ) && 
+                ) */&& 
                 (
                     Ciudad == other.Ciudad ||
                     Ciudad != null &&
@@ -210,8 +213,8 @@ namespace Javeriana.Convenios.Api.Models
                     hashCode = hashCode * 59 + FechaVigencia.GetHashCode();
                     if (Correo != null)
                     hashCode = hashCode * 59 + Correo.GetHashCode();
-                    if (Pais != null)
-                    hashCode = hashCode * 59 + Pais.GetHashCode();
+                    /*if (Pais != null)
+                    hashCode = hashCode * 59 + Pais.GetHashCode();*/
                     if (Ciudad != null)
                     hashCode = hashCode * 59 + Ciudad.GetHashCode();
                 return hashCode;

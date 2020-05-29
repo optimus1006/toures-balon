@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\NET\\ConveniosAPI\\Convenios\\Watchdog\\Watchdog.csproj": {}
+    "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\proyectoFinal\\toures-balon\\services\\Convenios\\ConveniosAPI\\Convenios\\Watchdog\\Watchdog.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\NET\\ConveniosAPI\\Convenios\\Watchdog\\Watchdog.csproj": {
+    "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\proyectoFinal\\toures-balon\\services\\Convenios\\ConveniosAPI\\Convenios\\Watchdog\\Watchdog.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\NET\\ConveniosAPI\\Convenios\\Watchdog\\Watchdog.csproj",
+        "projectUniqueName": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\proyectoFinal\\toures-balon\\services\\Convenios\\ConveniosAPI\\Convenios\\Watchdog\\Watchdog.csproj",
         "projectName": "Watchdog",
-        "projectPath": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\NET\\ConveniosAPI\\Convenios\\Watchdog\\Watchdog.csproj",
+        "projectPath": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\proyectoFinal\\toures-balon\\services\\Convenios\\ConveniosAPI\\Convenios\\Watchdog\\Watchdog.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\NET\\ConveniosAPI\\Convenios\\Watchdog\\obj\\",
+        "outputPath": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\proyectoFinal\\toures-balon\\services\\Convenios\\ConveniosAPI\\Convenios\\Watchdog\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

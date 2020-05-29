@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\NET\\ConveniosAPI\\Convenios\\ConveniosAPI\\ConveniosAPI.csproj": {}
+    "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\proyectoFinal\\toures-balon\\services\\Convenios\\ConveniosAPI\\Convenios\\ConveniosAPI\\ConveniosAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\NET\\ConveniosAPI\\Convenios\\ConveniosAPI\\ConveniosAPI.csproj": {
+    "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\proyectoFinal\\toures-balon\\services\\Convenios\\ConveniosAPI\\Convenios\\ConveniosAPI\\ConveniosAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\NET\\ConveniosAPI\\Convenios\\ConveniosAPI\\ConveniosAPI.csproj",
+        "projectUniqueName": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\proyectoFinal\\toures-balon\\services\\Convenios\\ConveniosAPI\\Convenios\\ConveniosAPI\\ConveniosAPI.csproj",
         "projectName": "ConveniosAPI",
-        "projectPath": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\NET\\ConveniosAPI\\Convenios\\ConveniosAPI\\ConveniosAPI.csproj",
+        "projectPath": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\proyectoFinal\\toures-balon\\services\\Convenios\\ConveniosAPI\\Convenios\\ConveniosAPI\\ConveniosAPI.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\NET\\ConveniosAPI\\Convenios\\ConveniosAPI\\obj\\",
+        "outputPath": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\proyectoFinal\\toures-balon\\services\\Convenios\\ConveniosAPI\\Convenios\\ConveniosAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

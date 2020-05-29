@@ -28,7 +28,7 @@ namespace Javeriana.Convenios.Api.Migrations
                     Codigo = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Nombre = table.Column<string>(nullable: true),
-                    PaisCodigo = table.Column<int>(nullable: true)
+                    PaisCodigo = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,7 +38,7 @@ namespace Javeriana.Convenios.Api.Migrations
                         column: x => x.PaisCodigo,
                         principalTable: "Pais",
                         principalColumn: "Codigo",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,24 +50,17 @@ namespace Javeriana.Convenios.Api.Migrations
                     TipoConvenio = table.Column<int>(nullable: true),
                     FechaVigencia = table.Column<DateTime>(nullable: true),
                     Correo = table.Column<string>(nullable: true),
-                    FK_Convenio_Pais_PaisCodigo = table.Column<int>(nullable: true),
-                    FK_Convenio_Ciudad_CiudadCodigo = table.Column<int>(nullable: true)
+                    CiudadCodigo = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Convenio", x => x.Identificacion);
                     table.ForeignKey(
-                        name: "FK_Convenio_Ciudad_FK_Convenio_Ciudad_CiudadCodigo",
-                        column: x => x.FK_Convenio_Ciudad_CiudadCodigo,
+                        name: "FK_Convenio_Ciudad_CiudadCodigo",
+                        column: x => x.CiudadCodigo,
                         principalTable: "Ciudad",
                         principalColumn: "Codigo",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Convenio_Pais_FK_Convenio_Pais_PaisCodigo",
-                        column: x => x.FK_Convenio_Pais_PaisCodigo,
-                        principalTable: "Pais",
-                        principalColumn: "Codigo",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -76,14 +69,9 @@ namespace Javeriana.Convenios.Api.Migrations
                 column: "PaisCodigo");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Convenio_FK_Convenio_Ciudad_CiudadCodigo",
+                name: "IX_Convenio_CiudadCodigo",
                 table: "Convenio",
-                column: "FK_Convenio_Ciudad_CiudadCodigo");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Convenio_FK_Convenio_Pais_PaisCodigo",
-                table: "Convenio",
-                column: "FK_Convenio_Pais_PaisCodigo");
+                column: "CiudadCodigo");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

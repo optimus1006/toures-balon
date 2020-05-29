@@ -9,13 +9,19 @@ namespace Javeriana.Convenios.Api.Models
 {
     public class RepositoryContext : DbContext
     {
+        public DbSet<Convenio> Convenio { get; set; }
+        //public DbSet<Pais> Pais { get; set; }
+        //public DbSet<Ciudad> Ciudad { get; set; }
+
         public RepositoryContext(DbContextOptions options ) : base(options) {
 
         }
 
-        public DbSet<Convenio> Convenio { get; set; }
-        public DbSet<Pais> Pais { get; set; }
-        public DbSet<Ciudad> Ciudad { get; set; }
+        /*protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            
+        }*/
+
+        
 
     }
 }

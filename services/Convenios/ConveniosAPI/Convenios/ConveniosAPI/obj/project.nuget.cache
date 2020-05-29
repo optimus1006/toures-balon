@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "SiGgIR0XLePbZOY0E7zvEH34Tq3KKieaxh9gAYOe58TthfkUJwaL4rimQ4aRtK34EOTBolvnMD6bBFbXF6uIKg==",
+  "dgSpecHash": "p+nhOUCIpPMQ1uXA2ZKDxbUHofUjCkbZbegTihevtERYml5BFxo1JZYUHBng+XpYQTn7iUnPo4vKhZa33s+N2g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\NET\\ConveniosAPI\\Convenios\\ConveniosAPI\\ConveniosAPI.csproj",
+  "projectFilePath": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\proyectoFinal\\toures-balon\\services\\Convenios\\ConveniosAPI\\Convenios\\ConveniosAPI\\ConveniosAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ASUS\\.nuget\\packages\\aspnetcore.healthchecks.ui.client\\3.1.0\\aspnetcore.healthchecks.ui.client.3.1.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.aspnetcore.authorization\\1.0.2\\microsoft.aspnetcore.authorization.1.0.2.nupkg.sha512",

@@ -44,11 +44,13 @@ namespace Javeriana.Convenios.Api.Models
         //[DataMember(Name="nombre")]
         public string Nombre { get; set; }
 
+        public int PaisCodigo { get; set; }
+
         /// <summary>
         /// Gets or Sets Pais
         /// </summary>
         //[DataMember(Name="pais")]
-        public Pais Pais { get; set; }
+        public virtual Pais Pais { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

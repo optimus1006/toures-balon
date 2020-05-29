@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XclRl3UzSXksWczbJDNKhFYJZR/HjfBy7DRy2CmrSfbA1SO1uz8uVdP/dvH57waMyeR++PNxGyPkoDMav7h6ZQ==",
+  "dgSpecHash": "xkFX38t/dmRABNXunSLtDRj5pBI3H3EagbUls3bFGD6CZp0+yJzo5r4xIhPyzlhdj9hrLTQHogsA/sPGDOl6ZQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\NET\\ConveniosAPI\\Convenios\\Watchdog\\Watchdog.csproj",
+  "projectFilePath": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\proyectoFinal\\toures-balon\\services\\Convenios\\ConveniosAPI\\Convenios\\Watchdog\\Watchdog.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ASUS\\.nuget\\packages\\aspnetcore.healthchecks.ui\\3.1.0\\aspnetcore.healthchecks.ui.3.1.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\aspnetcore.healthchecks.ui.client\\3.1.0\\aspnetcore.healthchecks.ui.client.3.1.0.nupkg.sha512",
