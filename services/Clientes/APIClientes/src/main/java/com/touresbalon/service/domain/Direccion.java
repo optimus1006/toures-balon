@@ -1,15 +1,17 @@
 package com.touresbalon.service.domain;
 
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
-
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.time.OffsetDateTime;
+
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Contiene la información de la direccion
@@ -82,7 +84,9 @@ public class Direccion {
 	private Estado estado;
 
 	@JsonProperty("fechaCreacion")
-	private OffsetDateTime fechaCreacion;
+	@JsonDeserialize(using = com.touresbalon.api.util.LocalDateTimeDeserializer.class)
+	@JsonSerialize(using = com.touresbalon.api.util.LocalDateTimeSerializer.class)
+	private LocalDateTime fechaCreacion;
 
 	public Direccion direccion(String direccion) {
 		this.direccion = direccion;
@@ -213,7 +217,7 @@ public class Direccion {
 		this.estado = estado;
 	}
 
-	public Direccion fechaCreacion(OffsetDateTime fechaCreacion) {
+	public Direccion fechaCreacion(LocalDateTime fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 		return this;
 	}
@@ -227,11 +231,11 @@ public class Direccion {
 
 	@Valid
 
-	public OffsetDateTime getFechaCreacion() {
+	public LocalDateTime getFechaCreacion() {
 		return fechaCreacion;
 	}
 
-	public void setFechaCreacion(OffsetDateTime fechaCreacion) {
+	public void setFechaCreacion(LocalDateTime fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
 

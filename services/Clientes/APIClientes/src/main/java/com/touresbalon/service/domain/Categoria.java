@@ -4,7 +4,6 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.math.BigDecimal;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -16,12 +15,12 @@ import javax.validation.constraints.*;
 
 public class Categoria   {
   @JsonProperty("codigo")
-  private BigDecimal codigo;
+  private Integer codigo;
 
   @JsonProperty("nombre")
   private String nombre;
 
-  public Categoria codigo(BigDecimal codigo) {
+  public Categoria codigo(Integer codigo) {
     this.codigo = codigo;
     return this;
   }
@@ -34,12 +33,11 @@ public class Categoria   {
   @ApiModelProperty(value = "Código del categoria.")
 
   @Valid
-@DecimalMin("1")
-  public BigDecimal getCodigo() {
+  public Integer getCodigo() {
     return codigo;
   }
 
-  public void setCodigo(BigDecimal codigo) {
+  public void setCodigo(Integer codigo) {
     this.codigo = codigo;
   }
 

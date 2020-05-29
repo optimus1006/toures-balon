@@ -18,12 +18,12 @@ import java.util.Objects;
 
 public class Categoria   {
   @JsonProperty("codigo")
-  private BigDecimal codigo;
+  private Integer codigo;
 
   @JsonProperty("nombre")
   private String nombre;
 
-  public com.touresbalon.ordenes.api.model.Categoria codigo(BigDecimal codigo) {
+  public com.touresbalon.ordenes.api.model.Categoria codigo(Integer codigo) {
     this.codigo = codigo;
     return this;
   }
@@ -36,12 +36,11 @@ public class Categoria   {
   @ApiModelProperty(value = "Código del categoria.")
 
   @Valid
-@DecimalMin("1")
-  public BigDecimal getCodigo() {
+  public Integer getCodigo() {
     return codigo;
   }
 
-  public void setCodigo(BigDecimal codigo) {
+  public void setCodigo(Integer codigo) {
     this.codigo = codigo;
   }
 

@@ -1,6 +1,8 @@
 package com.touresbalon.api.service;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,7 +37,7 @@ public class DireccionService {
 		this.readRepo = readRepo;
 	}
 
-	public void crearDireccion(Direccion direccion, Long idCliente) {
+	public void crearDireccionWrite(Direccion direccion, Long idCliente) {
 		try {
 			Date fechaCreacion = new Date();
 			WriteDireccionEntity direccionEntity = new WriteDireccionEntity(direccion.getDireccion(),
@@ -43,6 +45,14 @@ public class DireccionService {
 					direccion.getEstado().getCodigo(), fechaCreacion, idCliente, direccion.getUbicacion().getLatitud(),
 					direccion.getUbicacion().getLongitud());
 			writeRepo.save(direccionEntity);
+		} catch (Exception ex) {
+			throw new ClienteException("Error al crear la direccion", ex.getCause());
+		}
+	}
+
+	public void crearDireccionRead(Direccion direccion, Long idCliente) {
+		try {
+			Date fechaCreacion = new Date();
 
 			ReadDireccionEntity readdireccionEntity = new ReadDireccionEntity(direccion.getDireccion(),
 					direccion.getTipo().name(), direccion.getPais().getCodigo(), direccion.getCiudad().getCodigo(),
@@ -70,10 +80,8 @@ public class DireccionService {
 			Estado estado = new Estado();
 			estado.setCodigo(direccion.getIdEstado());
 			direccionResponse.setEstado(estado);
-			int hour = 0;
-			int minute = 0;
-			OffsetDateTime offsetDateTime = direccion.getFechaCreacion().toInstant()
-			  .atOffset(ZoneOffset.ofHoursMinutes(hour, minute));
+			LocalDateTime offsetDateTime = direccion.getFechaCreacion().toInstant().
+					atZone(ZoneId.systemDefault()).toLocalDateTime();
 			direccionResponse.setFechaCreacion(offsetDateTime);
 			direccionResponse.setTipo(TipoEnum.valueOf(direccion.getTipo()));
 			UbicacionGeografica ubicacionGeografica = new UbicacionGeografica();

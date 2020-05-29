@@ -19,7 +19,7 @@ public class WriteClienteEntity {
 
 
 	public WriteClienteEntity(String identificacion, String nombres, String apellidos, String telefono, String email,
-			String celular, @Valid @DecimalMin("1") int estado, @Valid @DecimalMin("1") BigDecimal categoria,
+			String celular, @Valid @DecimalMin("1") int estado, @Valid Integer categoria,
 			String tipoIdentificacion, Timestamp fechaRegistro) {
 		this.identificacion=identificacion;
 		this.nombres=nombres;
@@ -63,7 +63,7 @@ public class WriteClienteEntity {
 	private int estado;
 
 	@Column(name="categoria")
-	private BigDecimal categoria;
+	private Integer categoria;
 
 	@Column(name="tipoidentificacion")
 	private String tipoIdentificacion;

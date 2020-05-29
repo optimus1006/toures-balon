@@ -75,6 +75,8 @@ public class OrdenService {
     @Inject
     KafkaProducerService kafkaProducerService;
 
+    private static final BigDecimal MONTO_ESTABLECIDO = new BigDecimal(10000000);
+
     /**
      * Realizar compra
      *
@@ -88,7 +90,7 @@ public class OrdenService {
 
         //Llamar servicio de confirmacion de tarjeta
         if (validarTarjeta(orden, cliente)) {
-            EnumValidacionCliente validacionCliente = validarCliente(cliente);
+            EnumValidacionCliente validacionCliente = validarCliente(cliente, orden.getValorTotal());
             if (!validacionCliente.equals(EnumValidacionCliente.ENUM_VALIDACION_RECHAZADA)) {
                 orden.setEstado(Orden.EstadoEnum.EN_RESERVA);
                 orden.setCodigo(getCodigo());
@@ -185,10 +187,19 @@ public class OrdenService {
      * @param cliente
      * @return 1 si resulta exitoso, 0 si no es exitoso y 2 si queda en revision
      */
-    private EnumValidacionCliente validarCliente(Cliente cliente) {
+    private EnumValidacionCliente validarCliente(Cliente cliente, BigDecimal valorTotal) {
         log.info("validarCliente(Cliente cliente) ");
-        EnumValidacionCliente respuesta = EnumValidacionCliente.ENUM_VALIDACION_EXITOSA;
-
+        EnumValidacionCliente respuesta = EnumValidacionCliente.ENUM_VALIDACION_RECHAZADA;
+        if(cliente.getCategoria().getNombre().equalsIgnoreCase("Platino")) {
+            respuesta = EnumValidacionCliente.ENUM_VALIDACION_EXITOSA;
+        } else if(cliente.getCategoria().getNombre().equalsIgnoreCase("Dorado")) {
+            respuesta = EnumValidacionCliente.ENUM_VALIDACION_EXITOSA;
+        } else if(cliente.getCategoria().getNombre().equalsIgnoreCase("Dorado") &&
+                valorTotal.compareTo(MONTO_ESTABLECIDO) < 1) {
+            respuesta = EnumValidacionCliente.ENUM_VALIDACION_EXITOSA;
+        } else if(cliente.getCategoria().getNombre().equalsIgnoreCase("Plateado")) {
+            respuesta = EnumValidacionCliente.ENUM_VALIDACION_PENDIENTE;
+        }
         return respuesta;
     }
 
@@ -203,7 +214,7 @@ public class OrdenService {
         Cliente cliente;
         ClientesGETByIdRs clientesGETByIdRs = null;
         try {
-            //clientesGETByIdRs = clienteService.validarCliente(codigoCliente);
+            clientesGETByIdRs = clienteService.validarCliente(codigoCliente);
         } catch (Exception e) {
             log.error("validarCliente(Long codigoCliente) ", e);
         }
@@ -213,9 +224,11 @@ public class OrdenService {
             cliente = new Cliente();
             cliente.setId(codigoCliente);
             TipoIdentificacion tipoIdentificacion = new TipoIdentificacion();
-            tipoIdentificacion.setCodigo(new BigDecimal(10));
-            tipoIdentificacion.setNombre("CC");
+            tipoIdentificacion.setCodigo("CC");
             cliente.setTipoIdentificacion(tipoIdentificacion);
+            Categoria categoria = new Categoria();
+            categoria.setNombre("Plateado");
+            cliente.setCategoria(categoria);
         }
         return cliente;
     }
