@@ -28,7 +28,7 @@ public class OrdenItemEntity extends PanacheEntityBase {
 	private BigDecimal precio;
 
 	@Column(nullable = true)
-	private int cantidad;
+	private Integer cantidad;
 
 	@Column(nullable = false)
 	private EnumTipoProducto tipoProducto;
@@ -49,11 +49,11 @@ public class OrdenItemEntity extends PanacheEntityBase {
 		this.precio = precio;
 	}
 
-	public int getCantidad() {
+	public Integer getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(int cantidad) {
+	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
 

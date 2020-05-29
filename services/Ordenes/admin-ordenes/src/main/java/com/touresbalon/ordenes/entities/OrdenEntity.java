@@ -19,12 +19,13 @@ public class OrdenEntity extends PanacheEntityBase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(insertable = false, updatable = false, columnDefinition = "bigserial")
+    @Column(nullable = false)
     private Long codigo;
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaPago;
     private LocalDateTime fechaModificacion;
     private Long codigoCliente;
+    private Long codigoProducto;
 
     @Enumerated(EnumType.STRING)
     private Orden.EstadoEnum estado;
@@ -168,5 +169,13 @@ public class OrdenEntity extends PanacheEntityBase {
 
     public void setTarjetas(List<TarjetaEntity> tarjetas) {
         this.tarjetas = tarjetas;
+    }
+
+    public Long getCodigoProducto() {
+        return codigoProducto;
+    }
+
+    public void setCodigoProducto(Long codigoProducto) {
+        this.codigoProducto = codigoProducto;
     }
 }

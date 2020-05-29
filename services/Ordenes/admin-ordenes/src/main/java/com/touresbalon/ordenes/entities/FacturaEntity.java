@@ -27,7 +27,7 @@ public class FacturaEntity extends PanacheEntityBase {
     private CodigoBarrasEntity codigoBarras;
 
     @JoinColumn(name = "order_id")
-    @ManyToOne
+    @OneToOne
     private OrdenEntity orden;
 
     public Long getId() {

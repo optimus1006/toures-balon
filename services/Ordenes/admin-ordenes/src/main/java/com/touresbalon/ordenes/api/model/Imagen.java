@@ -13,7 +13,7 @@ import java.util.Objects;
 @ApiModel(description = "Contiene la información de la imagen que se mostrará del evento.")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-13T20:28:44.608-05:00[America/Bogota]")
 
-public class Imagen   {
+public class Imagen {
   @JsonProperty("id")
   private Long id;
 
@@ -29,7 +29,7 @@ public class Imagen   {
   @JsonProperty("data")
   private String data;
 
-  public com.touresbalon.ordenes.api.model.Imagen id(Long id) {
+  public Imagen id(Long id) {
     this.id = id;
     return this;
   }
@@ -49,7 +49,7 @@ public class Imagen   {
     this.id = id;
   }
 
-  public com.touresbalon.ordenes.api.model.Imagen nombre(String nombre) {
+  public Imagen nombre(String nombre) {
     this.nombre = nombre;
     return this;
   }
@@ -69,7 +69,7 @@ public class Imagen   {
     this.nombre = nombre;
   }
 
-  public com.touresbalon.ordenes.api.model.Imagen path(String path) {
+  public Imagen path(String path) {
     this.path = path;
     return this;
   }
@@ -89,7 +89,7 @@ public class Imagen   {
     this.path = path;
   }
 
-  public com.touresbalon.ordenes.api.model.Imagen dimensiones(ImagenDimensiones dimensiones) {
+  public Imagen dimensiones(ImagenDimensiones dimensiones) {
     this.dimensiones = dimensiones;
     return this;
   }
@@ -108,6 +108,11 @@ public class Imagen   {
 
   public void setDimensiones(ImagenDimensiones dimensiones) {
     this.dimensiones = dimensiones;
+  }
+
+  public Imagen data(String data) {
+    this.data = data;
+    return this;
   }
 
   /**
@@ -135,7 +140,7 @@ public class Imagen   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    com.touresbalon.ordenes.api.model.Imagen imagen = (com.touresbalon.ordenes.api.model.Imagen) o;
+    Imagen imagen = (Imagen) o;
     return Objects.equals(this.id, imagen.id) &&
         Objects.equals(this.nombre, imagen.nombre) &&
         Objects.equals(this.path, imagen.path) &&

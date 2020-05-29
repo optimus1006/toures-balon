@@ -31,7 +31,7 @@ public class Imagen   {
   private ImagenDimensiones dimensiones;
 
   @JsonProperty("data")
-  private Resource data;
+  private String data;
 
   public Imagen id(Long id) {
     this.id = id;
@@ -114,7 +114,7 @@ public class Imagen   {
     this.dimensiones = dimensiones;
   }
 
-  public Imagen data(Resource data) {
+  public Imagen data(String data) {
     this.data = data;
     return this;
   }
@@ -127,11 +127,11 @@ public class Imagen   {
 
   @Valid
 
-  public Resource getData() {
+  public String getData() {
     return data;
   }
 
-  public void setData(Resource data) {
+  public void setData(String data) {
     this.data = data;
   }
 

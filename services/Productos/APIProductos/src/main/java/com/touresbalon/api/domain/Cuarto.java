@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.validation.Valid;
 
 /**
@@ -24,12 +25,15 @@ public class Cuarto   {
   private Cliente cliente;
 
   @JsonProperty("fechaReservaInicio")
+  @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private LocalDateTime fechaReservaInicio;
 
   @JsonProperty("fechaReservaFin")
+  @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private LocalDateTime fechaReservaFin;
 
   @JsonProperty("fechaReserva")
+  @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private LocalDateTime fechaReserva;
 
   public Cuarto id(Long id) {

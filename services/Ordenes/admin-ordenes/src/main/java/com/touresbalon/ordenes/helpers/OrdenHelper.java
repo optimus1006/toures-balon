@@ -4,6 +4,7 @@ import com.touresbalon.ordenes.api.model.*;
 import com.touresbalon.ordenes.entities.OrdenEntity;
 import com.touresbalon.ordenes.entities.OrdenItemEntity;
 import com.touresbalon.ordenes.entities.TarjetaEntity;
+import com.touresbalon.ordenes.kafka.OrdenMessage;
 import com.touresbalon.ordenes.util.EnumTipoProducto;
 
 import java.util.ArrayList;
@@ -35,26 +36,6 @@ public class OrdenHelper {
             tarjetas.add(TarjetaHelper.tarjetaToTarjetaEntity(orden.getTarjeta(), null));
             ordenEntity.setTarjetas(tarjetas);
         }
-        List<OrdenItemEntity> itemList = new ArrayList<>();
-        if(orden.getEvento() != null){
-            for (Evento evento:orden.getEvento()
-                 ) {
-                itemList.add(OrdenItemHelper.ordenItemToOrdenItemEntity(new OrdenItem(Long.valueOf(evento.getId()), EnumTipoProducto.EVENTO), null));
-            }
-        }
-        if(orden.getTransporte() != null){
-            for (Transporte transporte:orden.getTransporte()
-            ) {
-                itemList.add(OrdenItemHelper.ordenItemToOrdenItemEntity(new OrdenItem(transporte.getId(), EnumTipoProducto.TRANSPORTE), null));
-            }
-        }
-        if(orden.getHospedaje() != null){
-            for (Hospedaje hospedaje:orden.getHospedaje()
-            ) {
-                itemList.add(OrdenItemHelper.ordenItemToOrdenItemEntity(new OrdenItem(hospedaje.getCodigo(), EnumTipoProducto.HOSPEDAJE), null));
-            }
-        }
-        ordenEntity.setItems(itemList);
 
         return ordenEntity;
     }
@@ -90,5 +71,25 @@ public class OrdenHelper {
         }
 
         return orden;
+    }
+
+    public static OrdenMessage ordenToOrdenMessage(Orden orden, OrdenMessage ordenMessage) {
+        if(ordenMessage == null) {
+            ordenMessage = new OrdenMessage();
+        }
+        ordenMessage.setCodigo(orden.getCodigo());
+        ordenMessage.setFechaCreacion(orden.getFechaCreacion());
+        ordenMessage.setFechaModificacion(orden.getFechaModificacion());
+        ordenMessage.setCodigoCliente(orden.getCodigoCliente());
+        ordenMessage.setEstado(orden.getEstado());
+        ordenMessage.setDescuento(orden.getDescuento());
+        ordenMessage.setSubtotal(orden.getSubtotal());
+        ordenMessage.setImpuestos(orden.getImpuestos());
+        ordenMessage.setValorTotal(orden.getValorTotal());
+        ordenMessage.setMoneda(orden.getMoneda());
+        ordenMessage.setFactura(orden.getFactura());
+        ordenMessage.setTarjeta(orden.getTarjeta());
+
+        return ordenMessage;
     }
 }

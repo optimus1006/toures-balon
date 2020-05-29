@@ -1,6 +1,8 @@
 package com.touresbalon.ordenes.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -25,12 +27,18 @@ public class Cuarto   {
   private com.touresbalon.ordenes.api.model.Cliente idCliente;
 
   @JsonProperty("fechaReservaInicio")
+  @JsonDeserialize(using = com.touresbalon.ordenes.util.LocalDateTimeDeserializer.class)
+  @JsonSerialize(using = com.touresbalon.ordenes.util.LocalDateTimeSerializer.class)
   private LocalDateTime fechaReservaInicio;
 
   @JsonProperty("fechaReservaFin")
+  @JsonDeserialize(using = com.touresbalon.ordenes.util.LocalDateTimeDeserializer.class)
+  @JsonSerialize(using = com.touresbalon.ordenes.util.LocalDateTimeSerializer.class)
   private LocalDateTime fechaReservaFin;
 
   @JsonProperty("fechaReserva")
+  @JsonDeserialize(using = com.touresbalon.ordenes.util.LocalDateTimeDeserializer.class)
+  @JsonSerialize(using = com.touresbalon.ordenes.util.LocalDateTimeSerializer.class)
   private LocalDateTime fechaReserva;
 
   public com.touresbalon.ordenes.api.model.Cuarto id(Long id) {

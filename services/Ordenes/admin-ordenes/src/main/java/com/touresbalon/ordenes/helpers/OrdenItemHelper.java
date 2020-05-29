@@ -12,10 +12,19 @@ public class OrdenItemHelper {
         }
         ordenItemEntity.setCodigo(ordenItem.getCodigo());
         ordenItemEntity.setTipoProducto(ordenItem.getTipoProducto());
-        if(ordenItem.getOrden() != null){
-            ordenItemEntity.setOrden(OrdenHelper.ordenToOrdenEntity(ordenItem.getOrden(), null));
-        }
+        ordenItemEntity.setCantidad(ordenItem.getCantidad());
 
         return ordenItemEntity;
+    }
+
+    public static OrdenItem ordenItemEntityToOrdenItem(OrdenItemEntity ordenItemEntity, OrdenItem ordenItem) {
+        if(ordenItemEntity == null) {
+            ordenItem = new OrdenItem();
+        }
+        ordenItem.setCodigo(ordenItemEntity.getCodigo());
+        ordenItem.setTipoProducto(ordenItemEntity.getTipoProducto());
+        ordenItem.setCantidad(ordenItemEntity.getCantidad());
+
+        return ordenItem;
     }
 }

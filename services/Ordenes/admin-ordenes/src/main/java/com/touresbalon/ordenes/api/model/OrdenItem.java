@@ -5,12 +5,16 @@ import com.touresbalon.ordenes.util.EnumTipoProducto;
 public class OrdenItem {
     private Long codigo;
 
+    private Integer cantidad;
+
     private EnumTipoProducto tipoProducto;
 
-    private Orden orden;
+    public OrdenItem() {
+    }
 
-    public OrdenItem(Long codigo, EnumTipoProducto tipoProducto) {
+    public OrdenItem(Long codigo, Integer cantidad, EnumTipoProducto tipoProducto) {
         this.codigo = codigo;
+        this.cantidad = cantidad;
         this.tipoProducto = tipoProducto;
     }
 
@@ -30,11 +34,11 @@ public class OrdenItem {
         this.tipoProducto = tipoProducto;
     }
 
-    public Orden getOrden() {
-        return orden;
+    public Integer getCantidad() {
+        return cantidad;
     }
 
-    public void setOrden(Orden orden) {
-        this.orden = orden;
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 }

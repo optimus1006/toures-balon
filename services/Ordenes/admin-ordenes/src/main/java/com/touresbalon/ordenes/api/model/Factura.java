@@ -1,6 +1,8 @@
 package com.touresbalon.ordenes.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -26,6 +28,8 @@ public class Factura   {
   private com.touresbalon.ordenes.api.model.CodigoBarras codigoBarras = null;
 
   @JsonProperty("fechaCreacion")
+  @JsonDeserialize(using = com.touresbalon.ordenes.util.LocalDateTimeDeserializer.class)
+  @JsonSerialize(using = com.touresbalon.ordenes.util.LocalDateTimeSerializer.class)
   private LocalDateTime fechaCreacion = null;
 
   @JsonProperty("valortotal")

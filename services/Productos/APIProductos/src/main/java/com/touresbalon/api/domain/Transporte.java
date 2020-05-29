@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
+
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -35,12 +37,14 @@ public class Transporte   {
   private Vehiculo vehiculo;
 
   @JsonProperty("fechaPartida")
+  @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private LocalDateTime fechaPartida;
 
   @JsonProperty("lugarPartida")
   private Ciudad lugarPartida;
 
   @JsonProperty("fechaLlegada")
+  @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private LocalDateTime fechaLlegada;
 
   @JsonProperty("lugarDestino")

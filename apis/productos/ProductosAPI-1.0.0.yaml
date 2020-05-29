@@ -149,11 +149,29 @@ paths:
                                   id: F13
                                   tipo: TURISTA
         '400':
-          description: Parametro invalido
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '500':
-          description: Error del sistema
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '401':
-          description: No autorizado
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
           
     post:
       tags:
@@ -184,11 +202,29 @@ paths:
                 producto:
                   id: 88546
         '400':
-          description: 'Parametro Invalido'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '409':
-          description: Evento ya estaba registrado  
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto 
         '500':
-          description: Error del sistema
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
           
   /productos/producto/{idProducto}:
     get:
@@ -285,11 +321,29 @@ paths:
                                 id: F13
                                 tipo: TURISTA
         '400':
-          description: Parametro invalido
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '500':
-          description: Error del sistema
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '401':
-          description: No autorizado
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
     
     patch:
       tags:
@@ -328,9 +382,21 @@ paths:
                 evento:
                   id: 1
         '400':
-          description: 'Parametro Invalido'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '500':
-          description: Error del sistema
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
     delete:
       tags:
         - Productos
@@ -349,9 +415,21 @@ paths:
         '200':
           description: Evento borrado exitosamente
         '400':
-          description: 'Parametro Invalido'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '500':
-          description: Error del sistema      
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto     
     
       
   /productos/eventos:
@@ -447,11 +525,29 @@ paths:
                         path: 'images/imagen.png'
                     imagenPrincipal: 'images/colombia-argentina.png'
         '400':
-          description: Parametro invalido
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '500':
-          description: Error del sistema
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '401':
-          description: No autorizado
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
     post:
       tags:
         - Eventos
@@ -514,11 +610,29 @@ paths:
                 evento:
                   id: 1
         '400':
-          description: 'Parametro Invalido'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '409':
-          description: Evento ya estaba registrado  
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto 
         '500':
-          description: Error del sistema           
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto          
           
   /productos/eventos/{idEvento}:
     get:
@@ -583,11 +697,29 @@ paths:
                       path: 'images/imagen.png'
                   imagenPrincipal: 1
         '400':
-          description: Parametro invalido
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '500':
-          description: Error del sistema
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '401':
-          description: No autorizado
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
     patch:
       tags:
         - Eventos
@@ -625,9 +757,21 @@ paths:
                 evento:
                   id: 1
         '400':
-          description: 'Parametro Invalido'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '500':
-          description: Error del sistema
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
     delete:
       tags:
         - Eventos
@@ -646,15 +790,27 @@ paths:
         '200':
           description: Evento borrado exitosamente
         '400':
-          description: 'Parametro Invalido'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '500':
-          description: Error del sistema
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
   /productos/{idProducto}/eventos:
     get:
       tags:
-        - Eventos
+        - Productos
       summary: Consulta al información de los eventos basado en parámetros de búsqueda
-      operationId: EventosGETByProduct
+      operationId: EventosGETByProductId
       description: |
         Consulta al información de los eventos basado en parámetros de búsqueda
       parameters:
@@ -735,11 +891,29 @@ paths:
                         path: 'images/imagen.png'
                     imagenPrincipal: 1
         '400':
-          description: Parametro invalido
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '500':
-          description: Error del sistema
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '401':
-          description: No autorizado
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
 
   /productos/hospedaje/{codigo}:
     get:
@@ -753,7 +927,8 @@ paths:
         description: Código del sitio.
         required: true
         schema:
-          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+          type: integer
+          format: int64
       responses:
         200:
           description: Operación de consulta exitosa.
@@ -822,7 +997,8 @@ paths:
           required: true
           description: 'Código del hospedaje seleccionado.'
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+            type: integer
+            format: int64
       # BODY REQUEST
       requestBody:
         description: 'Datos para realizar la actualizacion de un hospedaje.'
@@ -842,9 +1018,21 @@ paths:
                 transporte: 
                   id: 3 
         '400':
-          description: 'Error de parametros en request.'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '409':
-          description: 'error en parametros de entrada.'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
     
     delete:
       tags:
@@ -858,14 +1046,27 @@ paths:
           required: true
           description: 'Código del hospedaje.'
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+            type: integer
+            format: int64
       responses:
         '200':
           description: 'Hospedaje actualizado exitosamente'
         '400':
-          description: 'Error de parametros del request.'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '409':
-          description: 'error en parametros de entrada.'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
     
   /productos/hospedajes:
     get:
@@ -901,7 +1102,8 @@ paths:
           description: Código de la ciudad para filtrar por una ciudad en específico.
           required: false
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad'
+            type: integer
+            format: int64
         - in: query
           name: convenio
           description: Código del convenio para filtrar por un convenio en específico.
@@ -916,13 +1118,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/HospedajesGetAllRs'
         400: 
-          description: Mensaje con formato incorrecto.
-          content:
-            application/json:
-              schema:
-                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
-              example:
-                message: El mensaje de la solicitud no el formato correcto.
+         description: Mensaje con formato incorrecto.
+         content:
+           application/json:
+             schema:
+               $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+             example:
+               message: El mensaje de la solicitud no el formato correcto
         401: 
           description: No tiene autorización de realizar esta operación.
           content:
@@ -988,9 +1190,21 @@ paths:
                 hospedaje: 
                   id: 3 
         '400':
-          description: 'Error de parametros en request'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '409':
-          description: 'Ya existe el hospedaje'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
           
   /productos/transportes:
     get:
@@ -1026,19 +1240,22 @@ paths:
           description: parametro opcional de busqueda para filtrar por lugar de destino
           required: false
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad'
+            type: integer
+            format: int64
         - in: query
           name: lugarPartida
           description: parametro opcional de busqueda para filtrar por lugar de partida
           required: false
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad'
+            type: integer
+            format: int64
         - in: query
           name: vehiculo
           description: parametro opcional de busqueda para filtrar por vehiculo
           required: false
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Vehiculo'
+            type: integer
+            format: int64
       responses:
         '200':
           description: Se ha realizado la consulta exitosamente
@@ -1078,9 +1295,21 @@ paths:
                             tipo: TURISTA
                         
         '400':
-          description: Ha ocurrido un error en el mensaje
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '500':
-          description: Ha ocurrido un error interno en el sistema
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
     post:
       tags:
         - Transportes
@@ -1126,9 +1355,21 @@ paths:
                 transporte: 
                   id: 3 
         '400':
-          description: 'Error de parametros en request'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '409':
-          description: 'Ya existe el transporte'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         
   /productos/transportes/{idTransporte}:
     get: 
@@ -1144,7 +1385,8 @@ paths:
           required: true
           description: 'Código del transporte.'
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+            type: integer
+            format: int64
       responses:
         '200':
           description: Se ha realizado la consulta exitosamente
@@ -1184,9 +1426,21 @@ paths:
                           
                         
         '400':
-          description: Ha ocurrido un error en el mensaje
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '500':
-          description: Ha ocurrido un error interno en el sistema
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
           
     patch:
       tags:
@@ -1200,7 +1454,8 @@ paths:
           required: true
           description: 'Código del transporte.'
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+            type: integer
+            format: int64
       # BODY REQUEST
       requestBody:
         description: 'Datos para realizar la actualizacion de un transporte.'
@@ -1237,9 +1492,21 @@ paths:
                 transporte: 
                   id: 3 
         '400':
-          description: 'Error de parametros en request'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '409':
-          description: 'error en parametros'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
           
     delete:
       tags:
@@ -1253,14 +1520,27 @@ paths:
           required: true
           description: 'Código del transporte.'
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+            type: integer
+            format: int64
       responses:
         '200':
           description: 'Transporte actualizado exitosamente'
         '400':
-          description: 'Error de parametros en request'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '409':
-          description: 'error en parametros'    
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto   
 
   /productos/transportes/{idTransporte}/asientos:
     post:
@@ -1275,7 +1555,8 @@ paths:
           required: true
           description: Codigo del transporte.
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+            type: integer
+            format: int64
       # BODY REQUEST
       requestBody:
         description: 'Datos para realizar la creacion de un asiento.'
@@ -1298,9 +1579,21 @@ paths:
                 asiento: 
                   id: 3 
         '400':
-          description: 'Error de parametros en request'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '409':
-          description: 'error en parametros'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
     
     get: 
       tags:
@@ -1315,17 +1608,20 @@ paths:
           required: true
           description: 'Código del transporte.'
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+            type: integer
+            format: int64
         - in: query
           name: idCliente
           required: false
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/clientes/ClientesDominio-1.0.0.yaml#/components/schemas/Cliente'
+            type: integer
+            format: int64
         - in: query
           name: idAsiento
           required: false
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Asiento'
+            type: integer
+            format: int64
       responses:
         '200':
           description: Se ha realizado la consulta exitosamente
@@ -1343,9 +1639,21 @@ paths:
                     fechaReserva: '2020-05-10T13:11:00.0'
                   
         '400':
-          description: Ha ocurrido un error en el mensaje
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '500':
-          description: Ha ocurrido un error interno en el sistema
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
 
   /productos/transportes/{idTransporte}/asientos/{idAsiento}:
     patch:
@@ -1360,13 +1668,15 @@ paths:
           required: true
           description: Codigo del transporte.
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Transporte'
+            type: integer
+            format: int64
         - in: path
           name: idAsiento
           required: true
           description: Codigo del asiento.
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Asiento'
+            type: integer
+            format: int64
       # BODY REQUEST
       requestBody:
         description: 'Datos para realizar la actualizacion o reserva de un asiento.'
@@ -1390,9 +1700,21 @@ paths:
                 asiento: 
                   id: 3 
         '400':
-          description: 'Error de parametros en request'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '409':
-          description: 'error en parametros'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
 
   /productos/hospedajes/{codigo}/cuartos:
     post:
@@ -1407,7 +1729,8 @@ paths:
           required: true
           description: Codigo del hospedaje.
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+            type: integer
+            format: int64
       # BODY REQUEST
       requestBody:
         description: 'Datos para realizar la creacion de un cuarto.'
@@ -1431,9 +1754,21 @@ paths:
                 asiento: 
                   id: 3 
         '400':
-          description: 'Error de parametros en request'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '409':
-          description: 'error en parametros'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
     
     get: 
       tags:
@@ -1448,17 +1783,20 @@ paths:
           required: true
           description: 'Código del Hospedaje.'
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+            type: integer
+            format: int64
         - in: query
           name: idCliente
           required: false
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/clientes/ClientesDominio-1.0.0.yaml#/components/schemas/Cliente'
+            type: integer
+            format: int64
         - in: query
           name: idCuarto
           required: false
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Cuarto'
+            type: integer
+            format: int64
       responses:
         '200':
           description: Se ha realizado la consulta exitosamente
@@ -1479,9 +1817,21 @@ paths:
                     fechaReservaFin: '2020-06-11T13:11:00.0'
                   
         '400':
-          description: Ha ocurrido un error en el mensaje
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '500':
-          description: Ha ocurrido un error interno en el sistema
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
 
   /productos/hospedajes/{codigo}/cuartos/{idCuarto}:
     patch:
@@ -1496,13 +1846,15 @@ paths:
           required: true
           description: Codigo del hospedaje.
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Hospedaje'
+            type: integer
+            format: int64
         - in: path
           name: idCuarto
           required: true
           description: Codigo del asiento.
           schema:
-            $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/Cuarto'
+            type: integer
+            format: int64
         - in: query
           name: reserva
           description: indica si se desea realizar una reserva o simplemente dejar un cuarto como disponible.
@@ -1533,9 +1885,21 @@ paths:
                   id: 3
                   numeroCuarto: '17' 
         '400':
-          description: 'Error de parametros en request'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '409':
-          description: 'error en parametros'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
 
   /productos/eventos/{idEvento}/localidades:
     post:
@@ -1576,9 +1940,21 @@ paths:
                 localidad: 
                   id: 3 
         '400':
-          description: 'Error de parametros en request'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '409':
-          description: 'error en parametros'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
   /productos/eventos/localidades/{idLocalidad}/asientos:
     post:
       tags:
@@ -1618,9 +1994,21 @@ paths:
                 asiento: 
                   id: 3 
         '400':
-          description: 'Error de parametros en request'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '409':
-          description: 'error en parametros'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
 
   /productos/eventos/localidades/{idLocalidad}/asientos/{idAsiento}:  
     delete:
@@ -1648,9 +2036,21 @@ paths:
         '200':
           description: Evento borrado exitosamente
         '400':
-          description: 'Parametro Invalido'
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto
         '500':
-          description: Error del sistema  
+          description: Mensaje con formato incorrecto.
+          content:
+            application/json:
+              schema:
+                $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/productos/ProductosDominio-1.0.0.yaml#/components/schemas/ErrorResponse'
+              example:
+                message: El mensaje de la solicitud no el formato correcto 
 
 components:
   schemas:

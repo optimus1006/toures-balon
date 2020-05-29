@@ -17,9 +17,13 @@ import com.touresbalon.api.domain.TransporteException;
 import com.touresbalon.api.service.ProductoService;
 
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path("/productos")
 public class ProductoController {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProductoController.class);
 
 	@Inject
 	ProductoService productoService;
@@ -39,6 +43,7 @@ public class ProductoController {
 			return Response.status(Response.Status.CONFLICT).entity(error).type(MediaType.APPLICATION_JSON).build();
 		}
     	catch (Exception e) {
+			LOGGER.error("Error en creacion de productos ", e);
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
 		}
 	}
