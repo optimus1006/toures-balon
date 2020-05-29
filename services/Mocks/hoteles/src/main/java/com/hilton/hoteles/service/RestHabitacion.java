@@ -44,14 +44,14 @@ public class RestHabitacion {
 		System.out.println("Numero de habitación: " + request.getNumHabitacion());
 		System.out.println("Nombre Pasajero: " + request.getNombre());
 		System.out.println("Identificacion Pasajero: " + request.getIdentificacion());
-		return new Response(request.getNumHabitacion(), "Habitacion Reservada Exitosamente a nombre de: "+request.getNombre());
+		return new Response(request.getNumHabitacion(), "Reserva realizada Exitosamente a nombre de: "+request.getNombre());
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, path = "/pagarHabitacion", consumes = "application/json", produces = "application/json")
 	public @ResponseBody Response pagarHabitacion(@RequestBody RequestRest request) {
 		System.out.println("Numero de habitación: " + request.getNumHabitacion());
 		System.out.println("Valor: " + request.getValor());
-		return new Response(request.getNumHabitacion(), "Habitación Pagada Exitosamente por valor de: "+request.getValor());
+		return new Response(request.getNumHabitacion(), "Reserva Pagada Exitosamente por valor de: "+request.getValor());
 	}
 
 	private static List<VOHabitacion> createListBaq() {
