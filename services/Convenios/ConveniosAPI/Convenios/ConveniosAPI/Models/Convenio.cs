@@ -106,6 +106,21 @@ namespace Javeriana.Convenios.Api.Models
         public virtual Ciudad Ciudad { get; set; }
 
         /// <summary>
+        /// Gets or Sets an endpoint
+        /// </summary>
+        public string Endpoint { get; set; }
+
+        /// <summary>
+        /// Gets or sets a input template
+        /// </summary>
+        public string TemplateEntrada { get; set; }
+
+        /// <summary>
+        /// Gets or sets a output template
+        /// </summary>
+        public string TemplateSalida { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -120,6 +135,9 @@ namespace Javeriana.Convenios.Api.Models
             sb.Append("  Correo: ").Append(Correo).Append("\n");
             //sb.Append("  Pais: ").Append(Pais).Append("\n");
             sb.Append("  Ciudad: ").Append(Ciudad).Append("\n");
+            sb.Append("  Endpoint: ").Append(Endpoint).Append("\n");
+            sb.Append("  TemplateEntrada: ").Append(TemplateEntrada).Append("\n");
+            sb.Append("  TemplateSalida: ").Append(TemplateSalida).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -190,6 +208,21 @@ namespace Javeriana.Convenios.Api.Models
                     Ciudad == other.Ciudad ||
                     Ciudad != null &&
                     Ciudad.Equals(other.Ciudad)
+                ) &&
+                (
+                    Endpoint == other.Endpoint ||
+                    Endpoint != null &&
+                    Endpoint.Equals(other.Endpoint)
+                ) &&
+                (
+                    TemplateEntrada == other.TemplateEntrada ||
+                    TemplateEntrada != null &&
+                    TemplateEntrada.Equals(other.TemplateEntrada)
+                ) &&
+                (
+                    TemplateSalida == other.TemplateSalida ||
+                    TemplateSalida != null &&
+                    TemplateSalida.Equals(other.TemplateSalida)
                 );
         }
 
@@ -217,6 +250,12 @@ namespace Javeriana.Convenios.Api.Models
                     hashCode = hashCode * 59 + Pais.GetHashCode();*/
                     if (Ciudad != null)
                     hashCode = hashCode * 59 + Ciudad.GetHashCode();
+                    if (Endpoint != null)
+                    hashCode = hashCode * 59 + Endpoint.GetHashCode();
+                    if (TemplateEntrada != null)
+                    hashCode = hashCode * 59 + TemplateEntrada.GetHashCode();
+                    if (TemplateSalida != null)
+                    hashCode = hashCode * 59 + TemplateSalida.GetHashCode();
                 return hashCode;
             }
         }

@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Javeriana.Convenios.Api.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20200529201815_InitialCreate")]
+    [Migration("20200530062125_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,10 +52,19 @@ namespace Javeriana.Convenios.Api.Migrations
                     b.Property<string>("Correo")
                         .HasColumnType("text");
 
+                    b.Property<string>("Endpoint")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("FechaVigencia")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("NombreProveedor")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TemplateEntrada")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TemplateSalida")
                         .HasColumnType("text");
 
                     b.Property<int?>("TipoConvenio")

@@ -50,10 +50,19 @@ namespace Javeriana.Convenios.Api.Migrations
                     b.Property<string>("Correo")
                         .HasColumnType("text");
 
+                    b.Property<string>("Endpoint")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("FechaVigencia")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("NombreProveedor")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TemplateEntrada")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TemplateSalida")
                         .HasColumnType("text");
 
                     b.Property<int?>("TipoConvenio")

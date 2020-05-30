@@ -50,7 +50,10 @@ namespace Javeriana.Convenios.Api.Migrations
                     TipoConvenio = table.Column<int>(nullable: true),
                     FechaVigencia = table.Column<DateTime>(nullable: true),
                     Correo = table.Column<string>(nullable: true),
-                    CiudadCodigo = table.Column<int>(nullable: false)
+                    CiudadCodigo = table.Column<int>(nullable: false),
+                    Endpoint = table.Column<string>(nullable: true),
+                    TemplateEntrada = table.Column<string>(nullable: true),
+                    TemplateSalida = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
