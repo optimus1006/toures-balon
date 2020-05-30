@@ -5,6 +5,7 @@ import com.touresbalon.ordenes.entities.OrdenEntity;
 import com.touresbalon.ordenes.entities.OrdenItemEntity;
 import com.touresbalon.ordenes.exceptions.KafkaException;
 import com.touresbalon.ordenes.exceptions.OrdenException;
+import com.touresbalon.ordenes.exceptions.OrdenNotFoundException;
 import com.touresbalon.ordenes.helpers.OrdenHelper;
 import com.touresbalon.ordenes.helpers.OrdenItemHelper;
 import com.touresbalon.ordenes.kafka.EnumOrderAction;
@@ -370,15 +371,22 @@ public class OrdenService {
         ordenEntity.setFechaCreacion(LocalDateTime.now());
         ordenEntity.setFechaModificacion(LocalDateTime.now());
 
-        ordenRepository.persist(ordenEntity);
         orden = OrdenHelper.ordenEntityToOrden(ordenEntity, orden);
-        //Publish to kafka to persist in read table
-        // only topic and message value are specified, round robin on destination partitions
-        OrdenMessage ordenMessage = OrdenHelper.ordenToOrdenMessage(orden, null);
-        ordenMessage.setUidPago(ordenEntity.getUidPago());
-        ordenMessage.setAccion(EnumOrderAction.CREACION);
-        ordenMessage.setCodigoProducto(ordenEntity.getCodigoProducto());
-        kafkaProducerService.sendOrderToKafka(ordenMessage);
+
+        try {
+            //Publish to kafka to persist in read table
+            // only topic and message value are specified, round robin on destination partitions
+            OrdenMessage ordenMessage = OrdenHelper.ordenToOrdenMessage(orden, null);
+            ordenMessage.setUidPago(ordenEntity.getUidPago());
+            ordenMessage.setAccion(EnumOrderAction.CREACION);
+            ordenMessage.setCodigoProducto(ordenEntity.getCodigoProducto());
+            kafkaProducerService.sendOrderToKafka(ordenMessage);
+            ordenEntity.setEnviado(true);
+        } catch (KafkaException e) {
+            log.error("Error en envio de orden " , e);
+        } finally {
+            ordenRepository.persist(ordenEntity);
+        }
 
         return orden;
 
@@ -402,27 +410,33 @@ public class OrdenService {
             orden.setFechaModificacion(LocalDateTime.now());
             OrdenEntity ordenEntityMod = OrdenHelper.ordenToOrdenEntity(orden, null);
             ordenEntityMod.setCodigoProducto(ordenEntityOpt.get().getCodigoProducto());
-            ordenRepository.persist(ordenEntityMod);
-            //persistir items de nuevo
-            List<OrdenItem> itemList = new ArrayList<>();
-            List<OrdenItemEntity> items = ordenItemRepository.findByOrden(ordenEntityOpt.get());
-            for (OrdenItemEntity item :
-                    items) {
-                OrdenItem ordenItem = OrdenItemHelper.ordenItemEntityToOrdenItem(item, null);
-                OrdenItemEntity itemdup = OrdenItemHelper.ordenItemToOrdenItemEntity(ordenItem, null);
-                em.persist(itemdup);
-                itemList.add(ordenItem);
+            ordenEntityMod.setUidPago(ordenEntityOpt.get().getUidPago());
+
+            try {
+                //Publish to kafka to persist in read table
+                // only topic and message value are specified, round robin on destination partitions
+                OrdenMessage ordenMessage = OrdenHelper.ordenToOrdenMessage(orden, null);
+                ordenMessage.setUidPago(ordenEntityMod.getUidPago());
+                ordenMessage.setAccion(EnumOrderAction.ACTUALIZACION);
+                ordenMessage.setCodigoProducto(ordenEntityMod.getCodigoProducto());
+                kafkaProducerService.sendOrderToKafka(ordenMessage);
+                ordenEntityMod.setEnviado(true);
+            } catch (KafkaException e) {
+                log.error("Error en envio de orden " , e);
+            } finally {
+                ordenRepository.persist(ordenEntityMod);
+                //persistir items de nuevo
+                List<OrdenItemEntity> items = ordenItemRepository.findByOrden(ordenEntityOpt.get());
+                for (OrdenItemEntity item :
+                        items) {
+                    OrdenItem ordenItem = OrdenItemHelper.ordenItemEntityToOrdenItem(item, null);
+                    OrdenItemEntity itemdup = OrdenItemHelper.ordenItemToOrdenItemEntity(ordenItem, null);
+                    itemdup.setOrden(ordenEntityMod);
+                    ordenItemRepository.persist(itemdup);
+                }
             }
-            //Publish to kafka to persist in read table
-            // only topic and message value are specified, round robin on destination partitions
-            OrdenMessage ordenMessage = OrdenHelper.ordenToOrdenMessage(orden, null);
-            ordenMessage.setUidPago(ordenEntityOpt.get().getUidPago());
-            ordenMessage.setAccion(EnumOrderAction.ACTUALIZACION);
-            ordenMessage.setCodigoProducto(ordenEntityOpt.get().getCodigoProducto());
-            ordenMessage.setItems(itemList);
-            kafkaProducerService.sendOrderToKafka(ordenMessage);
         } else {
-            throw new OrdenException("Verifique el codigo de la orden");
+            throw new OrdenNotFoundException("Verifique el codigo de la orden");
         }
     }
 
@@ -444,27 +458,33 @@ public class OrdenService {
             ordenResponse.setEstado(Orden.EstadoEnum.CANCELADA);
             OrdenEntity ordenEntityMod = OrdenHelper.ordenToOrdenEntity(ordenResponse, null);
             ordenEntityMod.setCodigoProducto(ordenEntityOpt.get().getCodigoProducto());
-            ordenRepository.persist(ordenEntityMod);
-            //persistir items de nuevo
-            List<OrdenItem> itemList = new ArrayList<>();
-            List<OrdenItemEntity> items = ordenItemRepository.findByOrden(ordenEntityOpt.get());
-            for (OrdenItemEntity item :
-                    items) {
-                OrdenItem ordenItem = OrdenItemHelper.ordenItemEntityToOrdenItem(item, null);
-                OrdenItemEntity itemdup = OrdenItemHelper.ordenItemToOrdenItemEntity(ordenItem, null);
-                em.persist(itemdup);
-                itemList.add(ordenItem);
+            ordenEntityMod.setUidPago(ordenEntityOpt.get().getUidPago());
+
+            try {
+                //Publish to kafka to persist in read table
+                // only topic and message value are specified, round robin on destination partitions
+                OrdenMessage ordenMessage = OrdenHelper.ordenToOrdenMessage(ordenResponse, null);
+                ordenMessage.setUidPago(ordenEntityMod.getUidPago());
+                ordenMessage.setAccion(EnumOrderAction.ACTUALIZACION);
+                ordenMessage.setCodigoProducto(ordenEntityMod.getCodigoProducto());
+                kafkaProducerService.sendOrderToKafka(ordenMessage);
+                ordenEntityMod.setEnviado(true);
+            } catch (KafkaException e) {
+                log.error("Error en envio de orden " , e);
+            } finally {
+                ordenRepository.persist(ordenEntityMod);
+                //persistir items de nuevo
+                List<OrdenItemEntity> items = ordenItemRepository.findByOrden(ordenEntityOpt.get());
+                for (OrdenItemEntity item :
+                        items) {
+                    OrdenItem ordenItem = OrdenItemHelper.ordenItemEntityToOrdenItem(item, null);
+                    OrdenItemEntity itemdup = OrdenItemHelper.ordenItemToOrdenItemEntity(ordenItem, null);
+                    itemdup.setOrden(ordenEntityMod);
+                    ordenItemRepository.persist(itemdup);
+                }
             }
-            //Publish to kafka to persist in read table
-            // only topic and message value are specified, round robin on destination partitions
-            OrdenMessage ordenMessage = OrdenHelper.ordenToOrdenMessage(ordenResponse, null);
-            ordenMessage.setUidPago(ordenEntityOpt.get().getUidPago());
-            ordenMessage.setAccion(EnumOrderAction.ACTUALIZACION);
-            ordenMessage.setCodigoProducto(ordenEntityOpt.get().getCodigoProducto());
-            ordenMessage.setItems(itemList);
-            kafkaProducerService.sendOrderToKafka(ordenMessage);
         } else {
-            throw new OrdenException("Verifique el codigo de la orden");
+            throw new OrdenNotFoundException("Verifique el codigo de la orden");
         }
 
         return true;
