@@ -1,0 +1,187 @@
+{
+	"info": {
+		"_postman_id": "8eb36e88-d3cc-42a5-8cfa-eaf67de514f7",
+		"name": "ConveniosAPI",
+		"description": "Operaciones para servicio de conveniosAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ConveniosGetAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44330/api/convenios",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44330",
+					"path": [
+						"api",
+						"convenios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConveniosGETById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44330/api/convenios/80000002",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44330",
+					"path": [
+						"api",
+						"convenios",
+						"80000002"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConveniosDEL",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44330/api/convenios/80000001",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44330",
+					"path": [
+						"api",
+						"convenios",
+						"80000001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConveniosPCT",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"convenio\": {\r\n\t    \"nombreProveedor\": \"Hoteles donde Pancho\",\r\n\t    \"identificacion\": \"80000002\",\r\n\t    \"tipoConvenio\": 1,\r\n\t    \"fechaVigencia\": \"2020-05-29T01:00:00\",\r\n\t    \"correo\": \"nadie@notengo.com\",\r\n\t    \"ciudadCodigo\": 6881,\r\n\t    \"ciudad\": null,\r\n\t    \"endpoint\": \"https:9999//servicio/ruta/algo.wsdl\",\r\n        \"templateEntrada\": \"{objeto:9999, objeto2:[{x:1, y:2}]}\",\r\n        \"templateSalida\": \"{respuesta: {x:1000, y=2000, z={z1:1, z2=[a=1, a=2, a=3]} }}\"\r\n\t}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44330/api/convenios/80000002",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44330",
+					"path": [
+						"api",
+						"convenios",
+						"80000002"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConveniosPST",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"convenio\": {\r\n\t    \"nombreProveedor\": \"Hoteles el el aparecido\",\r\n\t    \"identificacion\": \"80000002\",\r\n\t    \"tipoConvenio\": 1,\r\n\t    \"fechaVigencia\": \"2020-05-29T01:00:00\",\r\n\t    \"correo\": \"nadie@notengo.com\",\r\n\t    \"ciudadCodigo\": 6881,\r\n\t    \"ciudad\": null,\r\n\t    \"endpoint\": \"https:9999//servicio/ruta/algo.wsdl\",\r\n        \"templateEntrada\": \"{objeto:9999, objeto2:[{x:1, y:2}]}\",\r\n        \"templateSalida\": \"{respuesta: {x:1000, y=2000, z={z1:1, z2=[a=1, a=2, a=3]} }}\"\r\n\t}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44330/api/convenios",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44330",
+					"path": [
+						"api",
+						"convenios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Healthchecks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44359/health",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44359",
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "43f8de21-585e-4609-ab6d-c87655bd0dfa",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "eb00b1fd-38f5-4117-a1ed-42a83bd4fbf1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "fd3716b0-abf9-48d8-973f-e06f160a2f71",
+			"key": "serverURL",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"id": "46d6f3e4-5046-429c-8d57-942071455888",
+			"key": "portPort",
+			"value": "44330",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

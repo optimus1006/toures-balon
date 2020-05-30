@@ -3,6 +3,7 @@ package com.touresbalon.ordenes.kafka;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.touresbalon.ordenes.api.model.Orden;
+import com.touresbalon.ordenes.exceptions.KafkaException;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import io.vertx.core.Vertx;
@@ -50,29 +51,33 @@ public class KafkaProducerService {
         LOGGER.info("onStart");
     }
 
-    public void sendOrderToKafka(OrdenMessage orden) {
+    public void sendOrderToKafka(OrdenMessage orden) throws KafkaException {
         try {
             KafkaProducerRecord<String, String> record = KafkaProducerRecord.create(
                     "read-order", objectMapper.writeValueAsString(orden));
 
             // use producer for interacting with Apache Kafka
             producer = KafkaProducer.create(vertx, config);
+            producer.exceptionHandler(e -> {
+                LOGGER.error("Error en envio a kafka  " , e);
+                producer.close();
+                throw new KafkaException(e);
+            });
             producer.send(record, done -> {
-
                 if (done.succeeded()) {
-
                     RecordMetadata recordMetadata = done.result();
                     LOGGER.info("Message " + record + " written on topic=" + recordMetadata.getTopic() +
                             ", partition=" + recordMetadata.getPartition() +
                             ", offset=" + recordMetadata.getOffset());
-                } else {
+                } /*else {
                     LOGGER.error("Error en envio a kafka ", done.cause());
-                }
-
+                    throw new KafkaException(done.cause());
+                }*/
             });
         } catch (
                 JsonProcessingException e) {
             LOGGER.error("Error en serializacion ", e);
+            throw new KafkaException(e);
         }
     }
 

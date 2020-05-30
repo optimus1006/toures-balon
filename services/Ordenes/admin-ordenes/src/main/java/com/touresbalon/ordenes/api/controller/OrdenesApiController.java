@@ -177,4 +177,32 @@ public class OrdenesApiController implements OrdenesApi {
         return Response.status(Response.Status.NOT_IMPLEMENTED).build();
     }
 
+    @Override
+    public Response aprobarOrdenCompra(@ApiParam(value = "Compra con la orden y sus items"  )
+                                           @Valid @RequestBody CompraPSTRq compra) {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                CompraPSTRs compraPSTRs = new CompraPSTRs();
+                compraPSTRs.setOrden(ordenService.aprobarOrden(compra.getOrden(), false, null));
+                return Response.status(Response.Status.OK).entity(compraPSTRs).type(MediaType.APPLICATION_JSON).build();
+            } catch (OrdenNotFoundException e) {
+                Error error=new Error();
+                error.setCode("0");
+                error.setMessage(e.getMessage());
+                return Response.status(Response.Status.NOT_FOUND).entity(e).type(MediaType.APPLICATION_JSON).build();
+            }  catch (OrdenException e) {
+                Error error=new Error();
+                error.setCode("0");
+                error.setMessage(e.getMessage());
+                return Response.status(Response.Status.CONFLICT).entity(error).type(MediaType.APPLICATION_JSON).build();
+            }
+            catch (Exception e) {
+                log.error("aprobarOrdenCompra ", e);
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
+            }
+        }
+        return Response.status(Response.Status.BAD_REQUEST).build();
+    }
+
 }
