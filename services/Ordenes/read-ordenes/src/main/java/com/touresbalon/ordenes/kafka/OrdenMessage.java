@@ -14,6 +14,8 @@ import java.util.List;
 public class OrdenMessage extends Orden {
 
   private Long codigoProducto = null;
+
+  private String uidPago;
   
   @JsonProperty("items")
   private List<OrdenItem> items = null;
@@ -61,6 +63,14 @@ public class OrdenMessage extends Orden {
 
   public void setCodigoProducto(Long codigoProducto) {
     this.codigoProducto = codigoProducto;
+  }
+
+  public String getUidPago() {
+    return uidPago;
+  }
+
+  public void setUidPago(String uidPago) {
+    this.uidPago = uidPago;
   }
 
   @Override

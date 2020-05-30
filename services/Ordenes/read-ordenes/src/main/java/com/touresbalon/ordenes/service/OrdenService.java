@@ -35,8 +35,8 @@ public class OrdenService {
 
     private static final Logger log = LoggerFactory.getLogger(OrdenService.class);
 
-    //@Inject
-    //EntityManager em;
+    @Inject
+    EntityManager em;
 
     @Inject
     OrdenRepository ordenRepository;
@@ -59,6 +59,8 @@ public class OrdenService {
 
         OrdenEntity ordenEntity = OrdenHelper.ordenToOrdenEntity(orden, null);
         ordenEntity.setCodigoProducto(orden.getCodigoProducto());
+        ordenEntity.setUidPago(orden.getUidPago());
+        ordenRepository.persist(ordenEntity);
         if(orden.getItems() != null && !orden.getItems().isEmpty()) {
             List<OrdenItemEntity> itemList = new ArrayList<>();
             for (OrdenItem item :
@@ -66,11 +68,9 @@ public class OrdenService {
                 itemList.add(OrdenItemHelper.ordenItemToOrdenItemEntity(item, null));
             }
             ordenEntity.setItems(itemList);
+            ordenEntity.getItems().forEach(item -> item.setOrden(ordenEntity));
+            ordenEntity.getItems().forEach(ordenItemRepository::persist);
         }
-
-        ordenRepository.persist(ordenEntity);
-        ordenEntity.getItems().forEach(item -> item.setOrden(ordenEntity));
-        ordenEntity.getItems().forEach(ordenItemRepository::persist);
 
         return OrdenHelper.ordenEntityToOrden(ordenEntity, orden);
 
@@ -85,6 +85,8 @@ public class OrdenService {
     public Orden crearOrden(OrdenMessage orden) throws OrdenException {
         log.info("crearOrden(Orden orden) ");
         OrdenEntity ordenEntity = OrdenHelper.ordenToOrdenEntity(orden, null);
+        ordenEntity.setCodigoProducto(orden.getCodigoProducto());
+        ordenEntity.setUidPago(orden.getUidPago());
 
         ordenRepository.persist(ordenEntity);
 
@@ -103,13 +105,25 @@ public class OrdenService {
         log.info("actualizarOrden(Orden orden, Long codigoOrden) ");
         Optional<OrdenEntity> ordenEntityOpt = ordenRepository.
                 find("codigo", codigoOrden).firstResultOptional();
-        Orden ordenResponse = new Orden();
         if (ordenEntityOpt.isPresent()) {
             orden.setCodigo(codigoOrden);
             orden.setCodigoCliente(ordenEntityOpt.get().getCodigoCliente());
+            orden.setUidPago(ordenEntityOpt.get().getUidPago());
             orden.setFechaCreacion(ordenEntityOpt.get().getFechaCreacion());
             OrdenEntity ordenEntity = OrdenHelper.ordenToOrdenEntity(orden, ordenEntityOpt.get());
             ordenEntity.setFechaModificacion(LocalDateTime.now());
+
+            if(orden.getItems() != null && !orden.getItems().isEmpty()) {
+                List<OrdenItemEntity> itemList = new ArrayList<>();
+                for (OrdenItem item :
+                        orden.getItems()) {
+                    itemList.add(OrdenItemHelper.ordenItemToOrdenItemEntity(item, null));
+                }
+                ordenEntity.setItems(itemList);
+                ordenEntity.getItems().forEach(item -> item.setOrden(ordenEntity));
+                ordenEntity.getItems().forEach(ordenItemRepository::persist);
+            }
+            em.merge(ordenEntity);
         } else {
             throw new OrdenException("Verifique el codigo de la orden");
         }
@@ -229,27 +243,6 @@ public class OrdenService {
             throw new OrdenException("No se encontro orden con este id");
         }
         return orden;
-    }
-
-    /**
-     * Cancela una orden
-     * @param codigoOrden
-     * @return
-     * @throws OrdenException
-     */
-    public boolean cancelarOrden(Long codigoOrden) throws OrdenException {
-        log.info("cancelarOrden(Long codigoOrden) ");
-        Optional<OrdenEntity> ordenEntityOpt = ordenRepository.
-                find("codigo", codigoOrden).firstResultOptional();
-        Orden ordenResponse = new Orden();
-        if (ordenEntityOpt.isPresent()) {
-            ordenEntityOpt.get().setEstado(Orden.EstadoEnum.CANCELADA);
-            ordenRepository.persist(ordenEntityOpt.get());
-        } else {
-            throw new OrdenException("Verifique el codigo de la orden");
-        }
-
-        return true;
     }
 
 }

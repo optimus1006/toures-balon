@@ -34,6 +34,7 @@ public class OrdenEntity extends PanacheEntityBase {
     private BigDecimal subtotal;
     private BigDecimal impuestos;
     private BigDecimal valorTotal;
+    private String uidPago;
 
     @OneToMany(mappedBy = "orden")
     private List<OrdenItemEntity> items;
@@ -177,5 +178,13 @@ public class OrdenEntity extends PanacheEntityBase {
 
     public void setCodigoProducto(Long codigoProducto) {
         this.codigoProducto = codigoProducto;
+    }
+
+    public String getUidPago() {
+        return uidPago;
+    }
+
+    public void setUidPago(String uidPago) {
+        this.uidPago = uidPago;
     }
 }

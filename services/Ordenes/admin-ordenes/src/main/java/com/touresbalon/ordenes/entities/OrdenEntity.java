@@ -34,6 +34,11 @@ public class OrdenEntity extends PanacheEntityBase {
     private BigDecimal subtotal;
     private BigDecimal impuestos;
     private BigDecimal valorTotal;
+    private String uidPago;
+
+    @org.hibernate.annotations.Type(type="yes_no")
+    @Column(name = "enviado", nullable = false)
+    boolean  enviado;
 
     @OneToMany(mappedBy = "orden")
     private List<OrdenItemEntity> items;
@@ -177,5 +182,21 @@ public class OrdenEntity extends PanacheEntityBase {
 
     public void setCodigoProducto(Long codigoProducto) {
         this.codigoProducto = codigoProducto;
+    }
+
+    public boolean isEnviado() {
+        return enviado;
+    }
+
+    public void setEnviado(boolean enviado) {
+        this.enviado = enviado;
+    }
+
+    public String getUidPago() {
+        return uidPago;
+    }
+
+    public void setUidPago(String uidPago) {
+        this.uidPago = uidPago;
     }
 }
