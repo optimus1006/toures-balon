@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import com.touresbalon.api.domain.Acomodacion;
 import com.touresbalon.api.domain.Asiento;
+import com.touresbalon.api.domain.Cliente;
 import com.touresbalon.api.domain.Cuarto;
 import com.touresbalon.api.domain.DetalleProducto;
 import com.touresbalon.api.domain.Evento;
@@ -187,6 +188,126 @@ public class ProductoService {
 		return productosPSTRs;
 	}
 	
-	
+	public List<Producto> listarProductos(Long idCliente,Long id){
+		List<Producto> productos = new ArrayList<>();
+		if(idCliente!=null && id==null) {
+			List<ProductoEntity> productosEntity = productoRepository.findById_cliente(idCliente);
+			if(productosEntity!=null) {
+				for(ProductoEntity productoEntity : productosEntity) {
+					Producto producto = new Producto();
+					List<DetalleProducto> detalleProductos = new ArrayList<>();
+					Cliente cliente = new Cliente();
+					cliente.setId(productoEntity.getId_cliente());
+					producto.setCliente(cliente);
+					producto.setDescripcion(productoEntity.getDescripcion());
+					producto.setFechaCreacion(productoEntity.getFecha_creacion().toLocalDateTime());
+					producto.setId(productoEntity.getId());
+					producto.setPrecio(productoEntity.getPrecio());
+					List<ProductoDetalleEntity> productosDetalleEntity = productoDetalleRepository.findById_producto(producto.getId());
+					for(ProductoDetalleEntity productoDetalleEntity : productosDetalleEntity) {
+						DetalleProducto detalleProducto = new DetalleProducto();
+						if(productoDetalleEntity.getId_evento()!=null) {
+							detalleProducto.setAsientosEvento(productoDetalleEntity.getAsientos_evento());
+							Evento evento = eventoService.consultarPorId(productoDetalleEntity.getId_evento());
+							detalleProducto.setEvento(evento);
+						}
+						if(productoDetalleEntity.getId_hospedaje()!=null) {
+							detalleProducto.setCuartosHospedaje(productoDetalleEntity.getCuartos_hospedaje());
+							Hospedaje hospedaje = hospedajeService.consultarPorId(productoDetalleEntity.getId_hospedaje());
+							detalleProducto.setHospedaje(hospedaje);
+						}
+						if(productoDetalleEntity.getId_transporte()!=null) {
+							detalleProducto.setAsientosTransporte(productoDetalleEntity.getAsientos_transporte());
+							Transporte transporte = transporteService.getTransportePorId(productoDetalleEntity.getId_transporte());
+							detalleProducto.setTransporte(transporte);
+						}
+						detalleProductos.add(detalleProducto);
+					}
+					producto.setDetalleProducto(detalleProductos);
+					productos.add(producto);
+				}
+			}
+			return productos;
+		}
+		else if(id!=null) {
+			List<ProductoEntity> productosEntity = productoRepository.findById_clienteAndId(idCliente, id);
+			if(productosEntity!=null) {
+				for(ProductoEntity productoEntity : productosEntity) {
+					Producto producto = new Producto();
+					List<DetalleProducto> detalleProductos = new ArrayList<>();
+					Cliente cliente = new Cliente();
+					cliente.setId(productoEntity.getId_cliente());
+					producto.setCliente(cliente);
+					producto.setDescripcion(productoEntity.getDescripcion());
+					producto.setFechaCreacion(productoEntity.getFecha_creacion().toLocalDateTime());
+					producto.setId(productoEntity.getId());
+					producto.setPrecio(productoEntity.getPrecio());
+					List<ProductoDetalleEntity> productosDetalleEntity = productoDetalleRepository.findById_producto(producto.getId());
+					for(ProductoDetalleEntity productoDetalleEntity : productosDetalleEntity) {
+						DetalleProducto detalleProducto = new DetalleProducto();
+						if(productoDetalleEntity.getId_evento()!=null) {
+							detalleProducto.setAsientosEvento(productoDetalleEntity.getAsientos_evento());
+							Evento evento = eventoService.consultarPorId(productoDetalleEntity.getId_evento());
+							detalleProducto.setEvento(evento);
+						}
+						if(productoDetalleEntity.getId_hospedaje()!=null) {
+							detalleProducto.setCuartosHospedaje(productoDetalleEntity.getCuartos_hospedaje());
+							Hospedaje hospedaje = hospedajeService.consultarPorId(productoDetalleEntity.getId_hospedaje());
+							detalleProducto.setHospedaje(hospedaje);
+						}
+						if(productoDetalleEntity.getId_transporte()!=null) {
+							detalleProducto.setAsientosTransporte(productoDetalleEntity.getAsientos_transporte());
+							Transporte transporte = transporteService.getTransportePorId(productoDetalleEntity.getId_transporte());
+							detalleProducto.setTransporte(transporte);
+						}
+						detalleProductos.add(detalleProducto);
+					}
+					producto.setDetalleProducto(detalleProductos);
+					productos.add(producto);
+				}
+			}
+				return productos;
+		}
+		else {
+			Iterable<ProductoEntity> productosEntity = productoRepository.findAll();
+			if(productosEntity!=null) {
+				for(ProductoEntity productoEntity : productosEntity) {
+					Producto producto = new Producto();
+					List<DetalleProducto> detalleProductos = new ArrayList<>();
+					Cliente cliente = new Cliente();
+					cliente.setId(productoEntity.getId_cliente());
+					producto.setCliente(cliente);
+					producto.setDescripcion(productoEntity.getDescripcion());
+					producto.setFechaCreacion(productoEntity.getFecha_creacion().toLocalDateTime());
+					producto.setId(productoEntity.getId());
+					producto.setPrecio(productoEntity.getPrecio());
+					List<ProductoDetalleEntity> productosDetalleEntity = productoDetalleRepository.findById_producto(producto.getId());
+					for(ProductoDetalleEntity productoDetalleEntity : productosDetalleEntity) {
+						DetalleProducto detalleProducto = new DetalleProducto();
+						if(productoDetalleEntity.getId_evento()!=null) {
+							detalleProducto.setAsientosEvento(productoDetalleEntity.getAsientos_evento());
+							Evento evento = eventoService.consultarPorId(productoDetalleEntity.getId_evento());
+							detalleProducto.setEvento(evento);
+						}
+						if(productoDetalleEntity.getId_hospedaje()!=null) {
+							detalleProducto.setCuartosHospedaje(productoDetalleEntity.getCuartos_hospedaje());
+							Hospedaje hospedaje = hospedajeService.consultarPorId(productoDetalleEntity.getId_hospedaje());
+							detalleProducto.setHospedaje(hospedaje);
+						}
+						if(productoDetalleEntity.getId_transporte()!=null) {
+							detalleProducto.setAsientosTransporte(productoDetalleEntity.getAsientos_transporte());
+							Transporte transporte = transporteService.getTransportePorId(productoDetalleEntity.getId_transporte());
+							detalleProducto.setTransporte(transporte);
+						}
+						detalleProductos.add(detalleProducto);
+					}
+					producto.setDetalleProducto(detalleProductos);
+					productos.add(producto);
+				}
+			}
+			return productos;
+		}
+		
+	}
 	
 }
