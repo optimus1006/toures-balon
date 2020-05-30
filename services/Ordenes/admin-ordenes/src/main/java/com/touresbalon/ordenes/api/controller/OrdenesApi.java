@@ -48,7 +48,7 @@ public interface OrdenesApi {
         @ApiResponse(code = 400, message = "Error de parametros del request."),
         @ApiResponse(code = 409, message = "error en parametros de entrada.") })
     @DELETE
-    @Path("{codigoOrden}/factura")
+    @Path("{codigoOrden}")
     @Produces(MediaType.APPLICATION_JSON)
     Response ordenesDEL(@ApiParam(value = "Código de la orden de pago.",required=true) @PathParam(value = "codigoOrden") Long codigoOrden
 );
@@ -89,5 +89,17 @@ public interface OrdenesApi {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/pago")
     Response realizarCompra(@ApiParam(value = "Compra con la orden y sus items"  )  @Valid @RequestBody CompraPSTRq compra);
+
+    @ApiOperation(value = "Genera aprobacion pago de orden.", nickname = "compraPST", notes = "Realiza captura de los datos de la orden y recalcula el valor a pagar de la orden, asi como sus valores de descuenta y otros recargos.", response = OrdenesPSTRs.class, tags={ "Orden", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Pago realizado exitosamente", response = OrdenesPSTRs.class),
+            @ApiResponse(code = 400, message = "Parametro Invalido"),
+            @ApiResponse(code = 409, message = "La orden ya estaba registrada."),
+            @ApiResponse(code = 500, message = "Error del sistema.") })
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/aprobar")
+    Response aprobarOrdenCompra(@ApiParam(value = "Compra con la orden y sus items"  )  @Valid @RequestBody CompraPSTRq compra);
 
 }

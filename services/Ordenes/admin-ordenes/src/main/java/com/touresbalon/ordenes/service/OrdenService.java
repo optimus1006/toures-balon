@@ -1,10 +1,9 @@
 package com.touresbalon.ordenes.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.touresbalon.ordenes.api.model.*;
 import com.touresbalon.ordenes.entities.OrdenEntity;
 import com.touresbalon.ordenes.entities.OrdenItemEntity;
+import com.touresbalon.ordenes.exceptions.KafkaException;
 import com.touresbalon.ordenes.exceptions.OrdenException;
 import com.touresbalon.ordenes.helpers.OrdenHelper;
 import com.touresbalon.ordenes.helpers.OrdenItemHelper;
@@ -24,12 +23,7 @@ import com.touresbalon.ordenes.restclient.validatarjeta.TarjetaService;
 import com.touresbalon.ordenes.restclient.validatarjeta.model.*;
 import com.touresbalon.ordenes.util.EnumTipoProducto;
 import com.touresbalon.ordenes.util.EnumValidacionCliente;
-import io.vertx.core.Vertx;
-import io.vertx.core.json.JsonObject;
-import io.vertx.kafka.client.producer.KafkaProducer;
-import io.vertx.kafka.client.producer.KafkaProducerRecord;
-import io.vertx.kafka.client.producer.RecordMetadata;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
+import io.quarkus.panache.common.Sort;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +36,6 @@ import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.*;
 
 @ApplicationScoped
@@ -85,11 +78,12 @@ public class OrdenService {
      */
     public Orden realizarCompra(Orden orden) throws OrdenException {
         log.info("realizarCompra(Orden orden) ");
-        //TODO: Llamar servicio de validar cliente
+        //Llamar servicio de consultar cliente
         Cliente cliente = consultarCliente(orden.getCodigoCliente());
 
         //Llamar servicio de confirmacion de tarjeta
-        if (validarTarjeta(orden, cliente)) {
+        String uuidPago = validarTarjeta(orden, cliente);
+        if (uuidPago != null) {
             EnumValidacionCliente validacionCliente = validarCliente(cliente, orden.getValorTotal());
             if (!validacionCliente.equals(EnumValidacionCliente.ENUM_VALIDACION_RECHAZADA)) {
                 orden.setEstado(Orden.EstadoEnum.EN_RESERVA);
@@ -98,57 +92,27 @@ public class OrdenService {
                 orden.setFechaModificacion(LocalDateTime.now());
 
                 OrdenEntity ordenEntity = OrdenHelper.ordenToOrdenEntity(orden, null);
-                ordenRepository.persist(ordenEntity);
+                ordenEntity.setUidPago(uuidPago);
 
-                List<OrdenItem> items = null;
                 if (validacionCliente.equals(EnumValidacionCliente.ENUM_VALIDACION_EXITOSA)) {
-                    //Llamar servicio de productos para reservar
-                    Producto producto = realizarReservas(orden, cliente);
-                    OrdenEntity ordenEntityMod = new OrdenEntity();
-
-                    if (producto != null) {
-                        items = new ArrayList<>();
-                        List<OrdenItemEntity> itemList = new ArrayList<>();
-                        for (DetalleProducto detalleProducto : producto.getDetalleProducto()
-                        ) {
-                            EnumTipoProducto tipoProducto = null;
-                            Integer cantidad = null;
-                            if (detalleProducto.getEventos() != null) {
-                                tipoProducto = EnumTipoProducto.EVENTO;
-                                cantidad = detalleProducto.getAsietosEvento();
-                            } else if (detalleProducto.getHospedaje() != null) {
-                                tipoProducto = EnumTipoProducto.HOSPEDAJE;
-                                cantidad = detalleProducto.getCuartosHospedaje();
-                            } else if (detalleProducto.getTransporte() != null) {
-                                tipoProducto = EnumTipoProducto.TRANSPORTE;
-                                cantidad = detalleProducto.getAsietosTransporte();
-                            }
-                            OrdenItem ordenItem = new OrdenItem(detalleProducto.getId(), cantidad, tipoProducto);
-                            OrdenItemEntity item = OrdenItemHelper.ordenItemToOrdenItemEntity(ordenItem
-                                    , null);
-                            item.setOrden(ordenEntity);
-                            ordenItemRepository.persist(item);
-                            itemList.add(item);
-                            items.add(ordenItem);
-                        }
-                        ordenEntityMod.setItems(itemList);
+                    ordenEntity.setEnviado(true);
+                    ordenRepository.persist(ordenEntity);
+                    orden = aprobarOrden(orden, true, cliente);
+                } else {
+                    try {
+                        //Publish to kafka to persist in read table
+                        // only topic and message value are specified, round robin on destination partitions
+                        // sen Item list
+                        OrdenMessage ordenMessage = OrdenHelper.ordenToOrdenMessage(orden, null);
+                        ordenMessage.setAccion(EnumOrderAction.PAGO);
+                        ordenMessage.setUidPago(ordenEntity.getUidPago());
+                        kafkaProducerService.sendOrderToKafka(ordenMessage);
+                        ordenEntity.setEnviado(true);
+                    } catch (KafkaException e) {
+                        log.error("Error en envio de orden " , e);
+                    } finally {
+                        ordenRepository.persist(ordenEntity);
                     }
-
-                    ordenEntityMod.setCodigoProducto(producto.getId());
-                    ordenEntityMod.setFechaPago(LocalDateTime.now());
-                    orden.setEstado(Orden.EstadoEnum.PAGADA);
-                    ordenEntityMod = OrdenHelper.ordenToOrdenEntity(orden, ordenEntityMod);
-                    ordenRepository.persist(ordenEntityMod);
-                }
-
-                //TODO: Publish to kafka to persist in read table
-                // only topic and message value are specified, round robin on destination partitions
-                // sen Item list
-                OrdenMessage ordenMessage = OrdenHelper.ordenToOrdenMessage(orden, null);
-                ordenMessage.setAccion(EnumOrderAction.PAGO);
-                ordenMessage.setCodigoProducto(ordenEntity.getCodigoProducto());
-                ordenMessage.setItems(items);
-                kafkaProducerService.sendOrderToKafka(ordenMessage);
                 /*try {
                     Vertx vertx = Vertx.vertx();
                     KafkaProducerRecord<String, String> record = KafkaProducerRecord.create(
@@ -172,6 +136,8 @@ public class OrdenService {
                 } catch (JsonProcessingException e) {
                     log.error("Error en serializacion ", e);
                 }*/
+
+                }
             }
             return orden;
 
@@ -179,6 +145,78 @@ public class OrdenService {
             throw new OrdenException("No paso la validacion de cupo de la tarjeta");
         }
 
+    }
+
+    /**
+     * Aprobar orden
+     * @param orden
+     * @param enPago
+     * @param cliente
+     * @return Datos de orden actualizada
+     * @throws OrdenException
+     */
+    public Orden aprobarOrden(Orden orden, boolean enPago, Cliente cliente) throws OrdenException {
+        //Llamar servicio de productos para reservar
+        if (cliente == null) {
+            //Llamar servicio de consultar cliente
+            cliente = consultarCliente(orden.getCodigoCliente());
+        }
+        //Llamado a registrar el producto
+        Producto producto = realizarReservas(orden, cliente);
+        if (producto != null) {
+            OrdenEntity ordenEntityMod = new OrdenEntity();
+            ordenEntityMod.setCodigoProducto(producto.getId());
+            ordenEntityMod.setFechaPago(LocalDateTime.now());
+            orden.setEstado(Orden.EstadoEnum.PAGADA);
+            ordenEntityMod = OrdenHelper.ordenToOrdenEntity(orden, ordenEntityMod);
+            List<OrdenItem> items = new ArrayList<>();
+            List<OrdenItemEntity> itemsEntity = new ArrayList<>();
+            for (DetalleProducto detalleProducto : producto.getDetalleProducto()
+            ) {
+                EnumTipoProducto tipoProducto = null;
+                Integer cantidad = null;
+                if (detalleProducto.getEventos() != null) {
+                    tipoProducto = EnumTipoProducto.EVENTO;
+                    cantidad = detalleProducto.getAsietosEvento();
+                } else if (detalleProducto.getHospedaje() != null) {
+                    tipoProducto = EnumTipoProducto.HOSPEDAJE;
+                    cantidad = detalleProducto.getCuartosHospedaje();
+                } else if (detalleProducto.getTransporte() != null) {
+                    tipoProducto = EnumTipoProducto.TRANSPORTE;
+                    cantidad = detalleProducto.getAsietosTransporte();
+                }
+                OrdenItem ordenItem = new OrdenItem(detalleProducto.getId(), cantidad, tipoProducto);
+                itemsEntity.add(OrdenItemHelper.ordenItemToOrdenItemEntity(ordenItem
+                        , null));
+                items.add(ordenItem);
+            }
+
+            try {
+                //Publish to kafka to persist in read table
+                // only topic and message value are specified, round robin on destination partitions
+                // sen Item list
+                OrdenMessage ordenMessage = OrdenHelper.ordenToOrdenMessage(orden, null);
+                ordenMessage.setAccion(EnumOrderAction.PAGO);
+                if(!enPago) {
+                    ordenMessage.setAccion(EnumOrderAction.ACTUALIZACION);
+                }
+                ordenMessage.setUidPago(ordenEntityMod.getUidPago());
+                ordenMessage.setCodigoProducto(ordenEntityMod.getCodigoProducto());
+                ordenMessage.setItems(items);
+                kafkaProducerService.sendOrderToKafka(ordenMessage);
+                ordenEntityMod.setEnviado(true);
+            } catch (KafkaException e) {
+                log.error("Error en envio de orden " , e);
+            } finally {
+                ordenRepository.persist(ordenEntityMod);
+                for (OrdenItemEntity item:
+                itemsEntity){
+                    item.setOrden(ordenEntityMod);
+                    ordenItemRepository.persist(item);
+                }
+            }
+        }
+        return orden;
     }
 
     /**
@@ -227,7 +265,7 @@ public class OrdenService {
             tipoIdentificacion.setCodigo("CC");
             cliente.setTipoIdentificacion(tipoIdentificacion);
             Categoria categoria = new Categoria();
-            categoria.setNombre("Plateado");
+            categoria.setNombre("Platino");
             cliente.setCategoria(categoria);
         }
         return cliente;
@@ -240,7 +278,7 @@ public class OrdenService {
      * @param cliente
      * @return Exitoso si pasa la validacion
      */
-    private boolean validarTarjeta(Orden orden, Cliente cliente) {
+    private String validarTarjeta(Orden orden, Cliente cliente) {
         log.info("validarTarjeta (Orden orden, Cliente cliente) ");
         CompraValidacion compraValidacion = new CompraValidacion();
         compraValidacion.setMonto(orden.getValorTotal());
@@ -250,7 +288,10 @@ public class OrdenService {
                 cliente.getNombres(), cliente.getApellidos(), cliente.getCelular(), tipoIdentificacion));
         compraValidacion.setTarjeta(new TarjetaValidacion(orden.getTarjeta().getNumero(), TarjetaValidacion.TipoEnum.fromValue(orden.getTarjeta().getTipo().name())));
         RespuestaValidacion respuestaValidacion = validaTarjetaService.validarTarjeta(compraValidacion);
-        return respuestaValidacion.getCodigo().equals(EnumRespuestaValidacion.RESPUESTA_EXITOSA.getCodigo());
+        if(respuestaValidacion.getCodigo().equals(EnumRespuestaValidacion.RESPUESTA_EXITOSA.getCodigo())) {
+            return respuestaValidacion.getUidPago();
+        }
+        return null;
     }
 
     /**
@@ -334,6 +375,7 @@ public class OrdenService {
         //Publish to kafka to persist in read table
         // only topic and message value are specified, round robin on destination partitions
         OrdenMessage ordenMessage = OrdenHelper.ordenToOrdenMessage(orden, null);
+        ordenMessage.setUidPago(ordenEntity.getUidPago());
         ordenMessage.setAccion(EnumOrderAction.CREACION);
         ordenMessage.setCodigoProducto(ordenEntity.getCodigoProducto());
         kafkaProducerService.sendOrderToKafka(ordenMessage);
@@ -351,15 +393,15 @@ public class OrdenService {
     public void actualizarOrden(Orden orden, Long codigoOrden) throws OrdenException {
         log.info("actualizarOrden(Orden orden, Long codigoOrden) ");
         Optional<OrdenEntity> ordenEntityOpt = ordenRepository.
-                find("codigo", codigoOrden).firstResultOptional();
+                find("codigo", Sort.by("id").descending(), codigoOrden).firstResultOptional();
         if (ordenEntityOpt.isPresent()) {
-            OrdenEntity ordenEntity = ordenEntityOpt.get();
             orden.setFechaModificacion(LocalDateTime.now());
             orden.setCodigo(codigoOrden);
             orden.setCodigoCliente(ordenEntityOpt.get().getCodigoCliente());
             orden.setFechaCreacion(ordenEntityOpt.get().getFechaCreacion());
             orden.setFechaModificacion(LocalDateTime.now());
             OrdenEntity ordenEntityMod = OrdenHelper.ordenToOrdenEntity(orden, null);
+            ordenEntityMod.setCodigoProducto(ordenEntityOpt.get().getCodigoProducto());
             ordenRepository.persist(ordenEntityMod);
             //persistir items de nuevo
             List<OrdenItem> itemList = new ArrayList<>();
@@ -374,8 +416,9 @@ public class OrdenService {
             //Publish to kafka to persist in read table
             // only topic and message value are specified, round robin on destination partitions
             OrdenMessage ordenMessage = OrdenHelper.ordenToOrdenMessage(orden, null);
+            ordenMessage.setUidPago(ordenEntityOpt.get().getUidPago());
             ordenMessage.setAccion(EnumOrderAction.ACTUALIZACION);
-            ordenMessage.setCodigoProducto(ordenEntity.getCodigoProducto());
+            ordenMessage.setCodigoProducto(ordenEntityOpt.get().getCodigoProducto());
             ordenMessage.setItems(itemList);
             kafkaProducerService.sendOrderToKafka(ordenMessage);
         } else {
@@ -393,14 +436,14 @@ public class OrdenService {
     public boolean cancelarOrden(Long codigoOrden) throws OrdenException {
         log.info("cancelarOrden(Long codigoOrden) ");
         Optional<OrdenEntity> ordenEntityOpt = ordenRepository.
-                find("codigo", codigoOrden).firstResultOptional();
+                find("codigo", Sort.by("id").descending(), codigoOrden).firstResultOptional();
         Orden ordenResponse = new Orden();
         if (ordenEntityOpt.isPresent()) {
-            OrdenEntity ordenEntity = ordenEntityOpt.get();
-            ordenResponse = OrdenHelper.ordenEntityToOrden(ordenEntity, ordenResponse);
+            ordenResponse = OrdenHelper.ordenEntityToOrden(ordenEntityOpt.get(), ordenResponse);
             ordenResponse.setFechaModificacion(LocalDateTime.now());
             ordenResponse.setEstado(Orden.EstadoEnum.CANCELADA);
             OrdenEntity ordenEntityMod = OrdenHelper.ordenToOrdenEntity(ordenResponse, null);
+            ordenEntityMod.setCodigoProducto(ordenEntityOpt.get().getCodigoProducto());
             ordenRepository.persist(ordenEntityMod);
             //persistir items de nuevo
             List<OrdenItem> itemList = new ArrayList<>();
@@ -415,8 +458,9 @@ public class OrdenService {
             //Publish to kafka to persist in read table
             // only topic and message value are specified, round robin on destination partitions
             OrdenMessage ordenMessage = OrdenHelper.ordenToOrdenMessage(ordenResponse, null);
+            ordenMessage.setUidPago(ordenEntityOpt.get().getUidPago());
             ordenMessage.setAccion(EnumOrderAction.ACTUALIZACION);
-            ordenMessage.setCodigoProducto(ordenEntity.getCodigoProducto());
+            ordenMessage.setCodigoProducto(ordenEntityOpt.get().getCodigoProducto());
             ordenMessage.setItems(itemList);
             kafkaProducerService.sendOrderToKafka(ordenMessage);
         } else {

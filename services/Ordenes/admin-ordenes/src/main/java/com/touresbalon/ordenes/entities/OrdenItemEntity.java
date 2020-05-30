@@ -31,6 +31,7 @@ public class OrdenItemEntity extends PanacheEntityBase {
 	private Integer cantidad;
 
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	private EnumTipoProducto tipoProducto;
 
 	public OrdenEntity getOrden() {

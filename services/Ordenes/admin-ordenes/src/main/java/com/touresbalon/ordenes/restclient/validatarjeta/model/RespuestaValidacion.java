@@ -4,6 +4,7 @@ public class RespuestaValidacion {
 
     private String codigo;
     private String mensaje;
+    private String uidPago;
 
     public String getCodigo() {
         return codigo;
@@ -19,5 +20,13 @@ public class RespuestaValidacion {
 
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
+    }
+
+    public String getUidPago() {
+        return uidPago;
+    }
+
+    public void setUidPago(String uidPago) {
+        this.uidPago = uidPago;
     }
 }

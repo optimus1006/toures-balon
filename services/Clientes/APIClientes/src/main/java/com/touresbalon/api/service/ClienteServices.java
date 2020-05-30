@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.touresbalon.api.repository.read.ReadCategoriaEntity;
 import com.touresbalon.api.repository.read.ReadCategoriaRepository;
@@ -139,10 +140,10 @@ public class ClienteServices {
 		Estado estado = new Estado();
 		estado.setCodigo(cliente.getEstado());
 		clienteResponse.setEstado(estado);
-		ReadCategoriaEntity categoriaEntity = readCategoriaRepository.getOne(cliente.getCategoria());
+		Optional<ReadCategoriaEntity> categoriaEntity = readCategoriaRepository.findById(cliente.getCategoria());
 		Categoria categoria = new Categoria();
-		categoria.setCodigo(categoriaEntity.getCodigo());
-		categoria.setNombre(categoriaEntity.getNombre());
+		categoria.setCodigo(categoriaEntity.get().getCodigo());
+		categoria.setNombre(categoriaEntity.get().getNombre());
 		clienteResponse.setCategoria(categoria);
 		TipoIdentificacion tipoIdentificacion =  new TipoIdentificacion();
 		tipoIdentificacion.setCodigo(cliente.getTipoIdentificacion());
