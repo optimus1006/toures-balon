@@ -24,7 +24,6 @@ namespace Javeriana.Convenios.Api.Models
     /// <summary>
     /// 
     /// </summary>
-    [DataContract]
     [Table("Convenio")]
     public class Convenio : IEquatable<Convenio>
     { 
@@ -87,20 +86,39 @@ namespace Javeriana.Convenios.Api.Models
         /// <value>Correo de contacto del convenio.</value>
         //[DataMember(Name="correo")]
         public string Correo { get; set; }
-
+        /*
+        public int PaisCodigo { get; set; }
+        
         /// <summary>
         /// Gets or Sets Pais
         /// </summary>
         //[DataMember(Name="pais")]
-        [ForeignKey("FK_Convenio_Pais_PaisCodigo")]
-        public Pais Pais { get; set; }
+        //[ForeignKey("FK_Convenio_Pais_PaisCodigo")]
+        public virtual Pais Pais { get; set; }
+        */
+        public int CiudadCodigo { get; set; }
 
         /// <summary>
         /// Gets or Sets Ciudad
         /// </summary>
         //[DataMember(Name="ciudad")]
-        [ForeignKey("FK_Convenio_Ciudad_CiudadCodigo")]
-        public Ciudad Ciudad { get; set; }
+        //[ForeignKey("FK_Convenio_Ciudad_CiudadCodigo")]
+        public virtual Ciudad Ciudad { get; set; }
+
+        /// <summary>
+        /// Gets or Sets an endpoint
+        /// </summary>
+        public string Endpoint { get; set; }
+
+        /// <summary>
+        /// Gets or sets a input template
+        /// </summary>
+        public string TemplateEntrada { get; set; }
+
+        /// <summary>
+        /// Gets or sets a output template
+        /// </summary>
+        public string TemplateSalida { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -115,8 +133,11 @@ namespace Javeriana.Convenios.Api.Models
             sb.Append("  TipoConvenio: ").Append(TipoConvenio).Append("\n");
             sb.Append("  FechaVigencia: ").Append(FechaVigencia).Append("\n");
             sb.Append("  Correo: ").Append(Correo).Append("\n");
-            sb.Append("  Pais: ").Append(Pais).Append("\n");
+            //sb.Append("  Pais: ").Append(Pais).Append("\n");
             sb.Append("  Ciudad: ").Append(Ciudad).Append("\n");
+            sb.Append("  Endpoint: ").Append(Endpoint).Append("\n");
+            sb.Append("  TemplateEntrada: ").Append(TemplateEntrada).Append("\n");
+            sb.Append("  TemplateSalida: ").Append(TemplateSalida).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -177,16 +198,31 @@ namespace Javeriana.Convenios.Api.Models
                     Correo == other.Correo ||
                     Correo != null &&
                     Correo.Equals(other.Correo)
-                ) && 
+                ) /*&& 
                 (
                     Pais == other.Pais ||
                     Pais != null &&
                     Pais.Equals(other.Pais)
-                ) && 
+                ) */&& 
                 (
                     Ciudad == other.Ciudad ||
                     Ciudad != null &&
                     Ciudad.Equals(other.Ciudad)
+                ) &&
+                (
+                    Endpoint == other.Endpoint ||
+                    Endpoint != null &&
+                    Endpoint.Equals(other.Endpoint)
+                ) &&
+                (
+                    TemplateEntrada == other.TemplateEntrada ||
+                    TemplateEntrada != null &&
+                    TemplateEntrada.Equals(other.TemplateEntrada)
+                ) &&
+                (
+                    TemplateSalida == other.TemplateSalida ||
+                    TemplateSalida != null &&
+                    TemplateSalida.Equals(other.TemplateSalida)
                 );
         }
 
@@ -210,10 +246,16 @@ namespace Javeriana.Convenios.Api.Models
                     hashCode = hashCode * 59 + FechaVigencia.GetHashCode();
                     if (Correo != null)
                     hashCode = hashCode * 59 + Correo.GetHashCode();
-                    if (Pais != null)
-                    hashCode = hashCode * 59 + Pais.GetHashCode();
+                    /*if (Pais != null)
+                    hashCode = hashCode * 59 + Pais.GetHashCode();*/
                     if (Ciudad != null)
                     hashCode = hashCode * 59 + Ciudad.GetHashCode();
+                    if (Endpoint != null)
+                    hashCode = hashCode * 59 + Endpoint.GetHashCode();
+                    if (TemplateEntrada != null)
+                    hashCode = hashCode * 59 + TemplateEntrada.GetHashCode();
+                    if (TemplateSalida != null)
+                    hashCode = hashCode * 59 + TemplateSalida.GetHashCode();
                 return hashCode;
             }
         }

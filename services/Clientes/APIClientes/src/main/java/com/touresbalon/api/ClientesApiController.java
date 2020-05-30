@@ -79,41 +79,43 @@ public class ClientesApiController implements IClientesApi {
 	public ClientesGETAllRS clientesGETAll(
 			@ApiParam(value = "El número de clientes a omitir antes de comenzar a recopilar el conjunto de resultados") @Valid @RequestParam(value = "offset", required = false) Integer offset,
 			@ApiParam(value = "El número de clientes a retornar") @Valid @RequestParam(value = "limit", required = false) Integer limit,
-			@ApiParam(value = "Nombres para consultar") @Valid @RequestParam(value = "nombres", required = false) Integer nombres,
-			@ApiParam(value = "Apellidos para consultar") @Valid @RequestParam(value = "apellidos", required = false) Integer apellidos,
+			@ApiParam(value = "Nombres para consultar") @Valid @RequestParam(value = "nombres", required = false) String nombres,
+			@ApiParam(value = "Apellidos para consultar") @Valid @RequestParam(value = "apellidos", required = false) String apellidos,
+            @ApiParam(value = "Identificacion para consultar") @Valid @RequestParam(value = "identificacion", required = false) String identificacion,
+            @ApiParam(value = "Tipo Identificacion para consultar") @Valid @RequestParam(value = "tipoIdentificacion", required = false) String tipoIdentificacion,
 			@ApiParam(value = "Estado del cliente.", allowableValues = "ACTIVO, INACTIVO") @Valid @RequestParam(value = "estado", required = false) String estado) {
 		ClientesGETAllRS clientesGETAllRS = new ClientesGETAllRS();
 		clientesGETAllRS.setClientes(clienteService.getAllClientes());
 		return clientesGETAllRS;
 	}
 
-	@ApiOperation(value = "Consulta al información de un cliente por su id", nickname = "clientesGETById", notes = "Consulta al información de un cliente por su id ", response = ClientesGETByIdRs.class, tags = {
-			"Clientes", })
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Consulta exitosa", response = ClientesGETByIdRs.class),
-			@ApiResponse(code = 400, message = "Parametro invalido"),
-			@ApiResponse(code = 500, message = "Error del sistema"),
-			@ApiResponse(code = 401, message = "No autorizado") })
-	@RequestMapping(value = "/clientes/{identificacion}", produces = { "application/json" }, method = RequestMethod.GET)
-	public ClientesGETByIdRs clientesGETById(
-			@ApiParam(value = "Id de cliente", required = true) @PathVariable("identificacion") String identificacion) {
-		ClientesGETByIdRs clientesGETByIdRs = new ClientesGETByIdRs();
-		Cliente cliente = clienteService.getByIdentificacion(identificacion);
-		clientesGETByIdRs.setCliente(cliente);
-		return clientesGETByIdRs;
+    @ApiOperation(value = "Consulta al información de un cliente por su id", nickname = "clientesGETById", notes = "Consulta al información de un cliente por su id ", response = ClientesGETByIdRs.class, tags = {
+            "Clientes", })
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Consulta exitosa", response = ClientesGETByIdRs.class),
+            @ApiResponse(code = 400, message = "Parametro invalido"),
+            @ApiResponse(code = 500, message = "Error del sistema"),
+            @ApiResponse(code = 401, message = "No autorizado") })
+    @RequestMapping(value = "/clientes/{id}", produces = { "application/json" }, method = RequestMethod.GET)
+    public ClientesGETByIdRs clientesGETById(
+            @ApiParam(value = "Id de cliente", required = true) @PathVariable("id") Long id) {
+        ClientesGETByIdRs clientesGETByIdRs = new ClientesGETByIdRs();
+        Cliente cliente = clienteService.getById(id);
+        clientesGETByIdRs.setCliente(cliente);
+        return clientesGETByIdRs;
 
-	}
+    }
 	
 	@ApiOperation(value = "Actualizar información del cliente", nickname = "clientesPCT", notes = "Actualiza el cliente de acuerdo con los parámetros recibidos.", response = ClientesPCTRs.class, tags={ "Clientes", })
     @ApiResponses(value = { 
         @ApiResponse(code = 201, message = "Cliente actualizado exitosamente", response = ClientesPCTRs.class),
         @ApiResponse(code = 400, message = "Parametro Invalido"),
         @ApiResponse(code = 500, message = "Error del sistema") })
-    @RequestMapping(value = "/clientes/{identificacion}",
+    @RequestMapping(value = "/clientes/{id}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PATCH)
-    public ResponseEntity<ClientesPCTRs> clientesPCT(@ApiParam(value = "Id de cliente", required = true) @PathVariable("identificacion") String identificacion, @ApiParam(value = "Cliente a actualizar"  )  @Valid @RequestBody ClientesPCTRq clientesPCTRq) {
-		clienteService.updateCliente(clientesPCTRq.getCliente(),identificacion);
+    public ResponseEntity<ClientesPCTRs> clientesPCT(@ApiParam(value = "Id de cliente", required = true) @PathVariable("id") Long id, @ApiParam(value = "Cliente a actualizar"  )  @Valid @RequestBody ClientesPCTRq clientesPCTRq) {
+		clienteService.updateCliente(clientesPCTRq.getCliente(),id);
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }

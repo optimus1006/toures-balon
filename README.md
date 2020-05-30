@@ -99,12 +99,12 @@ Contiene las operaciones sobre los productos.
 
 Contiene las operaciones sobre los proveedores/convenios/alianzas.
 
-- `/convenios` [GET] [ConveniosGETAll]: Consulta al información de los convenios basado en parámetros de búsqueda *(No implementado)*
-- `/convenios/{idConvenio}` [GET] [ConveniosGETById]: Consulta al información de un convenio de acuerdo a su id *(No implementado)*
+- `/convenios` [GET] [ConveniosGETAll]: Consulta al información de los convenios basado en parámetros de búsqueda **(Implementado)**
+- `/convenios/{idConvenio}` [GET] [ConveniosGETById]: Consulta al información de un convenio de acuerdo a su id **(Implementado)**
 - `/convenios/{idConvenio}/productos` [GET] [ConveniosGETAllProductos]: Consulta la información de los productos de un convenio de acuerdo a su id *(No implementado)*
-- `/convenios` [POST] [ConveniosPST]: Crea el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/convenios` [PATCH] [ConveniosPCT]: Actualizar el convenio de acuerdo con los parámetros recibidos. *(No implementado)*
-- `/convenios/{id}` [DELETE] [ConveniosDEL]: Eliminar el convenio. *(No implementado)*
+- `/convenios` [POST] [ConveniosPST]: Crea el convenio de acuerdo con los parámetros recibidos. **(Implementado)**
+- `/convenios` [PATCH] [ConveniosPCT]: Actualizar el convenio de acuerdo con los parámetros recibidos. **(Implementado)**
+- `/convenios/{id}` [DELETE] [ConveniosDEL]: Eliminar el convenio. **(Implementado)**
 
 ### Administracion
 
@@ -119,7 +119,8 @@ Contiene operaciones correspondientes a la administracion de la plataforma.
 
 ## Tecnologías
 
-Hecha con Spring Boot
+Spring Boot
+.NET Core Web API 3.x
 API Gateway: 
 Contenerización: 
 Patrones usados: Composite (Orquestación), API Gateway, Microservicios.
@@ -148,7 +149,7 @@ En este link se encuentra toda la información del API expuesto para el consumo 
 ### API REST Convenios
 [API Swagger Dominio](https://app.swaggerhub.com/domains/ivanalfonso88/DominioConvenios/1.0.0)
 
-[API Swagger Productos](https://app.swaggerhub.com/apis/ivanalfonso88/Convenios/1.0.0#/)
+[API Swagger Convenios](https://app.swaggerhub.com/apis/ivanalfonso88/Convenios/1.0.0#/)
 
 ### API REST Utilitarios
 

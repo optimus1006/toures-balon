@@ -13,7 +13,7 @@ namespace Javeriana.Convenios.Api.Repository
 
         }
         public IEnumerable<Ciudad> FindByCondition(int codigo) {
-            return FindByCondition(a => a.Codigo.Equals(codigo));
+            return FindByCondition(a => a.PaisCodigo.Equals(codigo));
         }
     }
 }

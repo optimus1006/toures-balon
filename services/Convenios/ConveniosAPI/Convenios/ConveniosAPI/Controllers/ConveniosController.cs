@@ -180,7 +180,7 @@ namespace Javeriana.Convenios.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public virtual IActionResult ConveniosDEL([FromRoute][Required]string identificacion) {
             try {
-                //_repository.Convenio.DeleteConvenio(identificacion);
+                _repository.Convenio.DeleteConvenio(new Convenio { Identificacion = identificacion });
                 return Ok();
             }
             catch (ConvenioNoExisteException e) {

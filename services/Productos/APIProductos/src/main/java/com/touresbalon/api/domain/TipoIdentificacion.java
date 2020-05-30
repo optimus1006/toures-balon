@@ -18,12 +18,12 @@ import javax.validation.constraints.*;
 
 public class TipoIdentificacion   {
   @JsonProperty("codigo")
-  private BigDecimal codigo;
+  private String codigo;
 
   @JsonProperty("nombre")
   private String nombre;
 
-  public TipoIdentificacion codigo(BigDecimal codigo) {
+  public TipoIdentificacion codigo(String codigo) {
     this.codigo = codigo;
     return this;
   }
@@ -36,12 +36,11 @@ public class TipoIdentificacion   {
   @ApiModelProperty(value = "Código del Tipo Identificacion.")
 
   @Valid
-@DecimalMin("1")
-  public BigDecimal getCodigo() {
+  public String getCodigo() {
     return codigo;
   }
 
-  public void setCodigo(BigDecimal codigo) {
+  public void setCodigo(String codigo) {
     this.codigo = codigo;
   }
 
