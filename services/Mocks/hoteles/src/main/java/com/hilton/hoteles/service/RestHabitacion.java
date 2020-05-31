@@ -1,9 +1,6 @@
 package com.hilton.hoteles.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -44,14 +41,29 @@ public class RestHabitacion {
 		System.out.println("Numero de habitación: " + request.getNumHabitacion());
 		System.out.println("Nombre Pasajero: " + request.getNombre());
 		System.out.println("Identificacion Pasajero: " + request.getIdentificacion());
-		return new Response(request.getNumHabitacion(), "Reserva realizada Exitosamente a nombre de: "+request.getNombre());
+
+		Integer numReserva = getRandomNumberUsingInts(1,100000);
+		String mensaje = "Reserva realizada Exitosamente";
+		if (numReserva < 20000) {
+			numReserva = 0;
+			mensaje = "No se pudo realizar la reserva solicitada";
+		}
+
+		return new Response(numReserva, mensaje);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, path = "/pagarHabitacion", consumes = "application/json", produces = "application/json")
 	public @ResponseBody Response pagarHabitacion(@RequestBody RequestRest request) {
-		System.out.println("Numero de habitación: " + request.getNumHabitacion());
+		System.out.println("Numero de reserva: " + request.getNumReserva());
 		System.out.println("Valor: " + request.getValor());
-		return new Response(request.getNumHabitacion(), "Reserva Pagada Exitosamente por valor de: "+request.getValor());
+		return new Response(request.getNumReserva(), "Reserva Pagada Exitosamente por valor de: "+request.getValor());
+	}
+
+	public int getRandomNumberUsingInts(int min, int max) {
+		Random random = new Random();
+		return random.ints(min, max)
+				.findFirst()
+				.getAsInt();
 	}
 
 	private static List<VOHabitacion> createListBaq() {

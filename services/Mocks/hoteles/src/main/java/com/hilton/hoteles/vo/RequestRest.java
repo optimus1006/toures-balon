@@ -19,6 +19,7 @@ public class RequestRest implements Serializable {
 	private String nombre;
 	private String identificacion;
 	private Double valor;
+	private int numReserva;
 
 	public String getDestino() {
 		return destino;
@@ -106,6 +107,14 @@ public class RequestRest implements Serializable {
 
 	public void setValor(Double valor) {
 		this.valor = valor;
+	}
+
+	public int getNumReserva() {
+		return numReserva;
+	}
+
+	public void setNumReserva(int numReserva) {
+		this.numReserva = numReserva;
 	}
 
 }

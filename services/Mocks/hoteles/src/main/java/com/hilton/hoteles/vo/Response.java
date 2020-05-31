@@ -2,20 +2,20 @@ package com.hilton.hoteles.vo;
 
 public class Response {
 
-	protected int numHabitacion;
+	protected int numReserva;
 	protected String mensaje;
 
-	public Response(int numHabitacion, String mensaje) {
-		this.numHabitacion = numHabitacion;
+	public Response(int numReserva, String mensaje) {
+		this.numReserva = numReserva;
 		this.mensaje = mensaje;
 	}
 
-	public int getNumHabitacion() {
-		return numHabitacion;
+	public int getNumReserva() {
+		return numReserva;
 	}
 
-	public void setNumHabitacion(int numHabitacion) {
-		this.numHabitacion = numHabitacion;
+	public void setNumReserva(int numReserva) {
+		this.numReserva = numReserva;
 	}
 
 	public String getMensaje() {
