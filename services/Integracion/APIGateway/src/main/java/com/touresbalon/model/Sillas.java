@@ -1,23 +1,20 @@
 package com.touresbalon.model;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "prcViajesElement")
+@XmlRootElement(name = "sillas")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PrcViajesElement {
+public class Sillas {
 
 	private int numViaje;
 	private String ciudadOrigen;
 	private String ciudadDestino;
 	private String numSilla;
 	private Date horaSalida;
-	private Map<String, String> otro = new HashMap<String, String>();
 
 	public int getNumViaje() {
 		return numViaje;
@@ -57,14 +54,6 @@ public class PrcViajesElement {
 
 	public void setHoraSalida(Date horaSalida) {
 		this.horaSalida = horaSalida;
-	}
-
-	public Map<String, String> getOtro() {
-		return otro;
-	}
-
-	public void setOtro(Map<String, String> otro) {
-		this.otro = otro;
 	}
 
 }

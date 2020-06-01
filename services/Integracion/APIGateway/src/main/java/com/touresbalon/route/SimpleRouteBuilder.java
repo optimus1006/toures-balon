@@ -8,8 +8,8 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
 
-import com.touresbalon.model.PrcViajesElement;
-import com.touresbalon.processor.MyProcessor;
+import com.touresbalon.model.Viajes;
+import com.touresbalon.processor.BolivarianoProcessor;
 
 public class SimpleRouteBuilder extends RouteBuilder {
 
@@ -18,15 +18,14 @@ public class SimpleRouteBuilder extends RouteBuilder {
 
 		// XML Data Format
 		JaxbDataFormat xmlDataFormat = new JaxbDataFormat();
-		JAXBContext con = JAXBContext.newInstance(PrcViajesElement.class);
+		JAXBContext con = JAXBContext.newInstance(Viajes.class);
 		xmlDataFormat.setContext(con);
 
 		// JSON Data Format
-		JacksonDataFormat jsonDataFormat = new JacksonDataFormat(PrcViajesElement.class);
+		JacksonDataFormat jsonDataFormat = new JacksonDataFormat(Viajes.class);
 
-		from("file:C:/BusesBolivariano").doTry().unmarshal(xmlDataFormat).
-		process(new MyProcessor()).marshal(jsonDataFormat).
-		to("jms:queue:busesBolivariano").doCatch(Exception.class).process(new Processor() {
+		from("file:C:/BusesBolivariano").doTry().process(new BolivarianoProcessor()).marshal(jsonDataFormat)
+				.to("jms:queue:busesBolivariano").doCatch(Exception.class).process(new Processor() {
 					public void process(Exchange exchange) throws Exception {
 						Exception cause = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
 						System.out.println(cause);
