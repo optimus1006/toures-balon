@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"transporte\": {\n    \t\"description\":\"Vuelo Bogota Cali\",\n    \t\"lugarPartida\":{\n    \t\t\"codigo\": 1\n    \t},\n    \t\"fechaPartida\":\"2020-05-10T16:23:00.0\",\n    \t\"lugarDestino\":{\n    \t\t\"codigo\":3\n    \t},\n    \t\"fechaLlegada\":\"2020-05-10T17:23:00.0\",\n    \t\"convenio\":{\n    \t\t\"identificacion\": \"AVIANCA1112223\"\n    \t},\n    \t\"cantidadCupos\":200\n    }\n}",
+					"raw": "{\n    \"transporte\": {\n    \t\"description\":\"Vuelo Bogota Cali\",\n    \t\"lugarPartida\":{\n    \t\t\"codigo\": 1\n    \t},\n    \t\"fechaPartida\":\"2020-05-10T16:23:00.000Z\",\n    \t\"lugarDestino\":{\n    \t\t\"codigo\":3\n    \t},\n    \t\"fechaLlegada\":\"2020-05-10T17:23:00.000Z\",\n    \t\"convenio\":{\n    \t\t\"identificacion\": \"AVIANCA1112223\"\n    \t},\n    \t\"cantidadCupos\":200,\n    \t\"tipo\": \"VIP\",\n    \t\"valor\": 300000,\n    \t\"codigoExterno\": 123\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,12 +20,13 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/transportes",
+					"raw": "localhost:8080/productos/transportes",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"productos",
 						"transportes"
 					]
 				}
@@ -222,7 +223,37 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"producto\": {\n    \t\"cliente\":{\n    \t\t\"id\": 1\n    \t},\n    \t\"precio\": 1300000.00,\n    \t\"detalleProducto\":[\n    \t\t{\n    \t\t\t\"eventos\":{\n    \t\t\t\t\"id\":1,\n    \t\t\t\t\"localidades\":[\n    \t\t\t\t\t{\n    \t\t\t\t\t\t\"id\":1\n    \t\t\t\t\t}\n    \t\t\t\t]\n    \t\t\t},\n    \t\t\t\"asientosEvento\":2\n    \t\t}\n    \t]\n    }\n}",
+					"raw": "{\n    \"producto\": {\n    \t\"cliente\":{\n    \t\t\"id\": 1\n    \t},\n    \t\"precio\": 1300000.00,\n    \t\"detalleProducto\":[\n    \t\t{\n    \t\t\t\"transporte\":{\n    \t\t\t\t\"id\":2\n    \t\t\t},\n    \t\t\t\"asientosTransporte\":2\n    \t\t}\n    \t]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/productos",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"productos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "productosGETAll",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"producto\": {\n    \t\"cliente\":{\n    \t\t\"id\": 1\n    \t},\n    \t\"precio\": 1300000.00,\n    \t\"detalleProducto\":[\n    \t\t{\n    \t\t\t\"transporte\":{\n    \t\t\t\t\"id\":2\n    \t\t\t},\n    \t\t\t\"asientosTransporte\":2\n    \t\t}\n    \t]\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
