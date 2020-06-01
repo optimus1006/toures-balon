@@ -1,6 +1,7 @@
 package com.touresbalon;
 
 import javax.jms.ConnectionFactory;
+
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
 import org.apache.camel.component.jms.JmsComponent;
@@ -15,7 +16,7 @@ public class MainApp {
 		CamelContext ctx = new DefaultCamelContext();
 
 		// configurar componente jms
-		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ParamDefinitions._CONST_AQM_SERVER);
 		ctx.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
 
 		try {

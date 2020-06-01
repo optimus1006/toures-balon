@@ -8,6 +8,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
 
+import com.touresbalon.ParamDefinitions;
 import com.touresbalon.model.Viajes;
 import com.touresbalon.processor.BolivarianoProcessor;
 
@@ -24,7 +25,7 @@ public class SimpleRouteBuilder extends RouteBuilder {
 		// JSON Data Format
 		JacksonDataFormat jsonDataFormat = new JacksonDataFormat(Viajes.class);
 
-		from("file:C:/BusesBolivariano").doTry().process(new BolivarianoProcessor()).marshal(jsonDataFormat)
+		from(ParamDefinitions._CONST_FILE_ENDPOINT_CSV).doTry().process(new BolivarianoProcessor()).marshal(jsonDataFormat)
 				.to("jms:queue:busesBolivariano").doCatch(Exception.class).process(new Processor() {
 					public void process(Exchange exchange) throws Exception {
 						Exception cause = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
