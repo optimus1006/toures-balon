@@ -9,6 +9,8 @@ public class OrdenItem {
 
     private EnumTipoProducto tipoProducto;
 
+    private String codigoReserva;
+
     public OrdenItem() {
     }
 
@@ -40,5 +42,13 @@ public class OrdenItem {
 
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public String getCodigoReserva() {
+        return codigoReserva;
+    }
+
+    public void setCodigoReserva(String codigoReserva) {
+        this.codigoReserva = codigoReserva;
     }
 }

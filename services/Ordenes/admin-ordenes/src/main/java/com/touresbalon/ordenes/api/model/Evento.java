@@ -50,10 +50,6 @@ public class Evento   {
   @Valid
   private List<com.touresbalon.ordenes.api.model.Localidad> localidades = null;
 
-  @JsonProperty("asientos")
-  @Valid
-  private List<String> asientos = null;
-
   /**
    * Tipo de evento.
    */
@@ -326,34 +322,6 @@ public class Evento   {
     this.localidades = localidades;
   }
 
-  public com.touresbalon.ordenes.api.model.Evento asientos(List<String> asientos) {
-    this.asientos = asientos;
-    return this;
-  }
-
-  public com.touresbalon.ordenes.api.model.Evento addAsientosItem(String asientosItem) {
-    if (this.asientos == null) {
-      this.asientos = new ArrayList<>();
-    }
-    this.asientos.add(asientosItem);
-    return this;
-  }
-
-  /**
-   * Get asientos
-   * @return asientos
-  */
-  @ApiModelProperty(value = "")
-
-
-  public List<String> getAsientos() {
-    return asientos;
-  }
-
-  public void setAsientos(List<String> asientos) {
-    this.asientos = asientos;
-  }
-
   public com.touresbalon.ordenes.api.model.Evento tipo(TipoEnum tipo) {
     this.tipo = tipo;
     return this;
@@ -462,7 +430,6 @@ public class Evento   {
         Objects.equals(this.cantidad, evento.cantidad) &&
         Objects.equals(this.ubicacionEvento, evento.ubicacionEvento) &&
         Objects.equals(this.localidades, evento.localidades) &&
-        Objects.equals(this.asientos, evento.asientos) &&
         Objects.equals(this.tipo, evento.tipo) &&
         Objects.equals(this.imagenes, evento.imagenes) &&
         Objects.equals(this.imagenPrincipal, evento.imagenPrincipal) &&
@@ -471,7 +438,7 @@ public class Evento   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nombre, descripcion, fecha, hora, zonaHoraria, cantidad, ubicacionEvento, localidades, asientos, tipo, imagenes, imagenPrincipal, estado);
+    return Objects.hash(id, nombre, descripcion, fecha, hora, zonaHoraria, cantidad, ubicacionEvento, localidades, tipo, imagenes, imagenPrincipal, estado);
   }
 
   @Override
@@ -488,7 +455,6 @@ public class Evento   {
     sb.append("    cantidad: ").append(toIndentedString(cantidad)).append("\n");
     sb.append("    ubicacionEvento: ").append(toIndentedString(ubicacionEvento)).append("\n");
     sb.append("    localidades: ").append(toIndentedString(localidades)).append("\n");
-    sb.append("    asientos: ").append(toIndentedString(asientos)).append("\n");
     sb.append("    tipo: ").append(toIndentedString(tipo)).append("\n");
     sb.append("    imagenes: ").append(toIndentedString(imagenes)).append("\n");
     sb.append("    imagenPrincipal: ").append(toIndentedString(imagenPrincipal)).append("\n");

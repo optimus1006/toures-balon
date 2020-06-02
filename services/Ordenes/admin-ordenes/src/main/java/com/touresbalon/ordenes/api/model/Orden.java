@@ -51,8 +51,12 @@ public class Orden   {
     PAGADA("PAGADA"),
     
     EN_RESERVA("EN_RESERVA"),
+
+    EN_APROBACION("EN_APROBACION"),
     
     CERRADA("CERRADA"),
+
+    RESERVA_RECHAZADA("RESERVA_RECHAZADA"),
     
     RECHAZADA("RECHAZADA"),
     

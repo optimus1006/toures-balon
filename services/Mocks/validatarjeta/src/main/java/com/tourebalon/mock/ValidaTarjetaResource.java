@@ -20,7 +20,7 @@ public class ValidaTarjetaResource {
         RespuestaValidacion respuesta = new RespuestaValidacion();
         respuesta.setCodigo(EnumRespuestaValidacion.RESPUESTA_EXITOSA.getCodigo());
         respuesta.setMensaje(EnumRespuestaValidacion.RESPUESTA_EXITOSA.name());
-        respuesta.setUidPago(new Random().nextLong());
+        respuesta.setUidPago(new Random().nextLong() + "");
         return respuesta;
     }
 }

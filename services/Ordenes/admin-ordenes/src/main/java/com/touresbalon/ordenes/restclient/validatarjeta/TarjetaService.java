@@ -1,5 +1,6 @@
 package com.touresbalon.ordenes.restclient.validatarjeta;
 
+import com.touresbalon.ordenes.restclient.validatarjeta.model.AprobacionCompra;
 import com.touresbalon.ordenes.restclient.validatarjeta.model.CompraValidacion;
 import com.touresbalon.ordenes.restclient.validatarjeta.model.RespuestaValidacion;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
@@ -18,4 +19,10 @@ public interface TarjetaService {
     @Path("/validar")
     @Produces("application/json")
     RespuestaValidacion validarTarjeta(@RequestBody CompraValidacion compraValidacion);
+
+
+    @POST
+    @Path("/aprobarpago")
+    @Produces("application/json")
+    RespuestaValidacion aprobarPago(@RequestBody AprobacionCompra aprobacionCompra);
 }

@@ -12,7 +12,9 @@ import com.touresbalon.ordenes.repository.OrdenRepository;
 import com.touresbalon.ordenes.restclient.productos.ProductoService;
 import com.touresbalon.ordenes.restclient.productos.model.DetalleProducto;
 import com.touresbalon.ordenes.restclient.productos.model.Producto;
+import com.touresbalon.ordenes.restclient.productos.model.ProductosPSTRs;
 import com.touresbalon.ordenes.util.EnumTipoProducto;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
@@ -24,10 +26,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @ApplicationScoped
 @Transactional
@@ -108,22 +107,30 @@ public class OrdenService {
         if (ordenEntityOpt.isPresent()) {
             orden.setCodigo(codigoOrden);
             orden.setCodigoCliente(ordenEntityOpt.get().getCodigoCliente());
-            orden.setUidPago(ordenEntityOpt.get().getUidPago());
             orden.setFechaCreacion(ordenEntityOpt.get().getFechaCreacion());
             OrdenEntity ordenEntity = OrdenHelper.ordenToOrdenEntity(orden, ordenEntityOpt.get());
             ordenEntity.setFechaModificacion(LocalDateTime.now());
+            ordenEntity.setCodigoProducto(orden.getCodigoProducto());
+            ordenEntity.setFechaModificacion(LocalDateTime.now());
+            ordenEntity.setUidPago(ordenEntityOpt.get().getUidPago());
+            em.merge(ordenEntity);
 
             if(orden.getItems() != null && !orden.getItems().isEmpty()) {
                 List<OrdenItemEntity> itemList = new ArrayList<>();
                 for (OrdenItem item :
                         orden.getItems()) {
-                    itemList.add(OrdenItemHelper.ordenItemToOrdenItemEntity(item, null));
+                    Optional<OrdenItemEntity> itemF = ordenItemRepository.findByOrdenAndCodigo(ordenEntity, item.getCodigo());
+                    if (itemF.isPresent()) {
+                        itemF.get().setCodigoReserva(item.getCodigoReserva());
+                        em.merge(itemF.get());
+                    } else {
+                        OrdenItemEntity ordenItem = OrdenItemHelper.ordenItemToOrdenItemEntity(item, null);
+                        ordenItem.setOrden(ordenEntity);
+                        ordenItem.persist();
+                    }
                 }
-                ordenEntity.setItems(itemList);
-                ordenEntity.getItems().forEach(item -> item.setOrden(ordenEntity));
-                ordenEntity.getItems().forEach(ordenItemRepository::persist);
+
             }
-            em.merge(ordenEntity);
         } else {
             throw new OrdenException("Verifique el codigo de la orden");
         }
@@ -218,10 +225,10 @@ public class OrdenService {
             if(itemsEntity != null && !itemsEntity.isEmpty()) {
                 //TODO: Consultar productos
                 Producto producto= new Producto();
-                /*Response responseProducto = productoService.consultarProductoPorId(ordenEntity.get().getCodigoProducto());
+                Response responseProducto = productoService.consultarProductoPorId(ordenEntity.get().getCodigoProducto());
                 if(responseProducto.getStatus() == Response.Status.OK.getStatusCode()){
-                  producto = ((ProductosPSTRs)response.getEntity()).getProducto();
-                }*/
+                  producto = ((ProductosPSTRs)responseProducto.getEntity()).getProducto();
+                }
                 List<Transporte> transportes = new ArrayList<>();
                 List<Hospedaje> hospedajes = new ArrayList<>();
                 List<Evento> eventos = new ArrayList<>();
@@ -243,6 +250,51 @@ public class OrdenService {
             throw new OrdenException("No se encontro orden con este id");
         }
         return orden;
+    }
+
+    /**
+     *
+     * @param orden
+     * @param codigoOrden
+     * @return
+     * @throws OrdenException
+     */
+    public void agregarItem(OrdenMessage orden) throws OrdenException {
+        log.info("agregarItem(OrdenMessage orden) ");
+        Optional<OrdenEntity> ordenEntityOpt = ordenRepository.
+                find("codigo", orden.getCodigo()).firstResultOptional();
+        if (ordenEntityOpt.isPresent()) {
+            if(ordenEntityOpt.get().getCodigoProducto() == null) {
+                orden.setCodigo(orden.getCodigo());
+                orden.setCodigoCliente(ordenEntityOpt.get().getCodigoCliente());
+                orden.setFechaCreacion(ordenEntityOpt.get().getFechaCreacion());
+                OrdenEntity ordenEntity = OrdenHelper.ordenToOrdenEntity(orden, ordenEntityOpt.get());
+                ordenEntity.setCodigoProducto(orden.getCodigoProducto());
+                ordenEntity.setFechaModificacion(LocalDateTime.now());
+                ordenEntity.setUidPago(ordenEntityOpt.get().getUidPago());
+                em.merge(ordenEntity);
+            }
+
+            if(orden.getItems() != null && !orden.getItems().isEmpty()) {
+                List<OrdenItemEntity> itemList = new ArrayList<>();
+                for (OrdenItem item :
+                        orden.getItems()) {
+                    Optional<OrdenItemEntity> itemF = ordenItemRepository.
+                            findByOrdenAndCodigo(ordenEntityOpt.get(), item.getCodigo());
+                    if (itemF.isPresent()) {
+                        itemF.get().setCodigoReserva(item.getCodigoReserva());
+                        em.merge(itemF.get());
+                    } else {
+                        OrdenItemEntity ordenItem = OrdenItemHelper.ordenItemToOrdenItemEntity(item, null);
+                        ordenItem.setOrden(ordenEntityOpt.get());
+                        ordenItem.persist();
+                    }
+                }
+
+            }
+        } else {
+            throw new OrdenException("Verifique el codigo de la orden");
+        }
     }
 
 }

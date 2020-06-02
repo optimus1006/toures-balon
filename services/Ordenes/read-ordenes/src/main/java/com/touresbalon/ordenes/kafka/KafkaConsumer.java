@@ -48,7 +48,8 @@ public class KafkaConsumer {
     private void startConsumer(){
         // Config values can be moved to application.properties
         Map<String, String> config = new HashMap<>();
-        config.put("bootstrap.servers", "localhost:9092");
+        config.put("bootstrap.servers", "ec2-3-16-57-65.us-east-2.compute.amazonaws.com:9092");
+        //config.put("bootstrap.servers", "localhost:9092");
         config.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         config.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         config.put("group.id", "group_orders");
@@ -78,6 +79,8 @@ public class KafkaConsumer {
                         ordenService.actualizarOrden(orden, orden.getCodigo());
                     } else if(orden.getAccion().equals(EnumOrderAction.CREACION)) {
                         ordenService.crearOrden(orden);
+                    } else if(orden.getAccion().equals(EnumOrderAction.AGREGAR_ITEM)) {
+                        ordenService.agregarItem(orden);
                     }
                     promise.complete(orden.getCodigo());
                 }, res -> {

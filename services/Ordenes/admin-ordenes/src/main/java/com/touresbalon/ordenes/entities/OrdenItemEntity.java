@@ -34,6 +34,9 @@ public class OrdenItemEntity extends PanacheEntityBase {
 	@Enumerated(EnumType.STRING)
 	private EnumTipoProducto tipoProducto;
 
+	@Column(nullable = true, length = 30)
+	private String codigoReserva;
+
 	public OrdenEntity getOrden() {
 		return orden;
 	}
@@ -86,15 +89,29 @@ public class OrdenItemEntity extends PanacheEntityBase {
 		this.id = id;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public String getCodigoReserva() {
+		return codigoReserva;
+	}
+
+	public void setCodigoReserva(String codigoReserva) {
+		this.codigoReserva = codigoReserva;
+	}
+
 	@Override
 	public String toString() {
 		return "OrdenItemEntity{" +
 				"descripcion='" + descripcion + '\'' +
-				", id=" + id +
+				", orden=" + orden +
 				", codigo=" + codigo +
+				", id=" + id +
 				", precio=" + precio +
 				", cantidad=" + cantidad +
 				", tipoProducto=" + tipoProducto +
+				", codigoReserva='" + codigoReserva + '\'' +
 				'}';
 	}
 }

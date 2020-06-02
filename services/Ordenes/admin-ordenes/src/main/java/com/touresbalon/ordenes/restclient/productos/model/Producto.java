@@ -21,6 +21,9 @@ import java.util.Objects;
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-05-23T10:55:03.920-05:00[America/Bogota]")
 
 public class Producto   {
+  @JsonProperty("idOrden")
+  private Long idOrden;
+  
   @JsonProperty("id")
   private Long id;
 
@@ -172,6 +175,15 @@ public class Producto   {
 
   public void setPrecio(Double precio) {
     this.precio = precio;
+  }
+
+
+  public Long getIdOrden() {
+    return idOrden;
+  }
+
+  public void setIdOrden(Long idOrden) {
+    this.idOrden = idOrden;
   }
 
 

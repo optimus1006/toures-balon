@@ -13,6 +13,7 @@ public class OrdenItemHelper {
         ordenItemEntity.setCodigo(ordenItem.getCodigo());
         ordenItemEntity.setTipoProducto(ordenItem.getTipoProducto());
         ordenItemEntity.setCantidad(ordenItem.getCantidad());
+        ordenItemEntity.setCodigoReserva(ordenItem.getCodigoReserva());
 
         return ordenItemEntity;
     }
@@ -24,6 +25,7 @@ public class OrdenItemHelper {
         ordenItem.setCodigo(ordenItemEntity.getCodigo());
         ordenItem.setTipoProducto(ordenItemEntity.getTipoProducto());
         ordenItem.setCantidad(ordenItemEntity.getCantidad());
+        ordenItem.setCodigoReserva(ordenItemEntity.getCodigoReserva());
 
         return ordenItem;
     }
