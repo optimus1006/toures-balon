@@ -2,6 +2,7 @@ package com.touresbalon.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.touresbalon.api.domain.AprobacionReserva;
 import com.touresbalon.api.exceptions.KafkaException;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
@@ -50,15 +51,26 @@ public class KafkaProducerService {
         LOGGER.info("onStart");
     }
 
-    public void sendOfertaToKafka(ConvenioMessage convenio) throws KafkaException {
+    public void sendOfertaToKafka(ConvenioMessage convenio) {
+        LOGGER.info("Sending Oferta to Kafka to topic [ReqReserva]");
+        processSendMessage(convenio, "ReqReserva");
+    }
+
+    public void sendAprobacionToKafka(AprobacionReserva aprobacionReserva) {
+        LOGGER.info("Sending Oferta to Kafka to topic [ReservaRealizada]");
+        processSendMessage(aprobacionReserva, "ReservaRealizada");
+    }
+
+    private void processSendMessage(Object object, String topicName) throws KafkaException {
         try {
+            LOGGER.info("Sending [" + object.getClass().getName() + "] to Kafka on topic [" + topicName + "]");
             KafkaProducerRecord<String, String> record = KafkaProducerRecord.create(
-                    "ReqReserva", objectMapper.writeValueAsString(convenio));
+                    topicName, objectMapper.writeValueAsString(object));
 
             // use producer for interacting with Apache Kafka
             producer = KafkaProducer.create(vertx, config);
             producer.exceptionHandler(e -> {
-                LOGGER.error("Error en envio a kafka  " , e);
+                LOGGER.error("Error sending to kafka due to an exception: " , e);
                 producer.close();
                 throw new KafkaException(e);
             });
@@ -69,7 +81,7 @@ public class KafkaProducerService {
                             ", partition=" + recordMetadata.getPartition() +
                             ", offset=" + recordMetadata.getOffset());
                 } else {
-                    LOGGER.error("Error en envio a kafka ", done.cause());
+                    LOGGER.error("Error sending to kafka: ", done.cause());
                     throw new KafkaException(done.cause());
                 }
             });

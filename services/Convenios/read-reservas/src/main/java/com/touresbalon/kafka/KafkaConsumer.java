@@ -2,9 +2,12 @@ package com.touresbalon.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.touresbalon.api.domain.AprobacionReserva;
 import com.touresbalon.api.domain.Convenio;
+import com.touresbalon.api.domain.RouteMessageGETRq;
 import com.touresbalon.api.exceptions.ConvenioNotFoundException;
 import com.touresbalon.restclient.ConvenioClientService;
+import com.touresbalon.restclient.RouteMessageClientService;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import io.vertx.core.Vertx;
@@ -38,6 +41,12 @@ public class KafkaConsumer {
     @Inject
     ConvenioClientService convenioClientService;
 
+    @Inject
+    RouteMessageClientService routeMessageClientService;
+
+    @Inject
+    KafkaProducerService kafkaProducerService;
+
     private io.vertx.kafka.client.consumer.KafkaConsumer<String, String> consumer;
 
 
@@ -68,10 +77,28 @@ public class KafkaConsumer {
                 vertx.executeBlocking(promise -> {
                     //TODO: Logica para consultar al convenio para ver si existe
                     LOGGER.info("Sending request to /api/convenios on ");
-                    Convenio convenio = convenioClientService.consultarConvenio(reserva.getIdConvenio().toString());
+                    Convenio convenio = convenioClientService.consultarConvenio(reserva.getIdConvenio());
                     if(convenio == null){
+                        LOGGER.info("Convenio not found");
                         throw new ConvenioNotFoundException("No se pudo encontrar el convenio con id " + reserva.getIdConvenio().toString());
                     } else {
+                        //Envío la data capturada hacia el homologador:
+                        RouteMessageGETRq routeMessageGETRq = new RouteMessageGETRq();
+                        LOGGER.info("Preparing the message routeMessageGERTRq to be sent");
+                        ConvenioMessage convenioMessage = new ConvenioMessage();
+                        convenioMessage.setEndpoint(convenio.getEndpoint());
+                        convenioMessage.setTemplateEntrada(convenio.getTemplateEntrada());
+                        convenioMessage.setTemplateSalida(convenio.getTemplateSalida());
+                        routeMessageGETRq.setConvenioMessage(convenioMessage);
+                        routeMessageGETRq.setReservaMessage(reserva);
+                        LOGGER.info("Consuming the service enviarReserva");
+                        AprobacionReserva aprobacion = routeMessageClientService.enviarReserva(routeMessageGETRq);
+                        if(aprobacion != null){
+                            LOGGER.info("Object Aprobacion received, sending to producer");
+                            kafkaProducerService.sendAprobacionToKafka(aprobacion);
+                        } else {
+                            LOGGER.info("For some reason, the Aprobacion response was null?");
+                        }
                         promise.complete(reserva.toString());
                     }
                 }, res -> {

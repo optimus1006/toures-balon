@@ -2,38 +2,34 @@ package com.touresbalon.kafka;
 
 import com.touresbalon.api.domain.Convenio;
 
-public class ConvenioMessage extends Convenio {
+import java.util.Objects;
+
+public class ConvenioMessage {
 
     private String endpoint;
     private String templateEntrada;
     private String templateSalida;
 
-    @Override
     public String getEndpoint() {
         return endpoint;
     }
 
-    @Override
     public void setEndpoint(String endpoint) {
         this.endpoint = endpoint;
     }
 
-    @Override
     public String getTemplateEntrada() {
         return templateEntrada;
     }
 
-    @Override
     public void setTemplateEntrada(String templateEntrada) {
         this.templateEntrada = templateEntrada;
     }
 
-    @Override
     public String getTemplateSalida() {
         return templateSalida;
     }
 
-    @Override
     public void setTemplateSalida(String templateSalida) {
         this.templateSalida = templateSalida;
     }
@@ -58,5 +54,24 @@ public class ConvenioMessage extends Convenio {
             return "null";
         }
         return o.toString().replace("\n", "\n    ");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ConvenioMessage convenioMessage = (ConvenioMessage) o;
+        return Objects.equals(this.endpoint, convenioMessage.endpoint) &&
+                Objects.equals(this.templateEntrada, convenioMessage.templateEntrada) &&
+                Objects.equals(this.templateSalida, convenioMessage.templateSalida);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(endpoint, templateEntrada, templateSalida);
     }
 }

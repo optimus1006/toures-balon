@@ -1,9 +1,12 @@
 package com.touresbalon.restclient;
 
 import com.touresbalon.api.domain.Convenio;
+import com.touresbalon.api.domain.RouteMessageGETRq;
 import com.touresbalon.api.interfaces.ConvenioService;
+import com.touresbalon.api.interfaces.RouteMessageService;
 import com.touresbalon.kafka.ConvenioMessage;
 import com.touresbalon.kafka.KafkaProducerService;
+import com.touresbalon.kafka.ReservaMessage;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +25,10 @@ public class ConvenioClientService {
     ConvenioService convenioService;
 
     @Inject
+    @RestClient
+    RouteMessageService routeMessageService;
+
+    @Inject
     KafkaProducerService kafkaProducerService;
 
     /**
@@ -38,7 +45,6 @@ public class ConvenioClientService {
             convenioGETByIdRs = convenioService.consultarConvenio(identificacion);
             ConvenioMessage convenioMessage = new ConvenioMessage();
 
-            convenioMessage.setIdentificacion(convenioGETByIdRs.getIdentificacion());
             convenioMessage.setEndpoint(convenioGETByIdRs.getEndpoint());
             convenioMessage.setTemplateEntrada(convenioGETByIdRs.getTemplateEntrada());
             convenioMessage.setTemplateSalida(convenioGETByIdRs.getTemplateSalida());
@@ -47,7 +53,11 @@ public class ConvenioClientService {
             //kafkaProducerService.sendOfertaToKafka(convenioMessage);
 
             //HACIA EL HOMOLOGADOR:
+            RouteMessageGETRq routeMessageRequest = new RouteMessageGETRq();
+            ReservaMessage reservaMessage = new ReservaMessage();
 
+            routeMessageRequest.setConvenioMessage(convenioMessage);
+            routeMessageRequest.setReservaMessage(reservaMessage);
 
         } catch (Exception e){
             log.error("Error en la consulta del convenio.", e);
