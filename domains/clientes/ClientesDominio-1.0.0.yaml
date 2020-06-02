@@ -70,8 +70,6 @@ components:
             - CASA
             - OFICINA
             - OTRO
-        pais:
-          $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Pais'
         ciudad:
           $ref: 'https://raw.githubusercontent.com/optimus1006/toures-balon/master/domains/utilitarios/DominioUtilitarios-1.0.0-domain.yaml#/components/schemas/Ciudad'
         estado:

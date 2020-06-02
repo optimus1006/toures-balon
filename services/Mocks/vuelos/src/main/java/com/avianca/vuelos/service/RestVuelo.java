@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.avianca.vuelos.vo.Pago;
 import com.avianca.vuelos.vo.RequestRest;
-import com.avianca.vuelos.vo.Response;
+import com.avianca.vuelos.vo.Reserva;
 import com.avianca.vuelos.vo.VOVuelo;
 
 @RestController
@@ -39,18 +40,33 @@ public class RestVuelo {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, path = "/reservarVuelo", consumes = "application/json", produces = "application/json")
-	public @ResponseBody Response reservarVuelo(@RequestBody RequestRest request) {
+	public @ResponseBody Reserva reservarVuelo(@RequestBody RequestRest request) {
 		System.out.println("Numero de Vuelo: " + request.getNumVuelo());
 		System.out.println("Nombre Pasajero: " + request.getNombre());
 		System.out.println("Identificacion Pasajero: " + request.getIdentificacion());
-		return new Response(request.getNumVuelo(), "Vuelo Reservado Exitosamente a nombre de: "+request.getNombre());
+
+		Integer numReserva = getRandomNumberUsingInts(1,100000);
+		String mensaje = "Vuelo Reservado Exitosamente";
+		if (numReserva < 20000) {
+			numReserva = 0;
+			mensaje = "No se pudo realizar la reserva del Vuelo solicitado";
+		}
+
+		return new Reserva(numReserva, mensaje);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, path = "/pagarVuelo", consumes = "application/json", produces = "application/json")
-	public @ResponseBody Response pagarVuelo(@RequestBody RequestRest request) {
+	public @ResponseBody Pago pagarVuelo(@RequestBody RequestRest request) {
 		System.out.println("Numero de vuelo: " + request.getNumVuelo());
 		System.out.println("Valor: " + request.getValor());
-		return new Response(request.getNumVuelo(), "Vuelo Pagado Exitosamente por valor de: "+request.getValor());
+		return new Pago(request.getNumVuelo(), "Vuelo Pagado Exitosamente por valor de: " + request.getValor());
+	}
+
+	public int getRandomNumberUsingInts(int min, int max) {
+		Random random = new Random();
+		return random.ints(min, max)
+				.findFirst()
+				.getAsInt();
 	}
 
 	private static List<VOVuelo> createListBogBaq() {

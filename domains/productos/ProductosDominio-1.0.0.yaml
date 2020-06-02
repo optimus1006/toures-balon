@@ -45,6 +45,9 @@ components:
         precio:
           type: number
           format: double
+        idOrden:
+          type: integer
+          format: int64
         
     DetalleProducto:
       type: object

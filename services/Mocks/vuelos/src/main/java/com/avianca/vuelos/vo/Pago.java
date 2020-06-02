@@ -1,11 +1,11 @@
 package com.avianca.vuelos.vo;
 
-public class Response {
+public class Pago {
 
 	protected int numVuelo;
 	protected String mensaje;
 
-	public Response(int numVuelo, String mensaje) {
+	public Pago(int numVuelo, String mensaje) {
 		this.numVuelo = numVuelo;
 		this.mensaje = mensaje;
 	}
