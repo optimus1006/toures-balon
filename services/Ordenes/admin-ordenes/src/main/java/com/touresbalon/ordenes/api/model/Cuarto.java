@@ -23,7 +23,7 @@ public class Cuarto   {
   @JsonProperty("numeroCuarto")
   private String numeroCuarto;
 
-  @JsonProperty("idCliente")
+  @JsonProperty("Cliente")
   private com.touresbalon.ordenes.api.model.Cliente idCliente;
 
   @JsonProperty("fechaReservaInicio")

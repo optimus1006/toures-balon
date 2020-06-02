@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.touresbalon.ordenes.api.model.Orden;
 import com.touresbalon.ordenes.exceptions.KafkaException;
+import com.touresbalon.ordenes.restclient.productos.model.ProductosPSTRq;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import io.vertx.core.Vertx;
@@ -30,10 +31,11 @@ public class KafkaProducerService {
 
     private KafkaProducer<String, String> producer;
 
+    private KafkaProducer<String, String> producerRead;
+
     @Inject
     ObjectMapper objectMapper;
 
-    @ConfigProperty(name = "kafka.bootstrap.servers")
     static String servers;
 
     private static Map<String, String> config;
@@ -41,7 +43,9 @@ public class KafkaProducerService {
     static {
         config = new HashMap<>();
         // Config values can be moved to application.properties
-        config.put("bootstrap.servers", "localhost:9092");
+        //config.put("bootstrap.servers", "localhost:9092");
+        //config.put("bootstrap.servers", "ip-10-0-1-153.us-east-2.compute.internal:19092");
+        config.put("bootstrap.servers", "ec2-3-16-57-65.us-east-2.compute.amazonaws.com:9092");
         config.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         config.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         config.put("acks", "1");
@@ -55,30 +59,63 @@ public class KafkaProducerService {
         try {
             KafkaProducerRecord<String, String> record = KafkaProducerRecord.create(
                     "read-order", objectMapper.writeValueAsString(orden));
-
-            // use producer for interacting with Apache Kafka
-            producer = KafkaProducer.create(vertx, config);
-            producer.exceptionHandler(e -> {
-                LOGGER.error("Error en envio a kafka  " , e);
-                producer.close();
-                throw new KafkaException(e);
-            });
-            producer.send(record, done -> {
-                if (done.succeeded()) {
-                    RecordMetadata recordMetadata = done.result();
-                    LOGGER.info("Message " + record + " written on topic=" + recordMetadata.getTopic() +
-                            ", partition=" + recordMetadata.getPartition() +
-                            ", offset=" + recordMetadata.getOffset());
-                } /*else {
-                    LOGGER.error("Error en envio a kafka ", done.cause());
-                    throw new KafkaException(done.cause());
-                }*/
-            });
+            //sendMessageToKafka(record);
+			
+        producerRead = KafkaProducer.create(vertx, config);
+        producerRead.exceptionHandler(e -> {
+            LOGGER.error("Error en envio a kafka  " , e);
+            //producerRead.close();
+            throw new KafkaException(e);
+        });
+        producerRead.send(record, done -> {
+            if (done.succeeded()) {
+                RecordMetadata recordMetadata = done.result();
+                LOGGER.info("Message " + record + " written on topic=" + recordMetadata.getTopic() +
+                        ", partition=" + recordMetadata.getPartition() +
+                        ", offset=" + recordMetadata.getOffset());
+            } /*else {
+                LOGGER.error("Error en envio a kafka ", done.cause());
+                throw new KafkaException(done.cause());
+            }*/
+        });
         } catch (
                 JsonProcessingException e) {
             LOGGER.error("Error en serializacion ", e);
             throw new KafkaException(e);
         }
+    }
+
+    public void sendProductsToKafka(ProductosPSTRq productosPSTRq) throws KafkaException {
+        try {
+            KafkaProducerRecord<String, String> record = KafkaProducerRecord.create(
+                    "OrdenCreada", objectMapper.writeValueAsString(productosPSTRq));
+            sendMessageToKafka(record);
+        } catch (
+                JsonProcessingException e) {
+            LOGGER.error("Error en serializacion ", e);
+            throw new KafkaException(e);
+        }
+    }
+
+    private void sendMessageToKafka(KafkaProducerRecord<String, String> record) throws KafkaException {
+        // use producer for interacting with Apache Kafka
+        producer = KafkaProducer.create(vertx, config);
+        producer.exceptionHandler(e -> {
+            LOGGER.error("Error en envio a kafka  " , e);
+            //producer.close();
+            throw new KafkaException(e);
+        });
+        producer.send(record, done -> {
+            if (done.succeeded()) {
+                RecordMetadata recordMetadata = done.result();
+                LOGGER.info("Message " + record + " written on topic=" + recordMetadata.getTopic() +
+                        ", partition=" + recordMetadata.getPartition() +
+                        ", offset=" + recordMetadata.getOffset());
+            } /*else {
+                LOGGER.error("Error en envio a kafka ", done.cause());
+                throw new KafkaException(done.cause());
+            }*/
+        });
     }
 
     void onStop(@Observes ShutdownEvent ev) {

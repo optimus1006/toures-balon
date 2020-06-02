@@ -13,17 +13,19 @@ public class OrdenItemHelper {
         ordenItemEntity.setCodigo(ordenItem.getCodigo());
         ordenItemEntity.setTipoProducto(ordenItem.getTipoProducto());
         ordenItemEntity.setCantidad(ordenItem.getCantidad());
+        ordenItemEntity.setCodigoReserva(ordenItem.getCodigoReserva());
 
         return ordenItemEntity;
     }
 
     public static OrdenItem ordenItemEntityToOrdenItem(OrdenItemEntity ordenItemEntity, OrdenItem ordenItem) {
-        if(ordenItemEntity == null) {
+        if(ordenItem == null) {
             ordenItem = new OrdenItem();
         }
         ordenItem.setCodigo(ordenItemEntity.getCodigo());
         ordenItem.setTipoProducto(ordenItemEntity.getTipoProducto());
         ordenItem.setCantidad(ordenItemEntity.getCantidad());
+        ordenItem.setCodigoReserva(ordenItemEntity.getCodigoReserva());
 
         return ordenItem;
     }

@@ -184,7 +184,7 @@ public class OrdenesApiController implements OrdenesApi {
         if (accept != null && accept.contains("application/json")) {
             try {
                 CompraPSTRs compraPSTRs = new CompraPSTRs();
-                compraPSTRs.setOrden(ordenService.aprobarOrden(compra.getOrden(), false, null));
+                compraPSTRs.setOrden(ordenService.aprobarOrden(compra.getOrden().getCodigo()));
                 return Response.status(Response.Status.OK).entity(compraPSTRs).type(MediaType.APPLICATION_JSON).build();
             } catch (OrdenNotFoundException e) {
                 Error error=new Error();
