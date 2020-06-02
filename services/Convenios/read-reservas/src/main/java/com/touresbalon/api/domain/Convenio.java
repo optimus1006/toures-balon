@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
-import java.beans.Transient;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -94,8 +93,8 @@ public class Convenio {
   private EstadoConvenioEnum estadoConvenio;
 
   @JsonProperty("fechaVigencia")
-  @JsonDeserialize(using = com.touresbalon.ordenes.util.LocalDateTimeDeserializer.class)
-  @JsonSerialize(using = com.touresbalon.ordenes.util.LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = com.touresbalon.util.LocalDateTimeDeserializer.class)
+  @JsonSerialize(using = com.touresbalon.util.LocalDateTimeSerializer.class)
   @JsonFormat(pattern = "YYYY-MM-DDThh:mm:ss.SSS Z")
   private LocalDateTime fechaVigencia;
 

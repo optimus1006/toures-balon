@@ -1,0 +1,20 @@
+package com.touresbalon.api.interfaces;
+
+import com.touresbalon.api.domain.RouteMessageGETRq;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
+
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.xml.ws.Response;
+
+@Path("api/routemessage")
+@RegisterRestClient(configKey = "routemessage-api")
+public interface RouteMessageService {
+
+    @POST
+    @Produces("application/json")
+    Response enviarReserva (@RequestBody RouteMessageGETRq routeMessageGETRq);
+
+}

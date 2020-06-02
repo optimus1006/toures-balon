@@ -1,16 +1,17 @@
 package com.touresbalon.api.domain;
 
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.time.LocalDateTime;
+
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Contiene la información de la direccion
@@ -71,8 +72,8 @@ public class Direccion   {
   private Estado estado;
 
   @JsonProperty("fechaCreacion")
-  @JsonDeserialize(using = com.touresbalon.ordenes.util.LocalDateTimeDeserializer.class)
-  @JsonSerialize(using = com.touresbalon.ordenes.util.LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = com.touresbalon.util.LocalDateTimeDeserializer.class)
+  @JsonSerialize(using = com.touresbalon.util.LocalDateTimeSerializer.class)
   private LocalDateTime fechaCreacion;
 
   public Direccion direccion(String direccion) {
