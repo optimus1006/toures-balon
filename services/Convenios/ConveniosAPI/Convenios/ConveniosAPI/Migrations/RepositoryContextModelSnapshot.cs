@@ -53,6 +53,9 @@ namespace Javeriana.Convenios.Api.Migrations
                     b.Property<string>("Endpoint")
                         .HasColumnType("text");
 
+                    b.Property<int?>("EstadoConvenio")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("FechaVigencia")
                         .HasColumnType("timestamp without time zone");
 

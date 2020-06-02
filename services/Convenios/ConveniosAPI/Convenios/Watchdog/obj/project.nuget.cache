@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "xkFX38t/dmRABNXunSLtDRj5pBI3H3EagbUls3bFGD6CZp0+yJzo5r4xIhPyzlhdj9hrLTQHogsA/sPGDOl6ZQ==",
+  "dgSpecHash": "SOb6svbkuD43pV16NUo+taGk55iLAHZl/1ScjCz4onTqT4wFLdRrw7WOTAnwdHyyfG2liKGyfOLoZjUwLAeXEQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\proyectoFinal\\toures-balon\\services\\Convenios\\ConveniosAPI\\Convenios\\Watchdog\\Watchdog.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ASUS\\.nuget\\packages\\aspnetcore.healthchecks.ui\\3.1.0\\aspnetcore.healthchecks.ui.3.1.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\aspnetcore.healthchecks.ui.client\\3.1.0\\aspnetcore.healthchecks.ui.client.3.1.0.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\awssdk.core\\3.3.100\\awssdk.core.3.3.100.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.3.101\\awssdk.extensions.netcore.setup.3.3.101.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\kubernetesclient\\1.6.10\\kubernetesclient.1.6.10.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.0.0\\microsoft.aspnetcore.jsonpatch.3.0.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\1.1.2\\microsoft.aspnetcore.webutilities.1.1.2.nupkg.sha512",

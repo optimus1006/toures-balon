@@ -52,7 +52,7 @@ namespace Javeriana.Convenios.Api.Controllers
         /// <response code="500">Error del sistema</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         //[SwaggerResponse(statusCode: 200, type: typeof(ConveniosGETAllRs), description: "Consulta exitosa")]
         public virtual IActionResult ConveniosGETAll([FromQuery]int? limit, [FromQuery]int? nombre, [FromQuery]string estado)
@@ -64,7 +64,7 @@ namespace Javeriana.Convenios.Api.Controllers
                 if (convenios.Count() != 0)
                     return Ok(convenios);
                 else
-                    return Conflict();
+                    return NotFound();
             } catch (ConvenioNoExisteException e) {
                 return StatusCode(500, e.Message);
             }
@@ -120,12 +120,17 @@ namespace Javeriana.Convenios.Api.Controllers
         {
             try {
                 if (ModelState.IsValid) {
-                    
-                    var convenios = _repository.Convenio.UpdateConvenio(body.Convenio as Convenio);
-                    if (convenios == null)
-                        return NoContent();
-                    else
-                        return StatusCode(201, convenios);
+                    var conv = _repository.Convenio.GetConvenioById(body.Convenio.Identificacion);
+
+                    if (conv == null) {
+                        return NotFound();
+                    } else {
+                        var convenios = _repository.Convenio.UpdateConvenio(body.Convenio as Convenio);
+                        if (convenios == null)
+                            return NoContent();
+                        else
+                            return StatusCode(201, convenios);
+                    }
                 } else {
                     return BadRequest();
                 }
@@ -155,10 +160,15 @@ namespace Javeriana.Convenios.Api.Controllers
         {
             try {
                 if (ModelState.IsValid) {
-                    _repository.Convenio.CreateConvenio(body.Convenio);
-                    return StatusCode(201, body.Convenio);
+                    var conv = _repository.Convenio.GetConvenioById(body.Convenio.Identificacion);
+
+                    if (conv == null) {
+                        return NotFound();
+                    } else {
+                        _repository.Convenio.CreateConvenio(body.Convenio);
+                        return StatusCode(201, body.Convenio);
+                    }
                 } else return BadRequest();
-                
             }
              catch (ConvenioNoExisteException e) {
                 return NotFound(e.Message);
@@ -180,12 +190,20 @@ namespace Javeriana.Convenios.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public virtual IActionResult ConveniosDEL([FromRoute][Required]string identificacion) {
             try {
-                _repository.Convenio.DeleteConvenio(new Convenio { Identificacion = identificacion });
-                return Ok();
+
+                var conv = _repository.Convenio.GetConvenioById(identificacion);
+                
+                if (conv == null) { 
+                    return NotFound(); 
+                } else {
+                    conv.EstadoConvenio = Convenio.EstadoConvenioEnum.INACTIVOEnum;
+                    Convenio c = _repository.Convenio.UpdateConvenio(conv);
+                    return Ok();
+                }
+                //_repository.Convenio.DeleteConvenio(new Convenio { Identificacion = identificacion });
             }
             catch (ConvenioNoExisteException e) {
-                var a = e.Message;
-                return NotFound();
+                return NotFound(e.Message);
             }
             
         }

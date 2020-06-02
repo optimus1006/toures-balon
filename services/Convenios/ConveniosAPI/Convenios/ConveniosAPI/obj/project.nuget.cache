@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "p+nhOUCIpPMQ1uXA2ZKDxbUHofUjCkbZbegTihevtERYml5BFxo1JZYUHBng+XpYQTn7iUnPo4vKhZa33s+N2g==",
+  "dgSpecHash": "QTl6VA32wgwA3haNlczGUAl3NCYuByVpIn5fdTaHhDylF1w4gsWMFENEVVDBpIGYLgGKRZCCQkyeuz7ez+Zjow==",
   "success": true,
   "projectFilePath": "C:\\Users\\ASUS\\OneDrive - Pontificia Universidad Javeriana\\PICA\\proyectoFinal\\toures-balon\\services\\Convenios\\ConveniosAPI\\Convenios\\ConveniosAPI\\ConveniosAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ASUS\\.nuget\\packages\\aspnetcore.healthchecks.ui.client\\3.1.0\\aspnetcore.healthchecks.ui.client.3.1.0.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\awssdk.core\\3.3.100\\awssdk.core.3.3.100.nupkg.sha512",
+    "C:\\Users\\ASUS\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.3.101\\awssdk.extensions.netcore.setup.3.3.101.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.aspnetcore.authorization\\1.0.2\\microsoft.aspnetcore.authorization.1.0.2.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.aspnetcore.diagnostics\\2.2.0\\microsoft.aspnetcore.diagnostics.2.2.0.nupkg.sha512",
     "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.aspnetcore.diagnostics.abstractions\\2.2.0\\microsoft.aspnetcore.diagnostics.abstractions.2.2.0.nupkg.sha512",

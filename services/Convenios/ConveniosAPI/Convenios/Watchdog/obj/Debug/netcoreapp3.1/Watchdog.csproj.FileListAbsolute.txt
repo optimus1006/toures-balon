@@ -153,8 +153,6 @@ C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\tou
 C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\Watchdog\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\Watchdog\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\e_sqlite3.dll
 C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\Watchdog\obj\Debug\netcoreapp3.1\Watchdog.csprojAssemblyReference.cache
-C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\Watchdog\obj\Debug\netcoreapp3.1\Watchdog.csproj.CoreCompileInputs.cache
-C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\Watchdog\obj\Debug\netcoreapp3.1\Watchdog.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\Watchdog\obj\Debug\netcoreapp3.1\Watchdog.RazorAssemblyInfo.cache
 C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\Watchdog\obj\Debug\netcoreapp3.1\Watchdog.RazorAssemblyInfo.cs
 C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\Watchdog\obj\Debug\netcoreapp3.1\Watchdog.AssemblyInfoInputs.cache
@@ -178,3 +176,7 @@ C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\tou
 C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\Watchdog\obj\Debug\netcoreapp3.1\Watchdog.dll
 C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\Watchdog\obj\Debug\netcoreapp3.1\Watchdog.pdb
 C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\Watchdog\obj\Debug\netcoreapp3.1\Watchdog.genruntimeconfig.cache
+C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\Watchdog\bin\Debug\netcoreapp3.1\AWSSDK.Core.dll
+C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\Watchdog\bin\Debug\netcoreapp3.1\AWSSDK.Extensions.NETCore.Setup.dll
+C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\Watchdog\obj\Debug\netcoreapp3.1\Watchdog.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\Watchdog\obj\Debug\netcoreapp3.1\Watchdog.MvcApplicationPartsAssemblyInfo.cache

@@ -18,6 +18,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
+using Javeriana.Convenios.Api.Utils;
 
 namespace Javeriana.Convenios.Api.Models
 { 
@@ -64,7 +65,8 @@ namespace Javeriana.Convenios.Api.Models
             /// Enum EVENTOEnum for EVENTO
             /// </summary>
             [EnumMember(Value = "EVENTO")]
-            EVENTOEnum = 2        }
+            EVENTOEnum = 2
+        }
 
         /// <summary>
         /// Tipo de convenio.
@@ -77,7 +79,7 @@ namespace Javeriana.Convenios.Api.Models
         /// Vigencia del convenio.
         /// </summary>
         /// <value>Vigencia del convenio.</value>
-        //[DataMember(Name="fechaVigencia")]
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         public DateTime? FechaVigencia { get; set; }
 
         /// <summary>
@@ -121,6 +123,32 @@ namespace Javeriana.Convenios.Api.Models
         public string TemplateSalida { get; set; }
 
         /// <summary>
+        /// Estado del convenio.
+        /// </summary>
+        /// <value>Estado del convenio.</value>
+        [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public enum EstadoConvenioEnum
+        {
+            /// <summary>
+            /// Enum TRANSPORTEEnum for TRANSPORTE
+            /// </summary>
+            [EnumMember(Value = "ACTIVO")]
+            ACTIVOEnum = 0,
+            /// <summary>
+            /// Enum HOSPEDAJEEnum for HOSPEDAJE
+            /// </summary>
+            [EnumMember(Value = "INACTIVO")]
+            INACTIVOEnum = 1
+        }
+
+        /// <summary>
+        /// Estado de convenio.
+        /// </summary>
+        /// <value>Estado de convenio.</value>
+        //[DataMember(Name="estadoConvenio")]
+        public EstadoConvenioEnum? EstadoConvenio { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -138,6 +166,7 @@ namespace Javeriana.Convenios.Api.Models
             sb.Append("  Endpoint: ").Append(Endpoint).Append("\n");
             sb.Append("  TemplateEntrada: ").Append(TemplateEntrada).Append("\n");
             sb.Append("  TemplateSalida: ").Append(TemplateSalida).Append("\n");
+            sb.Append("  EstadoConvenio: ").Append(EstadoConvenio).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -223,6 +252,11 @@ namespace Javeriana.Convenios.Api.Models
                     TemplateSalida == other.TemplateSalida ||
                     TemplateSalida != null &&
                     TemplateSalida.Equals(other.TemplateSalida)
+                ) &&
+                (
+                    EstadoConvenio == other.EstadoConvenio ||
+                    EstadoConvenio != null &&
+                    EstadoConvenio.Equals(other.EstadoConvenio)
                 );
         }
 
@@ -256,6 +290,8 @@ namespace Javeriana.Convenios.Api.Models
                     hashCode = hashCode * 59 + TemplateEntrada.GetHashCode();
                     if (TemplateSalida != null)
                     hashCode = hashCode * 59 + TemplateSalida.GetHashCode();
+                    if (EstadoConvenio != null)
+                    hashCode = hashCode * 59 + EstadoConvenio.GetHashCode();
                 return hashCode;
             }
         }

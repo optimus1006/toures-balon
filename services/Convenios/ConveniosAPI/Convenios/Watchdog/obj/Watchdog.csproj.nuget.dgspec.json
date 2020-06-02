@@ -41,6 +41,10 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "AWSSDK.Extensions.NETCore.Setup": {
+              "target": "Package",
+              "version": "[3.3.101, )"
+            },
             "AspNetCore.HealthChecks.UI": {
               "target": "Package",
               "version": "[3.1.0, )"

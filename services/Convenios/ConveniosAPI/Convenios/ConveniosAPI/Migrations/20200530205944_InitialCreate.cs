@@ -53,7 +53,8 @@ namespace Javeriana.Convenios.Api.Migrations
                     CiudadCodigo = table.Column<int>(nullable: false),
                     Endpoint = table.Column<string>(nullable: true),
                     TemplateEntrada = table.Column<string>(nullable: true),
-                    TemplateSalida = table.Column<string>(nullable: true)
+                    TemplateSalida = table.Column<string>(nullable: true),
+                    EstadoConvenio = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
