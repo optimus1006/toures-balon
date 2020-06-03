@@ -163,10 +163,10 @@ namespace Javeriana.Convenios.Api.Controllers
                     var conv = _repository.Convenio.GetConvenioById(body.Convenio.Identificacion);
 
                     if (conv == null) {
-                        return NotFound();
-                    } else {
                         _repository.Convenio.CreateConvenio(body.Convenio);
                         return StatusCode(201, body.Convenio);
+                    } else {
+                        return Conflict("El convenio ya existe");
                     }
                 } else return BadRequest();
             }

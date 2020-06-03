@@ -124,3 +124,4 @@ C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\tou
 C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\ConveniosAPI\obj\Debug\netcoreapp3.1\ConveniosAPI.csproj.CoreCompileInputs.cache
 C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\ConveniosAPI\obj\Debug\netcoreapp3.1\ConveniosAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\ConveniosAPI\obj\Debug\netcoreapp3.1\ConveniosAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\ASUS\OneDrive - Pontificia Universidad Javeriana\PICA\proyectoFinal\toures-balon\services\Convenios\ConveniosAPI\Convenios\ConveniosAPI\bin\Debug\netcoreapp3.1\aws-beanstalk-tools-defaults.json
