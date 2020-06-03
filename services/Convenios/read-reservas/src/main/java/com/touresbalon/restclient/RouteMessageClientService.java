@@ -29,9 +29,13 @@ public class RouteMessageClientService {
 
     public AprobacionReserva enviarReserva (RouteMessageGETRq routeMessageGETRq) {
         log.info("enviarReserva: Starting service consume...");
-
-        Response response = service.enviarReserva(routeMessageGETRq);
-        log.info("enviarReserva: Response was NULL?: " + (response == null?true:false));
-        return (AprobacionReserva) response;
+        AprobacionReserva response = null;
+        try{
+            response = service.enviarReserva(routeMessageGETRq);
+        } catch (Exception e) {
+            log.info("enviarReserva: Response was NULL?: " + (response == null?true:false));
+            log.error(e.getMessage(), e);
+        }
+        return response;
     }
 }
