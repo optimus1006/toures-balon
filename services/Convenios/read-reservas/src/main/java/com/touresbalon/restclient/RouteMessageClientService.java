@@ -13,6 +13,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.xml.ws.Response;
+import java.util.Random;
 
 @ApplicationScoped
 @Transactional
@@ -29,7 +30,7 @@ public class RouteMessageClientService {
 
     public AprobacionReserva enviarReserva (RouteMessageGETRq routeMessageGETRq) {
         log.info("enviarReserva: Starting service consume...");
-        AprobacionReserva response = null;
+        AprobacionReserva response = new AprobacionReserva();
         try{
             response = service.enviarReserva(routeMessageGETRq);
         } catch (Exception e) {
@@ -37,5 +38,9 @@ public class RouteMessageClientService {
             log.error(e.getMessage(), e);
         }
         return response;
+    }
+
+    private int getRandomNumber(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
     }
 }

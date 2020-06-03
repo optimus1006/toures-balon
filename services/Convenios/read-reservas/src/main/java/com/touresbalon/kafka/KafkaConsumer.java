@@ -20,6 +20,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 @ApplicationScoped
 public class KafkaConsumer {
@@ -92,7 +93,12 @@ public class KafkaConsumer {
                         routeMessageGETRq.setConvenioMessage(convenioMessage);
                         routeMessageGETRq.setReservaMessage(reserva);
                         LOGGER.info("Consuming the service enviarReserva");
-                        AprobacionReserva aprobacion = routeMessageClientService.enviarReserva(routeMessageGETRq);
+
+                        //Mock
+                        AprobacionReserva aprobacion = procesarMock(routeMessageGETRq);
+                        //Servicio real
+                        //AprobacionReserva aprobacion = routeMessageClientService.enviarReserva(routeMessageGETRq);
+
                         if(aprobacion != null){
                             LOGGER.info("Object Aprobacion received, sending to producer");
                             kafkaProducerService.sendAprobacionToKafka(aprobacion);
@@ -112,7 +118,7 @@ public class KafkaConsumer {
                         LOGGER.error("Error = " , ar.cause());
                     }
                 });
-            } catch (JsonProcessingException e) {
+            } catch (Exception e) {
                 LOGGER.error("Error JsonProcessingException= " , e);
 
                 vertx.executeBlocking(promise -> {
@@ -152,5 +158,38 @@ public class KafkaConsumer {
         consumer.close();
     }
 
+    private static int getRandomNumber(int min, int max) {
 
+        if (min >= max) {
+            throw new IllegalArgumentException("max must be greater than min");
+        }
+
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
+    }
+
+    private AprobacionReserva procesarMock(RouteMessageGETRq routeMessageGETRq){
+        AprobacionReserva aprobacion = new AprobacionReserva();
+        try{
+
+            int probabilityOfSuccess = 95;
+            int currentProbability = getRandomNumber(0, 100);
+            if(probabilityOfSuccess <= currentProbability){
+                aprobacion.setCodigoAprobacion("0");
+                aprobacion.setDetalle("Reserva no aprobada");
+            }
+            aprobacion.setCodigoExterno(Long.toString(routeMessageGETRq.getReservaMessage().getCodigoExterno()));
+            aprobacion.setCodigoExternoDetalle(routeMessageGETRq.getReservaMessage().getCodigoExternoDetalle());
+            aprobacion.setDetalle("Reserva aprobada");
+            aprobacion.setIdOrden(routeMessageGETRq.getReservaMessage().getIdOrden());
+            aprobacion.setIdProducto(Long.valueOf(getRandomNumber(100000, 999999)));
+            aprobacion.setIdProductoDetalle(Long.valueOf(getRandomNumber(100000, 999999)));
+            aprobacion.setTipoProducto(routeMessageGETRq.getReservaMessage().getTipoProducto().ordinal());//TODO: Validar si este es el valor correcto
+            aprobacion.setCodigoAprobacion(String.valueOf(getRandomNumber(10000000, 999999999)));
+        } catch (Exception e){
+            LOGGER.info("AprobacionReserva: excepcion: ");
+            LOGGER.error(e.getMessage(), e);
+        }
+        return aprobacion;
+    }
 }
