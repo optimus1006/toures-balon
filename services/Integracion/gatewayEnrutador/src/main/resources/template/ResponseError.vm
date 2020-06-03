@@ -1,0 +1,4 @@
+{
+"codigoError": "#if(${exchange.properties.codigoError})${exchange.properties.codigoError}#end",
+"descripcionError": "#if(${exchange.properties.descripcionError})${exchange.properties.descripcionError}#end"
+}

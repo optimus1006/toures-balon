@@ -1,0 +1,34 @@
+[
+      {
+      "origen": "Bogotá",
+      "destino": "Barranquilla",
+      "numVuelo": 1251415616,
+      "horaSalida": "2020-09-02T06:00:00.000+0000",
+      "precio": 62981.13815977205,
+      "asientosLibres": 4
+   },
+      {
+      "origen": "Bogotá",
+      "destino": "Barranquilla",
+      "numVuelo": -1904325312,
+      "horaSalida": "2020-09-02T09:00:00.000+0000",
+      "precio": 90005.14568153319,
+      "asientosLibres": 1
+   },
+      {
+      "origen": "Bogotá",
+      "destino": "Barranquilla",
+      "numVuelo": 1160307648,
+      "horaSalida": "2020-09-02T00:00:00.000+0000",
+      "precio": 74357.7826462016,
+      "asientosLibres": 2
+   },
+      {
+      "origen": "Bogotá",
+      "destino": "Barranquilla",
+      "numVuelo": -965500800,
+      "horaSalida": "2020-09-02T15:00:00.000+0000",
+      "precio": 92837.97900556859,
+      "asientosLibres": 2
+   }
+]

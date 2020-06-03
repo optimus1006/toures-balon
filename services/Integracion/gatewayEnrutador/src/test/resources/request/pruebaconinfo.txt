@@ -1,0 +1,4 @@
+{
+    "origen": "Bogota",
+    "destino": "Barranquilla"
+}

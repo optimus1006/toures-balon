@@ -1,0 +1,10 @@
+{
+	"request" : #if(${exchange.properties.RequestBody})${exchange.properties.RequestBody}#end,
+	"response": {
+					"codigoError": "#if(${exchange.properties.codigoError})${exchange.properties.codigoError}#end",
+					"descripcionError": "#if(${exchange.properties.descripcionError})${exchange.properties.descripcionError}#end"
+				},
+	"nombreServicio":"#if(${exchange.properties.nombreProyecto})${exchange.properties.nombreProyecto}#end",
+	"fechaHora":"#if(${exchange.properties.fechaSistema})${exchange.properties.fechaSistema}#end"
+}
+

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:ctx="http://www.springframework.org/schema/context"
+    xmlns:cxf="http://camel.apache.org/schema/cxf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring        http://camel.apache.org/schema/spring/camel-spring.xsd  http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf-2.8.3.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" id="jsonProvider"/>
+    <bean
+        class="co.com.touresbalon.exceptions.ErrorExcepcionInterceptor" id="ErrorExcepcionInterceptor"/>
+    <bean class="co.com.touresbalon.processor.RespuestaErrorProcessor" id="respuestaErrorProcessor"/>
+    <camel:errorHandler id="noErrorHandler" type="NoErrorHandler"/>
+    <bean class="org.slf4j.LoggerFactory" factory-method="getLogger" id="rh1">
+        <constructor-arg index="0" value="rh1"/>
+    </bean>
+    <bean class="co.com.touresbalon.QuickstartConfiguration" id="prop"/>
+    <ctx:property-placeholder location="classpath:application.properties"/>
+    <bean class="org.apache.camel.component.jms.JmsComponent" id="jms">
+        <property name="connectionFactory">
+            <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="brokerURL" value="${quickstart.urlBroker}"/>
+                <property name="closeTimeout" value="${quickstart.TimeOutBroker}"/>
+            </bean>
+        </property>
+    </bean>
+    <cxf:rsServer address="{{quickstart.endpoint_Enrutador_Path}}"
+        id="restApiEnpoint" serviceClass="co.com.touresbalon.client.Client">
+        <cxf:providers>
+            <ref bean="jsonProvider"/>
+        </cxf:providers>
+        <cxf:outInterceptors>
+            <ref bean="ErrorExcepcionInterceptor"/>
+        </cxf:outInterceptors>
+    </cxf:rsServer>
+    <camelContext id="CXF-SERVICE-ENRUTADOR-API" streamCache="true"
+        threadNamePattern="100" xmlns="http://camel.apache.org/schema/spring">
+        <propertyPlaceholder id="properties" location="classpath:application.properties"/>
+        <threadPoolProfile defaultProfile="true" id="changedProfile"
+            maxQueueSize="100" poolSize="1"/>
+        <redeliveryPolicyProfile id="redeliveryPolicy"
+            logRetryAttempted="true" maximumRedeliveries="0"
+            redeliveryDelay="10" retriesExhaustedLogLevel="WARN"/>
+        <onException id="CustomExceptionHandling"
+            redeliveryPolicyRef="redeliveryPolicy" useOriginalMessage="true">
+            <exception>org.apache.camel.component.bean.validator.BeanValidationException</exception>
+            <handled>
+                <constant>true</constant>
+            </handled>
+            <log loggerRef="rh1" loggingLevel="ERROR" message="ERROR: ${camelId} || ${routeId} || ${id} || ${date:now:yyyy-MM-dd'T'HH:mm:ss:SSS} || ${exception.message}"/>
+            <log loggerRef="rh1" loggingLevel="DEBUG" message="ERROR: ${camelId} || ${routeId} || ${id} || ${date:now:yyyy-MM-dd'T'HH:mm:ss:SSS} || ${exception.stacktrace}"/>
+            <setHeader headerName="trazaerror">
+                <simple>${exception.stacktrace}</simple>
+            </setHeader>
+            <setProperty propertyName="codigohttp">
+                <simple>{{quickstart.codigoRespuesta_ErrorGeneral}}</simple>
+            </setProperty>
+            <setProperty propertyName="codigo">
+                <simple>{{quickstart.codigo_ErrorEstructura}}</simple>
+            </setProperty>
+            <setProperty propertyName="descripcion">
+                <simple>{{quickstart.descripcion_ErrorEstructura}}</simple>
+            </setProperty>
+            <marshal>
+                <json library="Jackson"/>
+            </marshal>
+            <convertBodyTo type="String"/>
+            <setProperty propertyName="RequestBody">
+                <simple>${body}</simple>
+            </setProperty>
+            <bean method="process" ref="respuestaErrorProcessor"/>
+            <setProperty propertyName="nombreProyecto">
+                <simple>{{camel.springboot.name}}</simple>
+            </setProperty>
+            <setProperty propertyName="fechaSistema">
+                <simple>${date:now:yyyy-MM-dd'T'HH:mm:ss:SSS}</simple>
+            </setProperty>
+            <to uri="velocity:template/ResponseBroker.vm"/>
+            <log loggerRef="rh1" message="((((${body}))))"/>
+            <setHeader headerName="Content-Type">
+                <constant>application/json</constant>
+            </setHeader>
+            <setHeader headerName="CamelHttpMethod">
+                <constant>POST</constant>
+            </setHeader>
+            <wireTap uri="http4://{{quickstart.urlElasticSearch}}?bridgeEndpoint=true&amp;throwExceptionOnFailure=false"/>
+            <to uri="velocity:template/ResponseError.vm"/>
+            <stop/>
+        </onException>
+        <onException id="CustomExceptionHandling"
+            redeliveryPolicyRef="redeliveryPolicy" useOriginalMessage="true">
+            <exception>java.lang.Exception</exception>
+            <handled>
+                <constant>true</constant>
+            </handled>
+            <log loggerRef="rh1" loggingLevel="ERROR" message="ERROR: ${camelId} || ${routeId} || ${id} || ${date:now:yyyy-MM-dd'T'HH:mm:ss:SSS} || ${exception.message}"/>
+            <log loggerRef="rh1" loggingLevel="DEBUG" message="ERROR: ${camelId} || ${routeId} || ${id} || ${date:now:yyyy-MM-dd'T'HH:mm:ss:SSS} || ${exception.stacktrace}"/>
+            <setHeader headerName="trazaerror">
+                <simple>${exception.stacktrace}</simple>
+            </setHeader>
+            <setProperty propertyName="codigohttp">
+                <simple>{{quickstart.codigoRespuesta_ErrorGeneral}}</simple>
+            </setProperty>
+            <setProperty propertyName="codigo">
+                <simple>{{quickstart.codigo_ErrorInterno}}</simple>
+            </setProperty>
+            <setProperty propertyName="descripcion">
+                <simple>{{quickstart.descripcion_ErrorInterno}}</simple>
+            </setProperty>
+            <bean method="process" ref="respuestaErrorProcessor"/>
+            <stop/>
+        </onException>
+        <route id="ENRUTADOR-ROUTE-MAIN">
+            <from id="_from1" uri="cxfrs:bean:restApiEnpoint?bindingStyle=SimpleConsumer"/>
+            <to id="_to1" uri="bean-validator://x"/>
+            <removeHeaders id="_removeHeaders1" pattern="CamelHttp*"/>
+            <setHeader headerName="Content-Type" id="_setHeader1">
+                <constant>application/json</constant>
+            </setHeader>
+            <toD id="_toD1" uri="direct:${header.operationName}"/>
+        </route>
+        <route id="RT-GET-NOMBRE-PROYECTO">
+            <from id="_from2" uri="direct:nombreProyecto"/>
+            <setBody id="_setBody1">
+                <simple>{{camel.springboot.name}}</simple>
+            </setBody>
+        </route>
+        <route id="JMS-ROUTE-MAIN">
+            <from id="_from3" uri="jms:gatewayenrutadorJMS"/>
+            <setHeader headerName="tipoEntrada" id="_setHeader2">
+                <simple>cola</simple>
+            </setHeader>
+            <setHeader headerName="Content-Type" id="_setHeader3">
+                <constant>application/json</constant>
+            </setHeader>
+            <setHeader headerName="CamelHttpMethod" id="_setHeader4">
+                <constant>GET</constant>
+            </setHeader>
+            <to id="_to2" pattern="InOut" uri="https4://{{quickstart.urlEndpoint_service}}?{{quickstart.query_user_key}}={{quickstart.query_value}}&amp;bridgeEndpoint=true&amp;throwExceptionOnFailure=false"/>
+            <camel:log id="_log2" message="body"/>
+            <camel:removeHeaders id="_removeHeaders2" pattern="CamelHttp*"/>
+            <convertBodyTo id="_convertBodyTo1" type="String"/>
+            <stop id="_stop1"/>
+        </route>
+        <route id="RT-PROCESSOR-ENRUTADOR">
+            <from id="_from4" uri="direct:gatewayEnrutador"/>
+            <marshal id="_marshal1">
+                <json library="Jackson"/>
+            </marshal>
+            <to id="_to4" uri="http4:{{quickstart.wsdlConsume_avianca}}?bridgeEndpoint=true&amp;throwExceptionOnFailure=false&amp;httpMethod=POST"/>
+            <convertBodyTo id="_convertBodyTo3" type="java.lang.String"/>
+            <setProperty id="_setProperty3" propertyName="responseTransform">
+                <simple>${body}</simple>
+            </setProperty>
+            <to id="_to5" uri="direct:responseEnrutador"/>
+        </route>
+        <route id="RT-RESPUESTA-ENRUTADOR">
+            <from id="_from5" uri="direct:responseEnrutador"/>
+            <convertBodyTo id="_convertBodyTo4" type="java.lang.String"/>
+            <setProperty id="_setProperty4" propertyName="responseTransform2">
+                <simple>${body}</simple>
+            </setProperty>
+            <log id="_log1" loggerRef="rh1" message="FINALIZA RUTA (((${body})))"/>
+            <stop id="_stop2"/>
+        </route>
+    </camelContext>
+</beans>
