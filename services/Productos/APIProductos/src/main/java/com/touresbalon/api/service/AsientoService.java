@@ -28,19 +28,22 @@ public class AsientoService {
 	@Inject
 	AsientoEventoRepository asientoEventoRepository;
 	
-	public Long crearAsiento(Asiento asiento,Long idTransporte) throws TransporteException{
+	public Long crearAsiento(Asiento asiento,Long idTransporte,Long idProducto) throws TransporteException{
 		AsientoEntity asientoEntity = new AsientoEntity();
 		asientoEntity.setId_transporte(idTransporte);
 		if(asiento.getIdCliente()!=null) {
 			asientoEntity.setId_cliente(asiento.getIdCliente().getId());
+			asientoEntity.setId_producto(idProducto);
 		}
 		
 		if(asiento.getValor()!=null) {
 			asientoEntity.setValor(asiento.getValor());
 		}
-		else {
-			throw new TransporteException("El codigo de silleteria del asiento es obligatorio");
-		}
+//		else {
+//			throw new TransporteException("El codigo de silleteria del asiento es obligatorio");
+//		}
+		
+		asientoEntity.setFecha_reserva(new Timestamp(System.currentTimeMillis()));
 		
 		asientoRepository.save(asientoEntity);
 		
@@ -69,13 +72,20 @@ public class AsientoService {
 		return asientoResponse;
 	}
 	
-	public List<Asiento> buscarPorTransporte(Long idTransporte,Long idCliente) throws TransporteException{
+	public List<Asiento> buscarPorTransporte(Long idTransporte,Long idCliente, Long idProducto) throws TransporteException{
 		List<AsientoEntity> asientos = new ArrayList<>();
-		if(idCliente==null) {
-			asientos = asientoRepository.findAsientoById_transporte(idTransporte);
+		
+		if(idCliente!=null){
+			asientos = asientoRepository.findAsientoById_transporteAndId_cliente(idTransporte, idCliente);
+		}
+		else if(idProducto!=null && idTransporte!=null) {
+			asientos = asientoRepository.findById_transporteAndId_producto(idTransporte, idProducto);
+		}
+		else if(idProducto!=null && idTransporte==null) {
+			asientos = asientoRepository.findById_producto(idProducto);
 		}
 		else {
-			asientos = asientoRepository.findAsientoById_transporteAndId_cliente(idTransporte, idCliente);
+			asientos = asientoRepository.findAsientoById_transporte(idTransporte);
 		}
 		 
 		List<Asiento> asientosResponse = new ArrayList<>();
@@ -97,8 +107,44 @@ public class AsientoService {
 				asientosResponse.add(asiento);
 			}
 		}
+		
+		return asientosResponse;
+	}
+	
+	public List<Asiento> buscarPorEvento(Long idLocalidad,Long idCliente, Long idProducto) throws TransporteException{
+		List<AsientoEventoEntity> asientos = new ArrayList<>();
+		
+		if(idCliente!=null){
+			asientos = asientoEventoRepository.findAsientoById_localidadAndId_cliente(idLocalidad, idCliente);
+		}
+		else if(idProducto!=null && idLocalidad!=null) {
+			asientos = asientoEventoRepository.findById_localidadAndId_producto(idLocalidad, idProducto);
+		}
+		else if(idProducto!=null && idLocalidad==null) {
+			asientos = asientoEventoRepository.findById_producto(idProducto);
+		}
 		else {
-			throw new TransporteException("No hay asientos asociados a ese transporte");
+			asientos = asientoEventoRepository.findAsientoById_localidad(idLocalidad);
+		}
+		 
+		List<Asiento> asientosResponse = new ArrayList<>();
+		if(!asientos.isEmpty()) {
+			for(AsientoEventoEntity asientoEntity: asientos) {
+				Asiento asiento = new Asiento();
+				asiento.setId(asientoEntity.getId());
+				Cliente cliente =  new Cliente();
+				cliente.setId(asientoEntity.getId_cliente());
+				asiento.setIdCliente(cliente);
+				asiento.setValor(asientoEntity.getNumero());
+				if(asientoEntity.getFecha_reserva()!=null) {
+					asiento.setFechaReserva(asientoEntity.getFecha_reserva().toLocalDateTime());
+				}
+				else {
+					asiento.setFechaReserva(null);
+				}
+				
+				asientosResponse.add(asiento);
+			}
 		}
 		
 		return asientosResponse;
@@ -126,7 +172,7 @@ public class AsientoService {
 		return asiento;
 	}
 	
-	public Long reservarAsientoEvento(Asiento asiento,Long idLocalidad) throws TransporteException{
+	public Long reservarAsientoEvento(Asiento asiento,Long idLocalidad,Long idProducto) throws TransporteException{
 		AsientoEventoEntity asientoEventoEntity = new AsientoEventoEntity();
 		asientoEventoEntity.setId_localidad(idLocalidad);
 		asientoEventoEntity.setId_cliente(asiento.getIdCliente().getId());
@@ -136,6 +182,7 @@ public class AsientoService {
 		}
 		
 		asientoEventoEntity.setFecha_reserva(new Timestamp(System.currentTimeMillis()));
+		asientoEventoEntity.setId_producto(idProducto);
 		
 		asientoEventoRepository.save(asientoEventoEntity);
 		

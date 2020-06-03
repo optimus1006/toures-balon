@@ -116,13 +116,10 @@ public class TransporteService {
 		
 		if(transporte.getAsientos()!=null && transporte.getAsientos().size()>0) {
 			for(Asiento asiento: transporte.getAsientos()) {
-				Long idAsiento=asientoService.crearAsiento(asiento, id);
+				Long idAsiento=asientoService.crearAsiento(asiento, id,0L);
 				asiento.setId(idAsiento);
 			}
 			transporteResponse.setAsientos(transporte.getAsientos());
-		}
-		else {
-			throw new TransporteException("Los asientos del transporte son obligatorios");
 		}
 		transporteResponse.setId(id);
 		
@@ -175,6 +172,7 @@ public class TransporteService {
 			transporte.setLugarDestino(ciudad);
 			ciudad.setCodigo(transporteEntity.get().getLugar_partida());
 			transporte.setLugarPartida(ciudad);
+			transporte.setCodigoExterno(transporteEntity.get().getCodigo_externo());
 			Vehiculo vehiculo = new Vehiculo();
 			vehiculo.setId(transporteEntity.get().getId_vehiculo());
 			transporte.setVehiculo(vehiculo);

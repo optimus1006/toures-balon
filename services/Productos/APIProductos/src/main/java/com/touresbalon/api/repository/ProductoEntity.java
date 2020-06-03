@@ -26,4 +26,6 @@ public class ProductoEntity {
 	private Long id_cliente;
 	
 	private double precio;
+	
+	private Long idOrden;
 }

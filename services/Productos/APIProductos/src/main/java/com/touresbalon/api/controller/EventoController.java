@@ -152,7 +152,7 @@ public class EventoController {
 		AsientosPSTRs asientosPSTRs = new AsientosPSTRs();
 		try {
 			Asiento asiento = new Asiento();
-			asiento.setId(asientoService.reservarAsientoEvento(asientosPSTRq.getAsiento(), idLocalidad));
+			asiento.setId(asientoService.reservarAsientoEvento(asientosPSTRq.getAsiento(), idLocalidad,0L));
 			asientosPSTRs.setAsiento(asiento);
         	return Response.status(Response.Status.ACCEPTED).entity(asientosPSTRs).type(MediaType.APPLICATION_JSON).build();
     	}catch (TransporteException e) {

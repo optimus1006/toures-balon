@@ -133,7 +133,7 @@ public class HospedajeController {
 	public Response cuartosGETAll(@PathParam(value = "codigo") Long codigo,@QueryParam(value= "idCliente") Long cliente,@QueryParam(value= "idCuerto") Long cuarto) {
 		CuartosGETAllRs cuartosGETAllRs = new CuartosGETAllRs();
 		try {
-			cuartosGETAllRs.setCuartos(cuartoService.listarCuartos(codigo, cliente));
+			cuartosGETAllRs.setCuartos(cuartoService.listarCuartos(codigo, cliente,null));
         	return Response.status(Response.Status.OK).entity(cuartosGETAllRs).type(MediaType.APPLICATION_JSON).build();
     	}catch (HospedajeException e) {
     		Error error=new Error();
@@ -153,7 +153,7 @@ public class HospedajeController {
 	public Response cuartosPST(@PathParam(value = "codigo") Long codigo,@RequestBody CuartosPSTRq cuartosPSTRq) {
 		CuartosPSTRs cuartosPSTRs = new CuartosPSTRs();
 		try {
-			Cuarto cuarto = cuartoService.crearCuarto(cuartosPSTRq.getCuarto(),codigo);
+			Cuarto cuarto = cuartoService.crearCuarto(cuartosPSTRq.getCuarto(),codigo,null);
     		cuartosPSTRs.setCuarto(cuarto);
         	return Response.status(Response.Status.OK).entity(cuartosPSTRs).type(MediaType.APPLICATION_JSON).build();
     	}catch (HospedajeException e) {

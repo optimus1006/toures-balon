@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import com.touresbalon.api.domain.Ciudad;
+import com.touresbalon.api.domain.Convenio;
 import com.touresbalon.api.domain.Direccion;
 import com.touresbalon.api.domain.Evento;
 import com.touresbalon.api.domain.Evento.EstadoEnum;
@@ -269,6 +270,10 @@ public class EventoService {
 			ubicacion.setLongitud(Float.parseFloat(eventoEntity.get().getLongitud()));
 			ubicacionEvento.setUbicacion(ubicacion);
 			eventoResponse.setUbicacionEvento(ubicacionEvento);
+			eventoResponse.setCodigoExterno(eventoEntity.get().getCodigo_externo());
+			Convenio convenio = new Convenio();
+			convenio.setIdentificacion(eventoEntity.get().getId_convenio());
+			eventoResponse.setConvenio(convenio);
 			
 			return eventoResponse;
 		}
@@ -295,7 +300,7 @@ public class EventoService {
 			}
 			evento.setLocalidades(localidadService.buscarPorIdEvento(eventoEntity.getId()));
 			evento.setNombre(eventoEntity.getNombre());
-			evento.setTipo(TipoEnum.fromValue(tipoEventoRepository.findById(eventoEntity.getTipo()).toString()));
+			evento.setTipo(TipoEnum.valueOf(tipoEventoRepository.findById(eventoEntity.getTipo()).get().getDescripcion()));
 			Direccion ubicacionEvento = new Direccion();
 			Ciudad ciudad = new Ciudad();
 			ciudad.setCodigo(eventoEntity.getId_ciudad());

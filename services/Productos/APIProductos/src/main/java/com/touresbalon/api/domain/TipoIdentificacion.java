@@ -36,6 +36,7 @@ public class TipoIdentificacion   {
   @ApiModelProperty(value = "Código del Tipo Identificacion.")
 
   @Valid
+@DecimalMin("1")
   public String getCodigo() {
     return codigo;
   }

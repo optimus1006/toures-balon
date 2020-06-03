@@ -43,6 +43,9 @@ public class Producto   {
   @JsonProperty("precio")
   private Double precio;
 
+  @JsonProperty("idOrden")
+  private Long idOrden;
+
   public Producto id(Long id) {
     this.id = id;
     return this;
@@ -175,6 +178,26 @@ public class Producto   {
     this.precio = precio;
   }
 
+  public Producto idOrden(Long idOrden) {
+    this.idOrden = idOrden;
+    return this;
+  }
+
+  /**
+   * Get idOrden
+   * @return idOrden
+  */
+  @ApiModelProperty(value = "")
+
+
+  public Long getIdOrden() {
+    return idOrden;
+  }
+
+  public void setIdOrden(Long idOrden) {
+    this.idOrden = idOrden;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -190,12 +213,13 @@ public class Producto   {
         Objects.equals(this.fechaCreacion, producto.fechaCreacion) &&
         Objects.equals(this.detalleProducto, producto.detalleProducto) &&
         Objects.equals(this.cliente, producto.cliente) &&
-        Objects.equals(this.precio, producto.precio);
+        Objects.equals(this.precio, producto.precio) &&
+        Objects.equals(this.idOrden, producto.idOrden);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, descripcion, fechaCreacion, detalleProducto, cliente, precio);
+    return Objects.hash(id, descripcion, fechaCreacion, detalleProducto, cliente, precio, idOrden);
   }
 
   @Override
@@ -209,6 +233,7 @@ public class Producto   {
     sb.append("    detalleProducto: ").append(toIndentedString(detalleProducto)).append("\n");
     sb.append("    cliente: ").append(toIndentedString(cliente)).append("\n");
     sb.append("    precio: ").append(toIndentedString(precio)).append("\n");
+    sb.append("    idOrden: ").append(toIndentedString(idOrden)).append("\n");
     sb.append("}");
     return sb.toString();
   }

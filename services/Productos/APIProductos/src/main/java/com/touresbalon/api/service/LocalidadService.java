@@ -93,6 +93,7 @@ public class LocalidadService {
 				localidad.setId(localidadEntity.getId());
 				localidad.setNombre(localidadEntity.getNombre());
 				localidad.setPrecio(localidadEntity.getPrecio());
+				localidad.setCodigoExterno(localidadEntity.getCodigo_externo());
 				localidades.add(localidad);
 			}
 			
