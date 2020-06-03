@@ -277,6 +277,7 @@ public class HospedajeService {
 			hospedaje.setGeolocalizacion(geolocalizacion);
 			hospedaje.setInformacion(hospedajeEntity.get().getInformacion());
 			hospedaje.setNombre(hospedajeEntity.get().getNombre());
+			hospedaje.setCodigoExterno(hospedajeEntity.get().getCodigo_externo());
 			Optional<TipoHospedajeEntity> tipoHospedaje= tipoHospedajeRepository.findById(hospedajeEntity.get().getTipo_hospedaje());
 			hospedaje.setTipoHospedaje(TipoHospedaje.valueOf(tipoHospedaje.get().getDescripcion()));
 		}

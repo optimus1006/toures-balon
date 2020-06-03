@@ -54,7 +54,7 @@ public class ProductoController {
 	
 	@GET
     @Produces(MediaType.APPLICATION_JSON)
-	public Response productosGETAll(@PathParam(value = "idProducto") Long idProducto,@QueryParam(value= "idCliente") Long cliente) {
+	public Response productosGETAll(@QueryParam(value = "idProducto") Long idProducto,@QueryParam(value= "idCliente") Long cliente) {
 		ProductosGETAllRS productosGETAllRS = new ProductosGETAllRS();
 		try {
 			productosGETAllRS.setProductos(productoService.listarProductos(cliente, idProducto));

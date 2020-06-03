@@ -26,4 +26,6 @@ public class AsientoEntity {
 	
 	private Timestamp fecha_reserva;
 	
+	private Long id_producto;
+	
 }

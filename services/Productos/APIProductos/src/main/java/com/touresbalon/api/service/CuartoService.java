@@ -22,7 +22,7 @@ public class CuartoService {
 	@Inject
 	CuartoRepository cuartoRepository;
 	
-	public Cuarto crearCuarto(Cuarto cuarto, Long acomodacion) throws HospedajeException{
+	public Cuarto crearCuarto(Cuarto cuarto, Long acomodacion, Long idProducto) throws HospedajeException{
 		CuartoEntity cuartoEntity = new CuartoEntity();
 		
 		if(cuarto.getNumeroCuarto()!=null) {
@@ -50,6 +50,7 @@ public class CuartoService {
 				throw new HospedajeException("debe especificar la fecha final de la reserva");
 			}
 			cuartoEntity.setFecha_reserva(new Timestamp(System.currentTimeMillis()));
+			cuartoEntity.setId_producto(idProducto);
 		}
 		else {
 			cuartoEntity.setId_cliente(0L);
@@ -108,15 +109,23 @@ public class CuartoService {
 		return cuartoResponse;
 	}
 	
-	public List<Cuarto> listarCuartos(Long idAcomodacion,Long idCliente) throws HospedajeException{
+	public List<Cuarto> listarCuartos(Long idAcomodacion,Long idCliente,Long idProducto) throws HospedajeException{
 		List<Cuarto> cuartos = new ArrayList<>();
 		List<CuartoEntity> cuartosEntity = new ArrayList<CuartoEntity>();
 		if(idCliente!=null) {
 			cuartosEntity=cuartoRepository.findById_acomodacion(idAcomodacion);
 		}
+		else if(idProducto!=null && idAcomodacion!=null) {
+			cuartosEntity=cuartoRepository.findById_acomodacionAndId_producto(idAcomodacion, idProducto);
+		}
+		else if(idProducto!=null && idAcomodacion==null) {
+			cuartosEntity=cuartoRepository.findById_producto(idProducto);
+		}
 		else {
 			cuartosEntity=cuartoRepository.findById_acomodacionAndId_cliente(idAcomodacion, idCliente);
 		}
+		
+		
 		
 		if(cuartosEntity.size()>0) {
 			for(CuartoEntity cuarto: cuartosEntity) {

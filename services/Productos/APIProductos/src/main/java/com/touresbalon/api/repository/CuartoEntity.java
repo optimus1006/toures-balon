@@ -30,4 +30,6 @@ public class CuartoEntity {
 	private Timestamp fecha_reserva;
 	
 	private Long id_acomodacion;
+	
+	private Long id_producto;
 }

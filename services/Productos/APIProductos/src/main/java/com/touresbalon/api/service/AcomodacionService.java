@@ -97,6 +97,7 @@ public class AcomodacionService {
 			acomodacion.setNombre(acomodacionEntity.get().getNombre());
 			acomodacion.setPrecio(acomodacionEntity.get().getPrecio());
 			acomodacion.setId(acomodacionEntity.get().getId());
+			acomodacion.setCodigoExterno(acomodacionEntity.get().getCodigo_externo());
 			return acomodacion;
 		}
 		else {

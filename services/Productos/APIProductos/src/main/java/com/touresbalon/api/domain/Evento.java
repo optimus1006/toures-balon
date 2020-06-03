@@ -58,7 +58,7 @@ public class Evento   {
    * Tipo de evento.
    */
   public enum TipoEnum {
-    CONCIERTO("Concierto"),
+    CONCIERTO("CONCIERTO"),
     
     FUTBOL("Futbol"),
     

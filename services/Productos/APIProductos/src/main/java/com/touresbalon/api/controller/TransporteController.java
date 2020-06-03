@@ -146,7 +146,7 @@ public class TransporteController {
     	AsientosPSTRs asientosPSTRs = new AsientosPSTRs();
     	Asiento asientoResponse = new Asiento();
     	try {
-    		Long asientoId=asientoService.crearAsiento(asiento.getAsiento(), id);
+    		Long asientoId=asientoService.crearAsiento(asiento.getAsiento(), id,null);
     		asientoResponse.setId(asientoId);
     		asientosPSTRs.setAsiento(asientoResponse);
         	return Response.status(Response.Status.CREATED).entity(asientosPSTRs).type(MediaType.APPLICATION_JSON).build();
@@ -195,7 +195,7 @@ public class TransporteController {
     			listaAsientos.add(asientoService.buscarAsientoPorid(idAsiento));
     		}
     		else {
-    			listaAsientos=asientoService.buscarPorTransporte(id, idCliente);
+    			listaAsientos=asientoService.buscarPorTransporte(id, idCliente,null);
     		}
     		
     		asientosGETAllRs.setAsientos(listaAsientos);
