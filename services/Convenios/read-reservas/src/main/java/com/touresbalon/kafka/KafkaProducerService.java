@@ -41,7 +41,10 @@ public class KafkaProducerService {
     static {
         config = new HashMap<>();
         // Config values can be moved to application.properties
-        config.put("bootstrap.servers", "localhost:9092");
+        //DEV
+        //config.put("bootstrap.servers", "localhost:9092");
+        //PROD
+        config.put("bootstrap.servers", "10.0.1.153:19092");
         config.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         config.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         config.put("acks", "1");

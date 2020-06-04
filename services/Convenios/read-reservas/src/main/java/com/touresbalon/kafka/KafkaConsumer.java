@@ -59,7 +59,10 @@ public class KafkaConsumer {
     private void startConsumer(){
         // Config values can be moved to application.properties
         Map<String, String> config = new HashMap<>();
-        config.put("bootstrap.servers", "localhost:9092");
+        //DEV
+        //config.put("bootstrap.servers", "localhost:9092");
+        //PROD
+        config.put("bootstrap.servers", "10.0.1.153:19092");
         config.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         config.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         config.put("group.id", "RealizarReserva");
@@ -182,8 +185,8 @@ public class KafkaConsumer {
             aprobacion.setCodigoExternoDetalle(routeMessageGETRq.getReservaMessage().getCodigoExternoDetalle());
             aprobacion.setDetalle("Reserva aprobada");
             aprobacion.setIdOrden(routeMessageGETRq.getReservaMessage().getIdOrden());
-            aprobacion.setIdProducto(Long.valueOf(getRandomNumber(100000, 999999)));
-            aprobacion.setIdProductoDetalle(Long.valueOf(getRandomNumber(100000, 999999)));
+            aprobacion.setIdProducto(routeMessageGETRq.getReservaMessage().getIdProducto());
+            aprobacion.setIdProductoDetalle(routeMessageGETRq.getReservaMessage().getIdProductoDetalle());
             aprobacion.setTipoProducto(routeMessageGETRq.getReservaMessage().getTipoProducto().ordinal());//TODO: Validar si este es el valor correcto
             aprobacion.setCodigoAprobacion(String.valueOf(getRandomNumber(10000000, 999999999)));
         } catch (Exception e){
