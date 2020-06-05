@@ -6,6 +6,7 @@ import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 @Path("/productos")
@@ -13,7 +14,6 @@ import javax.ws.rs.core.Response;
 public interface ProductoService {
 
     @GET
-    @Path("{id}")
     @Produces("application/json")
-    Response consultarProductoPorId(@PathParam Long id);
+    Response consultarProductoPorId(@QueryParam("idProducto") Long idProducto);
 }

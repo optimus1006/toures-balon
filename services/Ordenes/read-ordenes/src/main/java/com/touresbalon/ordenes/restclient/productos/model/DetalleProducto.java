@@ -27,13 +27,13 @@ public class DetalleProducto {
   @JsonProperty("hospedaje")
   private Hospedaje hospedaje;
 
-  @JsonProperty("eventos")
+  @JsonProperty("evento")
   private Evento eventos;
 
-  @JsonProperty("asietosEvento")
+  @JsonProperty("asientosEvento")
   private Integer asietosEvento;
 
-  @JsonProperty("asietosTransporte")
+  @JsonProperty("asientosTransporte")
   private Integer asietosTransporte;
 
   @JsonProperty("cuartosHospedaje")

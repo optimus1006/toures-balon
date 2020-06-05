@@ -49,6 +49,8 @@ public class Orden   {
     COTIZACION("COTIZACION"),
     
     PAGADA("PAGADA"),
+
+    ADICION_PRODUCTOS("ADICION_PRODUCTOS"),
     
     EN_RESERVA("EN_RESERVA"),
 

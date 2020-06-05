@@ -48,7 +48,9 @@ public class KafkaConsumer {
     private void startConsumer(){
         // Config values can be moved to application.properties
         Map<String, String> config = new HashMap<>();
-        config.put("bootstrap.servers", "ec2-3-16-57-65.us-east-2.compute.amazonaws.com:9092");
+		//config.put("bootstrap.servers", "ip-10-0-1-153.us-east-2.compute.internal:19092");
+		config.put("bootstrap.servers", "b-2.touresbalonkafka.3inpqc.c4.kafka.us-east-2.amazonaws.com:9092,b-1.touresbalonkafka.3inpqc.c4.kafka.us-east-2.amazonaws.com:9092");
+        //config.put("bootstrap.servers", "ec2-3-16-57-65.us-east-2.compute.amazonaws.com:9092");
         //config.put("bootstrap.servers", "localhost:9092");
         config.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         config.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");

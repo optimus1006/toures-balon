@@ -53,7 +53,7 @@ public class OrdenEntity extends PanacheEntityBase {
     @OneToOne(cascade = CascadeType.MERGE, mappedBy = "orden", fetch = FetchType.LAZY)
     private FacturaEntity factura;
 
-    @OneToMany(mappedBy = "orden", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "orden", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<TarjetaEntity> tarjetas;
 
     public Long getId() {

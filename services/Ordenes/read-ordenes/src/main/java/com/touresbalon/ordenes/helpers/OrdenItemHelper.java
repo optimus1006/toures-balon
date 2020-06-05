@@ -19,7 +19,7 @@ public class OrdenItemHelper {
     }
 
     public static OrdenItem ordenItemEntityToOrdenItem(OrdenItemEntity ordenItemEntity, OrdenItem ordenItem) {
-        if(ordenItemEntity == null) {
+        if(ordenItem == null) {
             ordenItem = new OrdenItem();
         }
         ordenItem.setCodigo(ordenItemEntity.getCodigo());

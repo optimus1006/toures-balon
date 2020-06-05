@@ -5,23 +5,20 @@
 
 quarkus.datasource.db-kind=postgresql
 #quarkus.datasource.write.driver=org.postgresql.Driver
-#quarkus.datasource.jdbc.url=jdbc:postgresql://127.0.0.1:5433/ordenes_read
-quarkus.datasource.jdbc.url=jdbc:postgresql://ip-10-0-0-139.us-east-2.compute.internal:5432/ordenes_read
-#quarkus.datasource.username=ordenes_role
-quarkus.datasource.username=postgres
+quarkus.datasource.jdbc.url=jdbc:postgresql://127.0.0.1:5433/ordenes_read
+quarkus.datasource.username=ordenes_role
 quarkus.datasource.password=123456
 
 quarkus.hibernate-orm.database.charset=UTF-8
 quarkus.hibernate-orm.dialect=org.hibernate.dialect.PostgreSQLDialect
-quarkus.hibernate-orm.log.sql=false
+quarkus.hibernate-orm.log.sql=true
 quarkus.hibernate-orm.dialect.storage-engine=InnoDB
 # quarkus.hibernate.connection.autocommit=true
 quarkus.hibernate-orm.database.generation=update
 quarkus.hibernate-orm.metrics.enabled=true
 
 # Servicios api productos
-#productos-api/mp-rest/url=http://localhost:8191
-productos-api/mp-rest/url=http://ip-10-0-0-215.us-east-2.compute.internal:8080
+productos-api/mp-rest/url=http://localhost:8091
 productos-api/mp-rest/scope=javax.inject.Singleton # /
 
 # Configure the Kafka

@@ -1,11 +1,11 @@
 package com.touresbalon.ordenes.util;
 
 public enum EnumTipoProducto {
-    HOSPEDAJE("COTIZACION"),
+    HOSPEDAJE("1"),
 
-    TRANSPORTE("PAGADA"),
+    TRANSPORTE("0"),
 
-    EVENTO("EVENTO");
+    EVENTO("2");
 
     private String value;
 

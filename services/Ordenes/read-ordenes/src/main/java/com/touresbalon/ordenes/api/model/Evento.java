@@ -21,7 +21,7 @@ import java.util.Objects;
 
 public class Evento   {
   @JsonProperty("id")
-  private Integer id;
+  private Long id;
 
   @JsonProperty("nombre")
   private String nombre;
@@ -48,23 +48,21 @@ public class Evento   {
   @Valid
   private List<Localidad> localidades = null;
 
-  @JsonProperty("asientos")
-  @Valid
-  private List<String> asientos = null;
-
   /**
    * Tipo de evento.
    */
   public enum TipoEnum {
     CONCIERTO("CONCIERTO"),
-    
-    FUTBOL("FUTBOL"),
-    
-    BALONCESTO("BALONCESTO"),
-    
-    ACTIVIDAD("ACTIVIDAD"),
-    
-    OTRO("OTRO");
+
+    FUTBOL("Futbol"),
+
+    DEPORTIVO("DEPORTIVO"),
+
+    BALONCESTO("Baloncesto"),
+
+    ACTIVIDAD("Actividad"),
+
+    OTRO("Otro");
 
     private String value;
 
@@ -104,7 +102,7 @@ public class Evento   {
    */
   public enum EstadoEnum {
     ACTIVO("ACTIVO"),
-    
+
     INACTIVO("INACTIVO");
 
     private String value;
@@ -133,7 +131,13 @@ public class Evento   {
   @JsonProperty("estado")
   private EstadoEnum estado;
 
-  public Evento id(Integer id) {
+  @JsonProperty("codigoExterno")
+  private String codigoExterno;
+
+  @JsonProperty("convenio")
+  private Convenio convenio;
+
+  public Evento id(Long id) {
     this.id = id;
     return this;
   }
@@ -141,15 +145,15 @@ public class Evento   {
   /**
    * Get id
    * @return id
-  */
+   */
   @ApiModelProperty(value = "")
 
 
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -161,10 +165,10 @@ public class Evento   {
   /**
    * Get nombre
    * @return nombre
-  */
+   */
   @ApiModelProperty(value = "")
 
-@Size(max=100) 
+  @Size(max=100)
   public String getNombre() {
     return nombre;
   }
@@ -181,10 +185,10 @@ public class Evento   {
   /**
    * Get descripcion
    * @return descripcion
-  */
+   */
   @ApiModelProperty(value = "")
 
-@Size(max=255) 
+  @Size(max=255)
   public String getDescripcion() {
     return descripcion;
   }
@@ -201,7 +205,7 @@ public class Evento   {
   /**
    * Get fecha
    * @return fecha
-  */
+   */
   @ApiModelProperty(value = "")
 
   @Valid
@@ -222,7 +226,7 @@ public class Evento   {
   /**
    * Get hora
    * @return hora
-  */
+   */
   @ApiModelProperty(value = "")
 
 
@@ -242,7 +246,7 @@ public class Evento   {
   /**
    * Get zonaHoraria
    * @return zonaHoraria
-  */
+   */
   @ApiModelProperty(value = "")
 
 
@@ -262,7 +266,7 @@ public class Evento   {
   /**
    * Get cantidad
    * @return cantidad
-  */
+   */
   @ApiModelProperty(value = "")
 
 
@@ -282,7 +286,7 @@ public class Evento   {
   /**
    * Get ubicacionEvento
    * @return ubicacionEvento
-  */
+   */
   @ApiModelProperty(value = "")
 
   @Valid
@@ -311,7 +315,7 @@ public class Evento   {
   /**
    * Get localidades
    * @return localidades
-  */
+   */
   @ApiModelProperty(value = "")
 
   @Valid
@@ -324,34 +328,6 @@ public class Evento   {
     this.localidades = localidades;
   }
 
-  public Evento asientos(List<String> asientos) {
-    this.asientos = asientos;
-    return this;
-  }
-
-  public Evento addAsientosItem(String asientosItem) {
-    if (this.asientos == null) {
-      this.asientos = new ArrayList<>();
-    }
-    this.asientos.add(asientosItem);
-    return this;
-  }
-
-  /**
-   * Get asientos
-   * @return asientos
-  */
-  @ApiModelProperty(value = "")
-
-
-  public List<String> getAsientos() {
-    return asientos;
-  }
-
-  public void setAsientos(List<String> asientos) {
-    this.asientos = asientos;
-  }
-
   public Evento tipo(TipoEnum tipo) {
     this.tipo = tipo;
     return this;
@@ -360,7 +336,7 @@ public class Evento   {
   /**
    * Tipo de evento.
    * @return tipo
-  */
+   */
   @ApiModelProperty(value = "Tipo de evento.")
 
 
@@ -388,7 +364,7 @@ public class Evento   {
   /**
    * Get imagenes
    * @return imagenes
-  */
+   */
   @ApiModelProperty(value = "")
 
   @Valid
@@ -409,7 +385,7 @@ public class Evento   {
   /**
    * Get imagenPrincipal
    * @return imagenPrincipal
-  */
+   */
   @ApiModelProperty(value = "")
 
 
@@ -429,7 +405,7 @@ public class Evento   {
   /**
    * Estado el evento
    * @return estado
-  */
+   */
   @ApiModelProperty(value = "Estado el evento")
 
 
@@ -441,9 +417,50 @@ public class Evento   {
     this.estado = estado;
   }
 
+  public Evento codigoExterno(String codigoExterno) {
+    this.codigoExterno = codigoExterno;
+    return this;
+  }
+
+  /**
+   * codigo designado por el convenio para la homologacion
+   * @return codigoExterno
+   */
+  @ApiModelProperty(value = "codigo designado por el convenio para la homologacion")
+
+
+  public String getCodigoExterno() {
+    return codigoExterno;
+  }
+
+  public void setCodigoExterno(String codigoExterno) {
+    this.codigoExterno = codigoExterno;
+  }
+
+  public Evento convenio(Convenio convenio) {
+    this.convenio = convenio;
+    return this;
+  }
+
+  /**
+   * Get convenio
+   * @return convenio
+   */
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public Convenio getConvenio() {
+    return convenio;
+  }
+
+  public void setConvenio(Convenio convenio) {
+    this.convenio = convenio;
+  }
+
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -452,31 +469,32 @@ public class Evento   {
     }
     Evento evento = (Evento) o;
     return Objects.equals(this.id, evento.id) &&
-        Objects.equals(this.nombre, evento.nombre) &&
-        Objects.equals(this.descripcion, evento.descripcion) &&
-        Objects.equals(this.fecha, evento.fecha) &&
-        Objects.equals(this.hora, evento.hora) &&
-        Objects.equals(this.zonaHoraria, evento.zonaHoraria) &&
-        Objects.equals(this.cantidad, evento.cantidad) &&
-        Objects.equals(this.ubicacionEvento, evento.ubicacionEvento) &&
-        Objects.equals(this.localidades, evento.localidades) &&
-        Objects.equals(this.asientos, evento.asientos) &&
-        Objects.equals(this.tipo, evento.tipo) &&
-        Objects.equals(this.imagenes, evento.imagenes) &&
-        Objects.equals(this.imagenPrincipal, evento.imagenPrincipal) &&
-        Objects.equals(this.estado, evento.estado);
+            Objects.equals(this.nombre, evento.nombre) &&
+            Objects.equals(this.descripcion, evento.descripcion) &&
+            Objects.equals(this.fecha, evento.fecha) &&
+            Objects.equals(this.hora, evento.hora) &&
+            Objects.equals(this.zonaHoraria, evento.zonaHoraria) &&
+            Objects.equals(this.cantidad, evento.cantidad) &&
+            Objects.equals(this.ubicacionEvento, evento.ubicacionEvento) &&
+            Objects.equals(this.localidades, evento.localidades) &&
+            Objects.equals(this.tipo, evento.tipo) &&
+            Objects.equals(this.imagenes, evento.imagenes) &&
+            Objects.equals(this.imagenPrincipal, evento.imagenPrincipal) &&
+            Objects.equals(this.estado, evento.estado) &&
+            Objects.equals(this.codigoExterno, evento.codigoExterno) &&
+            Objects.equals(this.convenio, evento.convenio);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nombre, descripcion, fecha, hora, zonaHoraria, cantidad, ubicacionEvento, localidades, asientos, tipo, imagenes, imagenPrincipal, estado);
+    return Objects.hash(id, nombre, descripcion, fecha, hora, zonaHoraria, cantidad, ubicacionEvento, localidades, tipo, imagenes, imagenPrincipal, estado, codigoExterno, convenio);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Evento {\n");
-    
+
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    nombre: ").append(toIndentedString(nombre)).append("\n");
     sb.append("    descripcion: ").append(toIndentedString(descripcion)).append("\n");
@@ -486,11 +504,12 @@ public class Evento   {
     sb.append("    cantidad: ").append(toIndentedString(cantidad)).append("\n");
     sb.append("    ubicacionEvento: ").append(toIndentedString(ubicacionEvento)).append("\n");
     sb.append("    localidades: ").append(toIndentedString(localidades)).append("\n");
-    sb.append("    asientos: ").append(toIndentedString(asientos)).append("\n");
     sb.append("    tipo: ").append(toIndentedString(tipo)).append("\n");
     sb.append("    imagenes: ").append(toIndentedString(imagenes)).append("\n");
     sb.append("    imagenPrincipal: ").append(toIndentedString(imagenPrincipal)).append("\n");
     sb.append("    estado: ").append(toIndentedString(estado)).append("\n");
+    sb.append("    codigoExterno: ").append(toIndentedString(codigoExterno)).append("\n");
+    sb.append("    convenio: ").append(toIndentedString(convenio)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -499,7 +518,7 @@ public class Evento   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

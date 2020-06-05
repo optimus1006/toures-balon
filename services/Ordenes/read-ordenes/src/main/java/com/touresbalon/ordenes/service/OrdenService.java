@@ -1,21 +1,16 @@
 package com.touresbalon.ordenes.service;
 
 import com.touresbalon.ordenes.api.model.*;
-import com.touresbalon.ordenes.entities.OrdenEntity;
-import com.touresbalon.ordenes.entities.OrdenItemEntity;
+import com.touresbalon.ordenes.entities.*;
 import com.touresbalon.ordenes.exceptions.OrdenException;
-import com.touresbalon.ordenes.helpers.OrdenHelper;
-import com.touresbalon.ordenes.helpers.OrdenItemHelper;
+import com.touresbalon.ordenes.helpers.*;
 import com.touresbalon.ordenes.kafka.OrdenMessage;
 import com.touresbalon.ordenes.repository.OrdenItemRepository;
 import com.touresbalon.ordenes.repository.OrdenRepository;
 import com.touresbalon.ordenes.restclient.productos.ProductoService;
 import com.touresbalon.ordenes.restclient.productos.model.DetalleProducto;
 import com.touresbalon.ordenes.restclient.productos.model.Producto;
-import com.touresbalon.ordenes.restclient.productos.model.ProductosPSTRs;
-import com.touresbalon.ordenes.util.EnumTipoProducto;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import org.eclipse.microprofile.reactive.messaging.Incoming;
+import com.touresbalon.ordenes.restclient.productos.model.ProductosGETAllRS;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +21,10 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 @Transactional
@@ -56,10 +54,38 @@ public class OrdenService {
     public Orden realizarCompra(OrdenMessage orden) throws OrdenException {
         log.info("realizarCompra(Orden orden) ");
 
+        MonedaEntity monedaEntity = null;
+        if(orden.getMoneda() != null) {
+            monedaEntity = MonedaHelper.monedaToMonedaEntity(orden.getMoneda(), null);
+        }
+        orden.setMoneda(null);
+        TarjetaEntity tarjetaEntity = null;
+        if(orden.getTarjeta() != null) {
+            tarjetaEntity = TarjetaHelper.tarjetaToTarjetaEntity(orden.getTarjeta(), null);
+        }
+        orden.setTarjeta(null);
+        FacturaEntity facturaEntity = null;
+        if(orden.getFactura() != null) {
+            facturaEntity = FacturaHelper.facturaToFacturaEntity(orden.getFactura(), null);
+        }
+        orden.setFactura(null);
         OrdenEntity ordenEntity = OrdenHelper.ordenToOrdenEntity(orden, null);
         ordenEntity.setCodigoProducto(orden.getCodigoProducto());
         ordenEntity.setUidPago(orden.getUidPago());
         ordenRepository.persist(ordenEntity);
+
+        if(monedaEntity != null) {
+            monedaEntity.setOrden(ordenEntity);
+            monedaEntity.persist();
+        }
+        if(tarjetaEntity != null) {
+            tarjetaEntity.setOrden(ordenEntity);
+            tarjetaEntity.persist();
+        }
+        if(facturaEntity != null) {
+            facturaEntity.setOrden(ordenEntity);
+            facturaEntity.persist();
+        }
         if(orden.getItems() != null && !orden.getItems().isEmpty()) {
             List<OrdenItemEntity> itemList = new ArrayList<>();
             for (OrdenItem item :
@@ -83,11 +109,31 @@ public class OrdenService {
      */
     public Orden crearOrden(OrdenMessage orden) throws OrdenException {
         log.info("crearOrden(Orden orden) ");
+
+        MonedaEntity monedaEntity = null;
+        if(orden.getMoneda() != null) {
+            monedaEntity = MonedaHelper.monedaToMonedaEntity(orden.getMoneda(), null);
+        }
+        orden.setMoneda(null);
+        TarjetaEntity tarjetaEntity = null;
+        if(orden.getTarjeta() != null) {
+            tarjetaEntity = TarjetaHelper.tarjetaToTarjetaEntity(orden.getTarjeta(), null);
+        }
+        orden.setTarjeta(null);
         OrdenEntity ordenEntity = OrdenHelper.ordenToOrdenEntity(orden, null);
         ordenEntity.setCodigoProducto(orden.getCodigoProducto());
         ordenEntity.setUidPago(orden.getUidPago());
 
         ordenRepository.persist(ordenEntity);
+
+        if(monedaEntity != null) {
+            monedaEntity.setOrden(ordenEntity);
+            monedaEntity.persist();
+        }
+        if(tarjetaEntity != null) {
+            tarjetaEntity.setOrden(ordenEntity);
+            tarjetaEntity.persist();
+        }
 
         return OrdenHelper.ordenEntityToOrden(ordenEntity, orden);
 
@@ -108,12 +154,24 @@ public class OrdenService {
             orden.setCodigo(codigoOrden);
             orden.setCodigoCliente(ordenEntityOpt.get().getCodigoCliente());
             orden.setFechaCreacion(ordenEntityOpt.get().getFechaCreacion());
+            orden.setMoneda(null);
+            orden.setTarjeta(null);
+            FacturaEntity facturaEntity = null;
+            if(orden.getFactura() != null) {
+                facturaEntity = FacturaHelper.facturaToFacturaEntity(orden.getFactura(), null);
+            }
+            orden.setFactura(null);
             OrdenEntity ordenEntity = OrdenHelper.ordenToOrdenEntity(orden, ordenEntityOpt.get());
             ordenEntity.setFechaModificacion(LocalDateTime.now());
             ordenEntity.setCodigoProducto(orden.getCodigoProducto());
             ordenEntity.setFechaModificacion(LocalDateTime.now());
             ordenEntity.setUidPago(ordenEntityOpt.get().getUidPago());
             em.merge(ordenEntity);
+
+            if(facturaEntity != null && ordenEntity.getFactura() == null) {
+                facturaEntity.setOrden(ordenEntity);
+                facturaEntity.persist();
+            }
 
             if(orden.getItems() != null && !orden.getItems().isEmpty()) {
                 List<OrdenItemEntity> itemList = new ArrayList<>();
@@ -149,13 +207,13 @@ public class OrdenService {
         if (ordenEntity.isPresent()) {
             orden = OrdenHelper.ordenEntityToOrden(ordenEntity.get(),orden);
             List<OrdenItemEntity> itemsEntity = ordenItemRepository.findByOrden(ordenEntity.get());
-            if(itemsEntity != null && !itemsEntity.isEmpty()) {
-                //TODO: Consultar productos
+            if(itemsEntity != null && !itemsEntity.isEmpty() && ordenEntity.get().getCodigoProducto() != null) {
+                //Consultar productos
                 Producto producto= new Producto();
-                /*Response responseProducto = productoService.consultarProductoPorId(ordenEntity.get().getCodigoProducto());
+                Response responseProducto = productoService.consultarProductoPorId(ordenEntity.get().getCodigoProducto());
                 if(responseProducto.getStatus() == Response.Status.OK.getStatusCode()){
-                  producto = ((ProductosPSTRs)response.getEntity()).getProducto();
-                }*/
+                  producto = responseProducto.readEntity(ProductosGETAllRS.class).getProductos().get(0);
+                }
                 List<Transporte> transportes = new ArrayList<>();
                 List<Hospedaje> hospedajes = new ArrayList<>();
                 List<Evento> eventos = new ArrayList<>();
@@ -227,7 +285,7 @@ public class OrdenService {
                 Producto producto= new Producto();
                 Response responseProducto = productoService.consultarProductoPorId(ordenEntity.get().getCodigoProducto());
                 if(responseProducto.getStatus() == Response.Status.OK.getStatusCode()){
-                  producto = ((ProductosPSTRs)responseProducto.getEntity()).getProducto();
+                    producto = responseProducto.readEntity(ProductosGETAllRS.class).getProductos().get(0);
                 }
                 List<Transporte> transportes = new ArrayList<>();
                 List<Hospedaje> hospedajes = new ArrayList<>();
@@ -255,7 +313,6 @@ public class OrdenService {
     /**
      *
      * @param orden
-     * @param codigoOrden
      * @return
      * @throws OrdenException
      */

@@ -4,7 +4,9 @@ import com.touresbalon.ordenes.api.model.*;
 import com.touresbalon.ordenes.api.model.Error;
 import com.touresbalon.ordenes.exceptions.OrdenException;
 import com.touresbalon.ordenes.exceptions.OrdenNotFoundException;
+import com.touresbalon.ordenes.kafka.JaegerConfig;
 import com.touresbalon.ordenes.service.OrdenService;
+import io.opentracing.Span;
 import io.swagger.annotations.ApiParam;
 import io.vertx.core.http.HttpServerRequest;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
@@ -34,14 +36,22 @@ public class OrdenesApiController implements OrdenesApi {
     @Context
     private HttpServerRequest request;
 
+    @Inject
+    JaegerConfig tracer;
+
     public Response ordenesGETPorCodigo(@ApiParam(value = "Código identificador de la orden.",required=true) @PathParam(value = "codigoOrden") Long codigoOrden
 ) {
+        Span span = tracer.getTracer().buildSpan("Consultar orden por codigo").start();
+        span.setTag("url", "/ordenes/{codigoOrden}");
+        span.setTag("http.method", "GET");
+        span.setTag("http.status_code", 200);
+        span.finish();
         OrdenesGetByIdRs ordenesGetByIdRs = new OrdenesGetByIdRs();
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
                 ordenesGetByIdRs.setOrden(ordenService.findOrdenByCodigoOrden(codigoOrden));
-                return Response.status(Response.Status.CREATED).entity(ordenesGetByIdRs).type(MediaType.APPLICATION_JSON).build();
+                return Response.status(Response.Status.OK).entity(ordenesGetByIdRs).type(MediaType.APPLICATION_JSON).build();
             } catch (OrdenException e) {
                 Error error=new Error();
                 error.setCode("0");
@@ -58,6 +68,11 @@ public class OrdenesApiController implements OrdenesApi {
 
     public Response ordenesGETFacturaPorCodigoOrden(@ApiParam(value = "Código identificador de la orden.",required=true) @PathParam(value = "codigoOrden") Long codigoOrden
 )   {
+        Span span = tracer.getTracer().buildSpan("Consultar factura por codigo de orden").start();
+        span.setTag("url", "/ordenes/{codigoOrden}/factura");
+        span.setTag("http.method", "GET");
+        span.setTag("http.status_code", 200);
+        span.finish();
         OrdenesGetFacturaByCodigoRs ordenesGetFacturaByCodigoRs = new OrdenesGetFacturaByCodigoRs();
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
@@ -92,6 +107,11 @@ public class OrdenesApiController implements OrdenesApi {
         ,@ApiParam(value = "Estado de la orden.", allowableValues = "COTIZACION, PAGADA, EN_RESERVA, CERRADA, RECHAZADA, CANCELADA") @Valid @QueryParam(value = "estado" ) String estado
         )
     {
+        Span span = tracer.getTracer().buildSpan("Consultar ordenes").start();
+        span.setTag("url", "/ordenes");
+        span.setTag("http.method", "GET");
+        span.setTag("http.status_code", 200);
+        span.finish();
         OrdenesGetAllRs ordenesGetAllRs = new OrdenesGetAllRs();
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {

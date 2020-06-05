@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -14,7 +17,7 @@ import java.util.Objects;
 
 public class Localidad   {
   @JsonProperty("id")
-  private Integer id;
+  private Long id;
 
   @JsonProperty("nombre")
   private String nombre;
@@ -25,7 +28,14 @@ public class Localidad   {
   @JsonProperty("aforo")
   private Integer aforo;
 
-  public Localidad id(Integer id) {
+  @JsonProperty("asientos")
+  @Valid
+  private List<Asiento> asientos = null;
+
+  @JsonProperty("codigoExterno")
+  private String codigoExterno;
+
+  public Localidad id(Long id) {
     this.id = id;
     return this;
   }
@@ -33,15 +43,15 @@ public class Localidad   {
   /**
    * Get id
    * @return id
-  */
+   */
   @ApiModelProperty(readOnly = true, value = "")
 
 
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -53,7 +63,7 @@ public class Localidad   {
   /**
    * Get nombre
    * @return nombre
-  */
+   */
   @ApiModelProperty(value = "")
 
 
@@ -73,7 +83,7 @@ public class Localidad   {
   /**
    * Get precio
    * @return precio
-  */
+   */
   @ApiModelProperty(value = "")
 
 
@@ -93,7 +103,7 @@ public class Localidad   {
   /**
    * Get aforo
    * @return aforo
-  */
+   */
   @ApiModelProperty(value = "")
 
 
@@ -105,9 +115,58 @@ public class Localidad   {
     this.aforo = aforo;
   }
 
+  public Localidad asientos(List<Asiento> asientos) {
+    this.asientos = asientos;
+    return this;
+  }
+
+  public Localidad addAsientosItem(Asiento asientosItem) {
+    if (this.asientos == null) {
+      this.asientos = new ArrayList<>();
+    }
+    this.asientos.add(asientosItem);
+    return this;
+  }
+
+  /**
+   * indica la cantidad de voletos comprados para el evento
+   * @return asientos
+   */
+  @ApiModelProperty(value = "indica la cantidad de voletos comprados para el evento")
+
+  @Valid
+
+  public List<Asiento> getAsientos() {
+    return asientos;
+  }
+
+  public void setAsientos(List<Asiento> asientos) {
+    this.asientos = asientos;
+  }
+
+  public Localidad codigoExterno(String codigoExterno) {
+    this.codigoExterno = codigoExterno;
+    return this;
+  }
+
+  /**
+   * codigo designado por el convenio para la homologacion
+   * @return codigoExterno
+   */
+  @ApiModelProperty(value = "codigo designado por el convenio para la homologacion")
+
+
+  public String getCodigoExterno() {
+    return codigoExterno;
+  }
+
+  public void setCodigoExterno(String codigoExterno) {
+    this.codigoExterno = codigoExterno;
+  }
+
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -116,25 +175,29 @@ public class Localidad   {
     }
     Localidad localidad = (Localidad) o;
     return Objects.equals(this.id, localidad.id) &&
-        Objects.equals(this.nombre, localidad.nombre) &&
-        Objects.equals(this.precio, localidad.precio) &&
-        Objects.equals(this.aforo, localidad.aforo);
+            Objects.equals(this.nombre, localidad.nombre) &&
+            Objects.equals(this.precio, localidad.precio) &&
+            Objects.equals(this.aforo, localidad.aforo) &&
+            Objects.equals(this.asientos, localidad.asientos) &&
+            Objects.equals(this.codigoExterno, localidad.codigoExterno);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nombre, precio, aforo);
+    return Objects.hash(id, nombre, precio, aforo, asientos, codigoExterno);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Localidad {\n");
-    
+
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    nombre: ").append(toIndentedString(nombre)).append("\n");
     sb.append("    precio: ").append(toIndentedString(precio)).append("\n");
     sb.append("    aforo: ").append(toIndentedString(aforo)).append("\n");
+    sb.append("    asientos: ").append(toIndentedString(asientos)).append("\n");
+    sb.append("    codigoExterno: ").append(toIndentedString(codigoExterno)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -143,7 +206,7 @@ public class Localidad   {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

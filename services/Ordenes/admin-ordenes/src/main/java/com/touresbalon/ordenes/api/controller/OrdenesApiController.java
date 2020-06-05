@@ -4,12 +4,13 @@ import com.touresbalon.ordenes.api.model.Error;
 import com.touresbalon.ordenes.api.model.*;
 import com.touresbalon.ordenes.exceptions.OrdenException;
 import com.touresbalon.ordenes.exceptions.OrdenNotFoundException;
+import com.touresbalon.ordenes.kafka.JaegerConfig;
 import com.touresbalon.ordenes.service.OrdenService;
+import io.opentracing.Span;
 import io.swagger.annotations.ApiParam;
 import io.vertx.core.http.HttpServerRequest;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -22,7 +23,7 @@ import javax.ws.rs.core.Response;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2020-05-16T23:29:26.784Z[GMT]")
 public class OrdenesApiController implements OrdenesApi {
 
-    private static final Logger log = LoggerFactory.getLogger(OrdenesApiController.class);
+    private static final Logger log = Logger.getLogger(OrdenesApiController.class);
 
     @Inject
     OrdenService ordenService;
@@ -30,8 +31,16 @@ public class OrdenesApiController implements OrdenesApi {
     @Context
     private HttpServerRequest request;
 
+    @Inject
+    JaegerConfig tracer;
+
     public Response ordenesDEL(@ApiParam(value = "Código de la orden de pago.",required=true) @PathParam(value = "codigoOrden") Long codigoOrden
 ) {
+        Span span = tracer.getTracer().buildSpan("Cancelar orden").start();
+        span.setTag("url", "/ordenes/{codigoOrden}");
+        span.setTag("http.method", "DELETE");
+        span.setTag("http.status_code", 200);
+        span.finish();
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -56,6 +65,11 @@ public class OrdenesApiController implements OrdenesApi {
     public Response ordenesPCT(@ApiParam(value = "Código de la orden a cambiar de estado.",required=true) @PathParam(value = "codigoOrden") Long codigoOrden,
                                @NotNull @ApiParam(value = "Orden con los camppos a actualizar",required=true)  @Valid @RequestBody OrdenesPSTRq orden)
     {
+        Span span = tracer.getTracer().buildSpan("Actualizar orden").start();
+        span.setTag("url", "/ordenes");
+        span.setTag("http.method", "PATCH");
+        span.setTag("http.status_code", 200);
+        span.finish();
         OrdenesGetByIdRs ordenesGetByIdRs = new OrdenesGetByIdRs();
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
@@ -85,12 +99,17 @@ public class OrdenesApiController implements OrdenesApi {
     public Response ordenesPST(@ApiParam(value = "Orden que va a ser creada"  )
                                @Valid @RequestBody OrdenesPSTRq ordenesPSTRq )
     {
+        Span span = tracer.getTracer().buildSpan("Crear orden").start();
+        span.setTag("url", "/ordenes");
+        span.setTag("http.method", "POST");
+        span.setTag("http.status_code", 201);
+        span.finish();
         OrdenesPSTRs ordenesPSTRs = new OrdenesPSTRs();
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
                 ordenesPSTRs.setOrden(ordenService.crearOrden(ordenesPSTRq.getOrden()));
-                return Response.status(Response.Status.OK).entity(ordenesPSTRs).type(MediaType.APPLICATION_JSON).build();
+                return Response.status(Response.Status.CREATED).entity(ordenesPSTRs).type(MediaType.APPLICATION_JSON).build();
             } catch (OrdenNotFoundException e) {
                 Error error=new Error();
                 error.setCode("0");
@@ -113,6 +132,11 @@ public class OrdenesApiController implements OrdenesApi {
     @Override
     public Response realizarCompra(@ApiParam(value = "Orden que va a ser creada por compra"  )
                                      @Valid @RequestBody CompraPSTRq compra) {
+        Span span = tracer.getTracer().buildSpan("Realizar Pago").start();
+        span.setTag("url", "/ordenes/pago");
+        span.setTag("http.method", "POST");
+        span.setTag("http.status_code", 200);
+        span.finish();
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -180,6 +204,11 @@ public class OrdenesApiController implements OrdenesApi {
     @Override
     public Response aprobarOrdenCompra(@ApiParam(value = "Compra con la orden y sus items"  )
                                            @Valid @RequestBody CompraPSTRq compra) {
+        Span span = tracer.getTracer().buildSpan("Cancelar orden").start();
+        span.setTag("url", "/ordenes/aprobar");
+        span.setTag("http.method", "POST");
+        span.setTag("http.status_code", 200);
+        span.finish();
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {

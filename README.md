@@ -28,16 +28,19 @@ Clientes |  | Actualizar Clientes | Actualizacion de datos y estado de clientes 
 Clientes |  | Consultar Clientes | Consulta de clientes por los diferentes parametros | Web, Movil
 Ordenes |  | Crear ordenes | Crear ordenes de productos | Web, Movil
 Órdenes |  | Cancelación de Órdenes | El sistema permitirá la cancelación de órdenes de pedido en validación o en reservación que maneja TouresBalón. | Web, Movil
-Órdenes |  | Consultar Ordenes | detalle de productos se debe mostrar | Web, Movil
+Órdenes |  | Consultar Ordenes | Consultar ordenes por sus diferentes parametros | Web, Movil
 Órdenes |  | Pagar orden | Servicio de pago de ordenes | Web, Movil
+Órdenes |  | Aprobar orden | Servicio para aprobar ordenes que quedaron e estado pendiente de aprobar | Web, Movil
 Órdenes | Factura | Consultar factura | Servicio de consulta de factura de una orden | Web, Movil
 Productos |  | Administración de Productos | El sistema permitirá la creación, modificación y eliminación de los productos que comercializa TouresBalón. (Incluye la administración de imágenes). También el sistema permitirá la creación(*), modificación(*) y eliminación(*) de las tarifas asociadas a los productos | Web, Movil
-Productos | Campañas | Administrar Campañas | El sistema permitirá creación(*), modificación(*) y eliminación(*) de campañas. Una campaña es una imagen promocional que se mostrará en el sitio Web y está asociada a un producto durante un periodo de tiempo dado. | Web, Movil
 Productos | Paquetes |  Administrar Paquetes | El sistema permitirá creación(*), modificación(*) y eliminación(*) de paquetes. Un paquete es un conjuto de eventos, con transportes y hospedajes | Web, Movil
 Productos | Transportes |  Administrar Transportes | El sistema permitirá creación(*), modificación(*) y eliminación(*) de paquetes. Un paquete es un conjuto de eventos, con transportes y hospedajes | Web, Movil
 Productos | Hospedajes |  Administrar Hospedajes | El sistema permitirá creación(*), modificación(*) y eliminación(*) de hospedajes. | Web
 Productos | Eventos |  Administrar Eventos | El sistema permitirá creación(*), modificación(*) y eliminación(*) de eventos. | Web, Movil
 Convenios |  | Administración de convenios | Consulta y enrolamiento de proveedores/convenios/alianzas  | Web
+Convenios |  | Realizar reservas | Llamado a servicios de reserva de proveedores/convenios/alianzas  | Web
+Convenios |  | Actualizar catalogo | Llamado a servicios de reserva de proveedores/convenios/alianzas  | Web
+Convenios |  | Lanzar subasta inversa | A partir de la creacion de un paquete se genera llamado a convenios para solicitar ofertas  | Web
 
 ## Operaciones
 
@@ -49,6 +52,8 @@ Contiene 4 operaciones con las que se puede operar sobre la orden:
 - `/ordenes` [GET] [OrdenesGETAll]: Consulta al información de las ordenes basado en parámetros de búsqueda *(No implementado)*
 - `/ordenes/{idOrden}` [GET] [OrdenesGETById]: Consulta la información de una orden por su id. *(No implementado)*
 - `/ordenes` [POST] [OrdenesPST]: Crea la orden de acuerdo con los parámetros recibidos. La orden debe tener transporte, eventos y hospedajes. Se crea tambien como estado "Cotizacion". La orden va a atada a un producto. *(No implementado)*
+- `/ordenes/pago` [POST] [OrdenesPST]: Pagar la orden de acuerdo con los parámetros recibidos. La orden debe tener transporte, eventos y hospedajes. Se crea tambien como estado "Cotizacion". La orden va a atada a un producto. *(No implementado)*
+- `/ordenes/aprobar` [POST] [OrdenesPST]: Servicio para aprobar ordenes que quedaron e estado pendiente de aprobar *(No implementado)*
 - `/ordenes` [PATCH] [OrdenesPCT]: Actualizar la orden de acuerdo con los parámetros recibidos. La orden se actualiza solamente el estado.  *(No implementado)*
 - `/ordenes/{idOrden}` [DELETE] [OrdenesDEL]: Cancela la orden. *(No implementado)*
 - `/ordenes/facturas` [POST] [FacturasPST]: Pagar la orden. *(No implementado)*

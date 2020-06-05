@@ -133,6 +133,9 @@ public class Transporte   {
   @JsonProperty("convenio")
   private Convenio convenio;
 
+  @JsonProperty("codigoExterno")
+  private String codigoExterno;
+
   public Transporte id(Long id) {
     this.id = id;
     return this;
@@ -409,6 +412,26 @@ public class Transporte   {
 
   public void setConvenio(Convenio convenio) {
     this.convenio = convenio;
+  }
+
+  public Transporte codigoExterno(String codigoExterno) {
+    this.codigoExterno = codigoExterno;
+    return this;
+  }
+
+  /**
+   * codigo designado por el convenio para la homologacion
+   * @return codigoExterno
+   */
+  @ApiModelProperty(value = "codigo designado por el convenio para la homologacion")
+
+
+  public String getCodigoExterno() {
+    return codigoExterno;
+  }
+
+  public void setCodigoExterno(String codigoExterno) {
+    this.codigoExterno = codigoExterno;
   }
 
 

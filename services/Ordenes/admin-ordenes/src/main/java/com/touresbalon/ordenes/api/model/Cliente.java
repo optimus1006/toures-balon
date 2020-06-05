@@ -1,6 +1,7 @@
 package com.touresbalon.ordenes.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.touresbalon.ordenes.restclient.validacliente.model.DireccionCliente;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.Valid;
@@ -47,7 +48,7 @@ public class Cliente   {
 
   @JsonProperty("direcciones")
   @Valid
-  private List<Direccion> direcciones = null;
+  private List<DireccionCliente> direcciones = null;
 
   @JsonProperty("tarjetas")
   @Valid
@@ -257,12 +258,12 @@ public class Cliente   {
     this.tipoIdentificacion = tipoIdentificacion;
   }
 
-  public com.touresbalon.ordenes.api.model.Cliente direcciones(List<Direccion> direcciones) {
+  public com.touresbalon.ordenes.api.model.Cliente direcciones(List<DireccionCliente> direcciones) {
     this.direcciones = direcciones;
     return this;
   }
 
-  public com.touresbalon.ordenes.api.model.Cliente addDireccionesItem(Direccion direccionesItem) {
+  public com.touresbalon.ordenes.api.model.Cliente addDireccionesItem(DireccionCliente direccionesItem) {
     if (this.direcciones == null) {
       this.direcciones = new ArrayList<>();
     }
@@ -278,11 +279,11 @@ public class Cliente   {
 
   @Valid
 
-  public List<Direccion> getDirecciones() {
+  public List<DireccionCliente> getDirecciones() {
     return direcciones;
   }
 
-  public void setDirecciones(List<Direccion> direcciones) {
+  public void setDirecciones(List<DireccionCliente> direcciones) {
     this.direcciones = direcciones;
   }
 

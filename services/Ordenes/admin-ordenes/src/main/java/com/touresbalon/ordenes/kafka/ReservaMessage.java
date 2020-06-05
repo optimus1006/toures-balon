@@ -11,7 +11,7 @@ public class ReservaMessage {
 	
 	private String codigoExternoDetalle;
 	
-	private EnumTipoProducto tipoProducto;
+	private String tipoProducto;
 	
 	private Long idOrden;
 	
@@ -71,11 +71,11 @@ public class ReservaMessage {
 		this.codigoExterno = codigoExterno;
 	}
 
-	public EnumTipoProducto getTipoProducto() {
+	public String getTipoProducto() {
 		return tipoProducto;
 	}
 
-	public void setTipoProducto(EnumTipoProducto tipoProducto) {
+	public void setTipoProducto(String tipoProducto) {
 		this.tipoProducto = tipoProducto;
 	}
 

@@ -5,10 +5,10 @@
 
 quarkus.datasource.db-kind=postgresql
 #quarkus.datasource.write.driver=org.postgresql.Driver
-#quarkus.datasource.jdbc.url=jdbc:postgresql://127.0.0.1:5433/ordenes
-quarkus.datasource.jdbc.url=jdbc:postgresql://ip-10-0-0-139.us-east-2.compute.internal:5432/ordenes
-#quarkus.datasource.username=ordenes_role
-quarkus.datasource.username=postgres
+quarkus.datasource.jdbc.url=jdbc:postgresql://127.0.0.1:5433/ordenes
+#quarkus.datasource.jdbc.url=jdbc:postgresql://ip-10-0-0-139.us-east-2.compute.internal:5432/ordenes
+quarkus.datasource.username=ordenes_role
+#quarkus.datasource.username=postgres
 quarkus.datasource.password=123456
 
 quarkus.hibernate-orm.database.charset=UTF-8
@@ -20,18 +20,18 @@ quarkus.hibernate-orm.database.generation=update
 quarkus.hibernate-orm.metrics.enabled=true
 
 # Servicio valida tarjeta
-#validatarjeta-api/mp-rest/url=http://localhost:8192
-validatarjeta-api/mp-rest/url=http://ip-10-0-1-170.us-east-2.compute.internal:8192
+validatarjeta-api/mp-rest/url=http://localhost:8192
+#validatarjeta-api/mp-rest/url=http://ip-10-0-1-170.us-east-2.compute.internal:8192
 validatarjeta-api/mp-rest/scope=javax.inject.Singleton # /
 
 # Servicios api productos
-#productos-api/mp-rest/url=http://localhost:8191
-productos-api/mp-rest/url=http://ip-10-0-0-215.us-east-2.compute.internal:8080
+productos-api/mp-rest/url=http://localhost:8191
+# productos-api/mp-rest/url=http://ip-10-0-0-215.us-east-2.compute.internal:8080
 productos-api/mp-rest/scope=javax.inject.Singleton # /
 
 # Servicios api clientes
-#clientes-api/mp-rest/url=http://localhost:8083/archetype/Clientes/1.0.0
-clientes-api/mp-rest/url=http://ip-10-0-1-102.us-east-2.compute.interna:8080/archetype/Clientes/1.0.0l
+clientes-api/mp-rest/url=http://localhost:8083/archetype/Clientes/1.0.0
+#clientes-api/mp-rest/url=http://ip-10-0-1-102.us-east-2.compute.interna:8080/archetype/Clientes/1.0.0l
 clientes-api/mp-rest/scope=javax.inject.Singleton # /
 
 # Servicio arm
@@ -45,3 +45,9 @@ kafka.bootstrap.servers=ec2-3-21-156-152.us-east-2.compute.amazonaws.com:9092
 kafka.outgoing.topic=read-order
 kafka.incoming.topic=ReservaRealizada
 kafka.incoming.topic.products=RealizarReserva
+
+
+quarkus.jaeger.service-name=myservice
+quarkus.jaeger.sampler-type=const
+quarkus.jaeger.sampler-param=1
+quarkus.log.console.format=%d{HH:mm:ss} %-5p traceId=%X{traceId}, spanId=%X{spanId}, sampled=%X{sampled} [%c{2.}] (%t) %s%e%n

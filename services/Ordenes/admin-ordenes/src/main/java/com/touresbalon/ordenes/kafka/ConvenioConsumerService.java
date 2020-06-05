@@ -44,9 +44,11 @@ public class ConvenioConsumerService {
 
     static {
         config = new HashMap<>();
-        // Config values can be moved to application.properties
-        config.put("bootstrap.servers", "ec2-3-16-57-65.us-east-2.compute.amazonaws.com:9092");
+        // Config values can be moved to application.properties.aws.aws
         //config.put("bootstrap.servers", "localhost:9092");
+        //config.put("bootstrap.servers", "ip-10-0-1-153.us-east-2.compute.internal:19092");
+        config.put("bootstrap.servers", "b-1.touresbalonkafka.3inpqc.c4.kafka.us-east-2.amazonaws.com:9092,b-2.touresbalonkafka.3inpqc.c4.kafka.us-east-2.amazonaws.com:9092");
+        //config.put("bootstrap.servers", "ec2-18-219-44-85.us-east-2.compute.amazonaws.com:9092");
         config.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         config.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         config.put("group.id", "group_reservas");
@@ -66,24 +68,26 @@ public class ConvenioConsumerService {
                     ",partition=" + record.partition() + ",offset=" + servers +record.offset());
 
             try {
-                ReservaMessage reservaMessage = objectMapper.readValue(record.value(), ReservaMessage.class);
+                AprobacionReserva aprobacionReserva = objectMapper.readValue(record.value(), AprobacionReserva.class);
                 vertx.executeBlocking(promise -> {
-                    ordenService.validarReserva(reservaMessage);
-                    promise.complete(reservaMessage.getIdProductoDetalle());
+                    ordenService.validarReserva(aprobacionReserva);
+                    promise.complete(aprobacionReserva.getCodigoAprobacion());
                 }, res -> {
                     LOGGER.info("The result is: " + res.result());
                 });
-                consumer.commit(ar -> {
-
-                    if (ar.succeeded()) {
-                        LOGGER.info("Last read message offset committed");
-                    } else {
-                        LOGGER.error("Error = " , ar.cause());
-                    }
-                });
             } catch (JsonProcessingException e) {
                 LOGGER.error("Error JsonProcessingException= " , e);
+            } catch (Exception e) {
+                LOGGER.error("Error cargando items = " , e);
             }
+            consumer.commit(ar -> {
+
+                if (ar.succeeded()) {
+                    LOGGER.info("Last read message offset committed");
+                } else {
+                    LOGGER.error("Error = " , ar.cause());
+                }
+            });
         });
         configConsumer("ReservaRealizada");
     }
