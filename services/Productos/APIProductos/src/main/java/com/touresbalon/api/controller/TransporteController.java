@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.openapitools.configuration.OpenAPIDocumentationConfig;
 
 import com.touresbalon.api.domain.Asiento;
 import com.touresbalon.api.domain.AsientosGETAllRs;
@@ -34,10 +35,15 @@ import com.touresbalon.api.domain.TransportesPSTRs;
 import com.touresbalon.api.service.AsientoService;
 import com.touresbalon.api.service.TransporteService;
 
+import io.opentracing.Span;
 import io.swagger.annotations.ApiOperation;
+import io.opentracing.*;
 
 @Path("/productos/transportes")
 public class TransporteController {
+	
+	@Inject
+	OpenAPIDocumentationConfig tracer;
 
 	@Inject
 	TransporteService transporteService;
@@ -50,18 +56,26 @@ public class TransporteController {
     @ApiOperation(value = "Consultar todos los transportes existentes", nickname = "transportesGETAll", notes = "Realiza la consulta completa de los transportes existentes para toures balon ", response = TransportesGETAllRs.class, tags={ "Transportes", })
     public Response findAll() {
     	TransportesGETAllRs transportesGETAllRs = new TransportesGETAllRs();
-    	
+    	Span span = tracer.getTracer().buildSpan("Consultar Transportes").start();
+    	span.setTag("url", "/productos/transportes");
+    	span.setTag("http.method", "GET");
     	try {
     		List<Transporte> transportes=transporteService.listarTransportes();
     		transportesGETAllRs.setTransportes(transportes);
-        	return Response.status(Response.Status.CREATED).entity(transportesGETAllRs).type(MediaType.APPLICATION_JSON).build();
+    		span.setTag("http.status_code", 200);
+    		span.finish();
+        	return Response.status(Response.Status.OK).entity(transportesGETAllRs).type(MediaType.APPLICATION_JSON).build();
     	}catch (TransporteException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
+    		span.setTag("http.status_code", 409);
+    		span.finish();
 			return Response.status(Response.Status.CONFLICT).entity(error).type(MediaType.APPLICATION_JSON).build();
 		}
     	catch (Exception e) {
+    		span.setTag("http.status_code", 500);
+    		span.finish();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
 		}
     }
@@ -78,17 +92,26 @@ public class TransporteController {
     @ApiOperation(value = "Crear un transporte", nickname = "transportesPST", notes = "Crea un transporte de acuerdo a los parametros dados", response = TransportesPSTRs.class, tags={ "Transportes", })
     public Response create(@RequestBody TransportesPSTRq transporte) throws TransporteException{
     	TransportesPSTRs transportesPSTRs = new TransportesPSTRs();
+    	Span span = tracer.getTracer().buildSpan("Crear Transportes").start();
+    	span.setTag("url", "/productos/transportes");
+    	span.setTag("http.method", "POST");
     	try {
     		Transporte transporteResponse=transporteService.crearTransporte(transporte.getTransporte());
+    		span.setTag("http.status_code", 200);
+    		span.finish();
     		transportesPSTRs.setTransporte(transporteResponse);
         	return Response.status(Response.Status.OK).entity(transportesPSTRs).type(MediaType.APPLICATION_JSON).build();
     	}catch (TransporteException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
+    		span.setTag("http.status_code", 409);
+    		span.finish();
 			return Response.status(Response.Status.CONFLICT).entity(error).type(MediaType.APPLICATION_JSON).build();
 		}
     	catch (Exception e) {
+    		span.setTag("http.status_code", 500);
+    		span.finish();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
 		}
     	
@@ -100,19 +123,28 @@ public class TransporteController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response changeColor(@RequestBody TransportesPCTRq transporte, @PathParam(value = "idTransporte") Long id) {
     	TransportesPCTRs transportesPCTRs = new TransportesPCTRs();
+    	Span span = tracer.getTracer().buildSpan("Actualizar Transportes").start();
+    	span.setTag("url", "/productos/transportes/{idTransporte}");
+    	span.setTag("http.method", "PATCH");
     	try {
     		transporteService.actualizarTransporte(transporte.getTransporte(), id);
     		Transporte transporteResponse = new Transporte();
     		transporteResponse.setId(id);
     		transportesPCTRs.setTransporte(transporteResponse);
+    		span.setTag("http.status_code", 200);
+    		span.finish();
         	return Response.status(Response.Status.OK).entity(transportesPCTRs).type(MediaType.APPLICATION_JSON).build();
     	}catch (TransporteException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
+    		span.setTag("http.status_code", 409);
+    		span.finish();
 			return Response.status(Response.Status.CONFLICT).entity(error).type(MediaType.APPLICATION_JSON).build();
 		}
     	catch (Exception e) {
+    		span.setTag("http.status_code", 500);
+    		span.finish();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
 		}
     }
@@ -123,17 +155,26 @@ public class TransporteController {
     @ApiOperation(value = "Consultar todos los transportes existentes", nickname = "transportesGETById", notes = "Realiza la consulta de un transporete existente de acuerdo a su id para toures balon ", response = TransportesGETByIdRs.class, tags={ "Transportes", })
     public Response findById(@PathParam(value = "idTransporte") Long id) {
     	TransportesGETByIdRs transportesGETByIdRs = new TransportesGETByIdRs();
+    	Span span = tracer.getTracer().buildSpan("Consultar Transportes por id").start();
+    	span.setTag("url", "/productos/transportes/{idTransporte}");
+    	span.setTag("http.method", "GET");
     	try {
     		Transporte transporte=transporteService.getTransportePorId(id);
     		transportesGETByIdRs .setTransporte(transporte);
+    		span.setTag("http.status_code", 200);
+    		span.finish();
         	return Response.status(Response.Status.OK).entity(transportesGETByIdRs).type(MediaType.APPLICATION_JSON).build();
     	}catch (TransporteException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
+    		span.setTag("http.status_code", 409);
+    		span.finish();
 			return Response.status(Response.Status.NOT_FOUND).entity(error).type(MediaType.APPLICATION_JSON).build();
 		}
     	catch (Exception e) {
+    		span.setTag("http.status_code", 500);
+    		span.finish();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
 		}
     }
@@ -145,18 +186,27 @@ public class TransporteController {
 	public Response asientosPST(@RequestBody AsientosPSTRq asiento, @PathParam(value = "idTransporte") Long id) {
     	AsientosPSTRs asientosPSTRs = new AsientosPSTRs();
     	Asiento asientoResponse = new Asiento();
+    	Span span = tracer.getTracer().buildSpan("Crear Asientos").start();
+    	span.setTag("url", "/productos/transportes/{idTransporte}/asientos");
+    	span.setTag("http.method", "POST");
     	try {
     		Long asientoId=asientoService.crearAsiento(asiento.getAsiento(), id,null);
     		asientoResponse.setId(asientoId);
     		asientosPSTRs.setAsiento(asientoResponse);
+    		span.setTag("http.status_code", 200);
+    		span.finish();
         	return Response.status(Response.Status.CREATED).entity(asientosPSTRs).type(MediaType.APPLICATION_JSON).build();
     	}catch (TransporteException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
+    		span.setTag("http.status_code", 409);
+    		span.finish();
 			return Response.status(Response.Status.CONFLICT).entity(error).type(MediaType.APPLICATION_JSON).build();
 		}
     	catch (Exception e) {
+    		span.setTag("http.status_code", 500);
+    		span.finish();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
 		}
     }
@@ -168,17 +218,26 @@ public class TransporteController {
     public Response asientosPTC(@RequestBody AsientosPTCRq asiento, @PathParam(value = "idTransporte") Long id, @PathParam(value = "idAsiento") Long idAsiento) {
     	AsientosPTCRs asientosPTCRs = new AsientosPTCRs();
     	Asiento asientoRs = new Asiento();
+    	Span span = tracer.getTracer().buildSpan("Actualizar Asientos").start();
+    	span.setTag("url", "/productos/transportes/{idTransporte}/asientos/{idAsiento}");
+    	span.setTag("http.method", "PATCH");
     	try {
     		asientoRs= asientoService.actualizarAsiento(id, asiento.getAsiento(),idAsiento);
     		asientosPTCRs.setAsiento(asientoRs);
+    		span.setTag("http.status_code", 200);
+    		span.finish();
         	return Response.status(Response.Status.OK).entity(asientosPTCRs).type(MediaType.APPLICATION_JSON).build();
     	}catch (TransporteException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
+    		span.setTag("http.status_code", 409);
+    		span.finish();
 			return Response.status(Response.Status.CONFLICT).entity(error).type(MediaType.APPLICATION_JSON).build();
 		}
     	catch (Exception e) {
+    		span.setTag("http.status_code", 500);
+    		span.finish();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
 		}
     }
@@ -190,6 +249,9 @@ public class TransporteController {
     public Response asientosGETAll(@PathParam(value = "idTransporte") Long id, @QueryParam(value= "idCliente") Long idCliente,@QueryParam(value= "idAsiento") Long idAsiento) {
     	AsientosGETAllRs asientosGETAllRs = new AsientosGETAllRs();
     	List<Asiento> listaAsientos = new ArrayList<>();
+    	Span span = tracer.getTracer().buildSpan("Consultar Asientos").start();
+    	span.setTag("url", "/productos/transportes/{idTransporte}/asientos");
+    	span.setTag("http.method", "GET");
     	try {
     		if(idAsiento!=null) {
     			listaAsientos.add(asientoService.buscarAsientoPorid(idAsiento));
@@ -199,14 +261,20 @@ public class TransporteController {
     		}
     		
     		asientosGETAllRs.setAsientos(listaAsientos);
+    		span.setTag("http.status_code", 200);
+    		span.finish();
         	return Response.status(Response.Status.OK).entity(asientosGETAllRs).type(MediaType.APPLICATION_JSON).build();
     	}catch (TransporteException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
+    		span.setTag("http.status_code", 409);
+    		span.finish();
 			return Response.status(Response.Status.NOT_FOUND).entity(error).type(MediaType.APPLICATION_JSON).build();
 		}
     	catch (Exception e) {
+    		span.setTag("http.status_code", 500);
+    		span.finish();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
 		}
     }

@@ -218,7 +218,7 @@ public class ProductoService {
 						productoDetalleRepository.save(productoDetalleEntity);
 						if (producto.getCliente() != null) {
 							ReservaMessage reservaMessage = new ReservaMessage();
-							reservaMessage.setCantidadProductosReserva(detalleProducto.getCuartosHospedaje());
+							reservaMessage.setCantidadProductosReserva(detalleProducto.getAsientosTransporte());
 							reservaMessage.setCliente(producto.getCliente());
 							reservaMessage.setCodigoExterno(transporteDetalle.getCodigoExterno());
 							reservaMessage.setIdConvenio(transporteDetalle.getConvenio().getIdentificacion());
@@ -226,7 +226,6 @@ public class ProductoService {
 							reservaMessage.setIdProducto(productoEntity.getId());
 							reservaMessage.setIdProductoDetalle(productoDetalleEntity.getId());
 							reservaMessage.setTipoProducto("0");
-							reservaMessage.setIdProductoDetalle(0L);
 							for (int i = 1; i <= detalleProducto.getAsientosTransporte(); i++) {
 								Asiento asiento = new Asiento();
 								asiento.setIdCliente(producto.getCliente());

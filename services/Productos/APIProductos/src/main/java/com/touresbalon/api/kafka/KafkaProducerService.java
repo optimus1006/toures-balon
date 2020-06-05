@@ -44,6 +44,7 @@ public class KafkaProducerService {
         config = new HashMap<>();
         // Config values can be moved to application.properties
         config.put("bootstrap.servers", "10.0.1.153:9092");
+//        config.put("bootstrap.servers", "ec2-18-219-44-85.us-east-2.compute.amazonaws.com:9092");
         config.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         config.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         config.put("acks", "1");
@@ -56,7 +57,7 @@ public class KafkaProducerService {
     public void sendOrderToKafka(ReservaMessage reserva) throws KafkaException {
         try {
             KafkaProducerRecord<String, String> record = KafkaProducerRecord.create(
-                    "RealizarReserva", objectMapper.writeValueAsString(reserva));
+                    "RealizarReserva",reserva.getIdProductoDetalle().toString(), objectMapper.writeValueAsString(reserva));
 
             // use producer for interacting with Apache Kafka
             producer = KafkaProducer.create(vertx, config);

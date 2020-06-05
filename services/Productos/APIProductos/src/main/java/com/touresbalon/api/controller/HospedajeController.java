@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.openapitools.configuration.OpenAPIDocumentationConfig;
 
 import com.touresbalon.api.domain.Cuarto;
 import com.touresbalon.api.domain.CuartosGETAllRs;
@@ -33,10 +34,14 @@ import com.touresbalon.api.domain.TransporteException;
 import com.touresbalon.api.service.CuartoService;
 import com.touresbalon.api.service.HospedajeService;
 
+import io.opentracing.Span;
 import io.swagger.annotations.ApiOperation;
 
 @Path("/productos/hospedajes")
 public class HospedajeController {
+	
+	@Inject
+	OpenAPIDocumentationConfig tracer;
 
 	@Inject
 	HospedajeService hospedajeService;
@@ -50,16 +55,25 @@ public class HospedajeController {
 	@ApiOperation(value = "", nickname = "hospedajesGetById", notes = "Realiza la consulta de un hospedaje específico, trayendo toda la información del sitio.", response = Hospedaje.class, tags={ "Hospedajes", })
 	public Response hospedajesGetById(@PathParam(value = "codigo") Long codigo) {
 		Hospedaje response = new Hospedaje();
+		Span span = tracer.getTracer().buildSpan("Consultar Hospedajes").start();
+    	span.setTag("url", "/productos/hospedajes/{codigo}");
+    	span.setTag("http.method", "GET");
 		try {
     		response=hospedajeService.consultarPorId(codigo);
+    		span.setTag("http.status_code", 200);
+    		span.finish();
         	return Response.status(Response.Status.OK).entity(response).type(MediaType.APPLICATION_JSON).build();
     	}catch (HospedajeException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
+    		span.setTag("http.status_code", 409);
+    		span.finish();
 			return Response.status(Response.Status.NOT_FOUND).entity(error).type(MediaType.APPLICATION_JSON).build();
 		}
     	catch (Exception e) {
+    		span.setTag("http.status_code", 500);
+    		span.finish();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
 		}
 	}
@@ -69,16 +83,25 @@ public class HospedajeController {
 	@ApiOperation(value = "", nickname = "hospedajesGETAll", notes = "Realiza la consulta de un hospedaje específico, trayendo toda la información del sitio.", response = HospedajesGetAllRs.class, tags={ "Hospedajes", })
 	public Response hospedajesGetAll(@QueryParam(value= "nombre") String nombre,@QueryParam(value= "calificacion") int calificacion,@QueryParam(value= "tipoHospedaje") String tipoHospedaje,@QueryParam(value= "ciudad") Long ciudad,@QueryParam(value= "convenio") String convenio) {
 		HospedajesGetAllRs hospedajesGetAllRs = new HospedajesGetAllRs();
+		Span span = tracer.getTracer().buildSpan("Consultar Hospedajes").start();
+    	span.setTag("url", "/productos/hospedajes");
+    	span.setTag("http.method", "GET");
 		try {
     		hospedajesGetAllRs.setHospedajes(hospedajeService.consultarHospedajes(nombre, calificacion, tipoHospedaje, ciudad, convenio));
+    		span.setTag("http.status_code", 200);
+    		span.finish();
         	return Response.status(Response.Status.OK).entity(hospedajesGetAllRs).type(MediaType.APPLICATION_JSON).build();
     	}catch (HospedajeException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
+    		span.setTag("http.status_code", 409);
+    		span.finish();
 			return Response.status(Response.Status.NOT_FOUND).entity(error).type(MediaType.APPLICATION_JSON).build();
 		}
     	catch (Exception e) {
+    		span.setTag("http.status_code", 500);
+    		span.finish();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
 		}
 				
@@ -90,18 +113,26 @@ public class HospedajeController {
 	@ApiOperation(value = "Actualizar la información de un hospedaje", nickname = "hospedajesPTC", notes = "Actualizar los datos del hospedaje de acuerdo a los parametros de entrada.", response = HospedajesPCTRs.class, tags={ "Hospedajes", })
 	public Response hospedajesPTC(@PathParam(value = "codigo") Long codigo,@RequestBody HospedajesPCTRq hospedajesPCTRq) {
 		HospedajesPCTRs hospedajesPCTRs = new HospedajesPCTRs();
-		
+		Span span = tracer.getTracer().buildSpan("Actualizar Hospedajes").start();
+    	span.setTag("url", "/productos/hospedajes/{codigo}");
+    	span.setTag("http.method", "PATCH");
 		try {
 			Hospedaje hospedaje = hospedajeService.actualizar(hospedajesPCTRq.getHospedaje(),codigo);
     		hospedajesPCTRs.setHospedaje(hospedaje);
+    		span.setTag("http.status_code", 200);
+    		span.finish();
         	return Response.status(Response.Status.OK).entity(hospedajesPCTRs).type(MediaType.APPLICATION_JSON).build();
     	}catch (HospedajeException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
+    		span.setTag("http.status_code", 409);
+    		span.finish();
 			return Response.status(Response.Status.CONFLICT).entity(error).type(MediaType.APPLICATION_JSON).build();
 		}
     	catch (Exception e) {
+    		span.setTag("http.status_code", 500);
+    		span.finish();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
 		}
 	}
@@ -111,17 +142,26 @@ public class HospedajeController {
 	@ApiOperation(value = "Crea un nuevo sitio de hospedaje.", nickname = "hospedajesPST", notes = "Crea un hospedaje dentro del sistema.", response = HospedajesPSTRs.class, tags={ "Hospedajes", })
 	public Response hospedajesPST(@RequestBody HospedajesPCTRq hospedajesPCTRq) {
 		HospedajesPCTRs hospedajesPCTRs = new HospedajesPCTRs();
+		Span span = tracer.getTracer().buildSpan("Crear Hospedajes").start();
+    	span.setTag("url", "/productos/hospedajes");
+    	span.setTag("http.method", "GET");
 		try {
 			Hospedaje hospedaje = hospedajeService.crearHospedaje(hospedajesPCTRq.getHospedaje());
     		hospedajesPCTRs.setHospedaje(hospedaje);
+    		span.setTag("http.status_code", 200);
+    		span.finish();
         	return Response.status(Response.Status.OK).entity(hospedajesPCTRs).type(MediaType.APPLICATION_JSON).build();
     	}catch (HospedajeException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
+    		span.setTag("http.status_code", 409);
+    		span.finish();
 			return Response.status(Response.Status.CONFLICT).entity(error).type(MediaType.APPLICATION_JSON).build();
 		}
     	catch (Exception e) {
+    		span.setTag("http.status_code", 500);
+    		span.finish();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
 		}
 	}
@@ -132,16 +172,25 @@ public class HospedajeController {
 	@ApiOperation(value = "Consultar todos los cuartos existentes en un hospedaje", nickname = "cuartosGETAll", notes = "Consultar todos los cuartos existentes para un hospedaje ", response = CuartosGETAllRs.class, tags={ "Hospedajes", })
 	public Response cuartosGETAll(@PathParam(value = "codigo") Long codigo,@QueryParam(value= "idCliente") Long cliente,@QueryParam(value= "idCuerto") Long cuarto) {
 		CuartosGETAllRs cuartosGETAllRs = new CuartosGETAllRs();
+		Span span = tracer.getTracer().buildSpan("Consultar Cuartos").start();
+    	span.setTag("url", "/productos/hospedajes/{codigo}/cuartos");
+    	span.setTag("http.method", "GET");
 		try {
 			cuartosGETAllRs.setCuartos(cuartoService.listarCuartos(codigo, cliente,null));
+			span.setTag("http.status_code", 200);
+    		span.finish();
         	return Response.status(Response.Status.OK).entity(cuartosGETAllRs).type(MediaType.APPLICATION_JSON).build();
     	}catch (HospedajeException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
+    		span.setTag("http.status_code", 409);
+    		span.finish();
 			return Response.status(Response.Status.NOT_FOUND).entity(error).type(MediaType.APPLICATION_JSON).build();
 		}
     	catch (Exception e) {
+    		span.setTag("http.status_code", 500);
+    		span.finish();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
 		}
 	}
@@ -152,17 +201,26 @@ public class HospedajeController {
 	@ApiOperation(value = "Crear un cuarto de acuerdo a un hospedaje", nickname = "cuartosPST", notes = "crear un cuarto de acuerdo a al codigo de un hospedaje", response = CuartosPSTRs.class, tags={ "Hospedajes", })
 	public Response cuartosPST(@PathParam(value = "codigo") Long codigo,@RequestBody CuartosPSTRq cuartosPSTRq) {
 		CuartosPSTRs cuartosPSTRs = new CuartosPSTRs();
+		Span span = tracer.getTracer().buildSpan("Actualizar Cuartos").start();
+    	span.setTag("url", "/productos/hospedajes/{codigo}/cuartos");
+    	span.setTag("http.method", "GET");
 		try {
 			Cuarto cuarto = cuartoService.crearCuarto(cuartosPSTRq.getCuarto(),codigo,null);
     		cuartosPSTRs.setCuarto(cuarto);
+    		span.setTag("http.status_code", 200);
+    		span.finish();
         	return Response.status(Response.Status.OK).entity(cuartosPSTRs).type(MediaType.APPLICATION_JSON).build();
     	}catch (HospedajeException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
+    		span.setTag("http.status_code", 409);
+    		span.finish();
 			return Response.status(Response.Status.CONFLICT).entity(error).type(MediaType.APPLICATION_JSON).build();
 		}
     	catch (Exception e) {
+    		span.setTag("http.status_code", 500);
+    		span.finish();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
 		}
 	}
@@ -173,17 +231,26 @@ public class HospedajeController {
 	@ApiOperation(value = "Actualizar o reservar un cuarto de acuerdo a un hospedaje", nickname = "cuartosPTC", notes = "Actualizar o reservar un cuarto de acuerdo a un codigo de hospedaje", response = CuartosPTCRs.class, tags={ "Hospedajes", })
 	public Response cuartosPTC(@PathParam(value = "codigo") Long codigo,@PathParam(value = "idCuarto") Long cuartoId,@RequestBody CuartosPTCRq cuartosPTCRq,@QueryParam(value= "reservar") boolean reservar) {
 		CuartosPTCRs cuartosPTCRs = new CuartosPTCRs();
+		Span span = tracer.getTracer().buildSpan("Actualizar Cuarto").start();
+    	span.setTag("url", "/productos/hospedajes/{codigo}/cuartos/{idCuarto}");
+    	span.setTag("http.method", "GET");
 		try {
 			Cuarto cuarto = cuartoService.actualizarCuarto(cuartosPTCRq.getCuarto(), cuartoId, reservar);
     		cuartosPTCRs.setCuarto(cuarto);
+    		span.setTag("http.status_code", 200);
+    		span.finish();
         	return Response.status(Response.Status.OK).entity(cuartosPTCRs).type(MediaType.APPLICATION_JSON).build();
     	}catch (HospedajeException e) {
     		Error error=new Error();
     		error.setCode("0");
     		error.setMessage(e.getMessage());
+    		span.setTag("http.status_code", 409);
+    		span.finish();
 			return Response.status(Response.Status.CONFLICT).entity(error).type(MediaType.APPLICATION_JSON).build();
 		}
     	catch (Exception e) {
+    		span.setTag("http.status_code", 500);
+    		span.finish();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).type(MediaType.APPLICATION_JSON).build();
 		}
 	}
