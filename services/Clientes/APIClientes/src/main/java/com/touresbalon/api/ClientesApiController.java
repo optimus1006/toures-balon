@@ -20,6 +20,8 @@ import com.touresbalon.service.domain.ClientesPCTRs;
 import com.touresbalon.service.domain.ClientesPSTRq;
 import com.touresbalon.service.domain.ClientesPSTRs;
 
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -39,6 +41,9 @@ public class ClientesApiController implements IClientesApi {
 
 	@Autowired
     private ClienteServices clienteService;
+	
+	@Autowired
+	private Tracer tracer;
 
 	@org.springframework.beans.factory.annotation.Autowired
 	public ClientesApiController(NativeWebRequest request) {
@@ -66,6 +71,10 @@ public class ClientesApiController implements IClientesApi {
 		Long idCliente = clienteService.createCliente(clientesPSTRq.getCliente());
 		cliente.setId(idCliente);
 		clientesPSTRs.setCliente(cliente);
+		Span span = tracer.buildSpan("CrearCliente").start();
+		span.setTag("url", "/clientes");
+		span.setTag("http.status_code", 201);
+		span.finish();
 		return new ResponseEntity<ClientesPSTRs>(clientesPSTRs, HttpStatus.CREATED);
 	}
 
@@ -86,6 +95,9 @@ public class ClientesApiController implements IClientesApi {
 			@ApiParam(value = "Estado del cliente.", allowableValues = "ACTIVO, INACTIVO") @Valid @RequestParam(value = "estado", required = false) String estado) {
 		ClientesGETAllRS clientesGETAllRS = new ClientesGETAllRS();
 		clientesGETAllRS.setClientes(clienteService.getAllClientes());
+		Span span = tracer.buildSpan("ConsultarClientes").start();
+		span.setTag("http.status_code", 200);
+		span.finish();
 		return clientesGETAllRS;
 	}
 
@@ -101,7 +113,11 @@ public class ClientesApiController implements IClientesApi {
         ClientesGETByIdRs clientesGETByIdRs = new ClientesGETByIdRs();
         Cliente cliente = clienteService.getById(id);
         clientesGETByIdRs.setCliente(cliente);
-        return clientesGETByIdRs;
+		Span span = tracer.buildSpan("ConsultarClientesPorId").start();
+		span.setTag("url", "/clientes/{identificacion}");
+		span.setTag("http.status_code", 201);
+		span.finish();
+		return clientesGETByIdRs;
 
     }
 	

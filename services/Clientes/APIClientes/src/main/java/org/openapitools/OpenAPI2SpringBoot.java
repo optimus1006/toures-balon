@@ -2,6 +2,11 @@ package org.openapitools;
 
 import com.fasterxml.jackson.databind.Module;
 
+import io.jaegertracing.Configuration;
+import io.jaegertracing.Configuration.SenderConfiguration;
+import io.jaegertracing.internal.JaegerTracer;
+import io.jaegertracing.internal.samplers.ProbabilisticSampler;
+
 import org.openapitools.jackson.nullable.JsonNullableModule;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
@@ -66,5 +71,37 @@ public class OpenAPI2SpringBoot implements CommandLineRunner {
     public Module jsonNullableModule() {
         return new JsonNullableModule();
     }
+
+	@Bean
+	public static JaegerTracer getTracer() {
+
+		System.out.println("Iniciando Jaeger");
+
+//		Configuration.SamplerConfiguration samplerConfig = Configuration.SamplerConfiguration.fromEnv()
+//				.withType("const").withParam(1);
+//		Configuration.ReporterConfiguration reporterConfig = Configuration.ReporterConfiguration.fromEnv()
+//				.withLogSpans(true);
+//		Configuration config = new Configuration("API Cientes").withSampler(samplerConfig)
+//				.withReporter(reporterConfig);
+//		return config.getTracer();
+		
+		Configuration.SamplerConfiguration samplerConfig = Configuration.SamplerConfiguration.fromEnv()
+                .withType(ProbabilisticSampler.TYPE).withParam(1);
+
+        /* Update default sender configuration with custom host and port */
+            SenderConfiguration senderConfig = Configuration.SenderConfiguration.fromEnv()
+                    .withAgentHost("10.0.1.102")
+                    .withAgentPort(6831);
+        /* End */
+
+        Configuration.ReporterConfiguration reporterConfig = Configuration.ReporterConfiguration.fromEnv()
+                .withLogSpans(true)
+                .withSender(senderConfig);
+
+        Configuration config = new Configuration("API clientes").withSampler(samplerConfig)
+                .withReporter(reporterConfig);
+
+        return config.getTracer();
+	}
 
 }
