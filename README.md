@@ -238,8 +238,6 @@ han relacionado a los atributos de calidad de la norma 25001, de modo
 que las decisiones tomadas tengan sustento y validez, así como presentar
 a Toures Balón una alineación de sus necesidades que puedan ser medidas.
 
-Árbol de Utilidad (SMART - Specific - Measurable - Achievable - Real -
-Time Constraint)
 
 | **Atributo de Calidad** | **Criterio**                                                                                                            | **Escenario** | **Descripción Escenario**                                                                                                                                                                                                                                             | **Imp.** | **Dif.** |
 | ----------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------- |
@@ -653,7 +651,21 @@ Time Constraint)
 
 ## Diagrama de datos
 
-![](media/image5.png)
+### Diagrama de clientes
+
+![](diagrams/clientesdb.png)
+
+### Diagrama de convenios
+
+![](diagrams/conveniosdb.png)
+
+### Diagrama de ordenes
+
+![](diagrams/ordenesdb.png)
+
+### Diagrama de productos
+
+![](diagrams/productosdb.png)
 
 ## Diagrama de despliegue
 
